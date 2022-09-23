@@ -1,0 +1,27 @@
+.login_app {
+    background: #E5E5E5;
+    .login_content {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        background: rgba(80, 48, 229, 0.65);
+        .login_col {
+            display: flex;
+            height: 100%;
+            width: 50%;
+            align-items: center;
+            justify-content: center;
+            .login_ill_wrapper {
+                display: flex;
+                height: 250px;
+                width: 250px;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                object-fit: contain;
+            }
+        }
+    }
+}
