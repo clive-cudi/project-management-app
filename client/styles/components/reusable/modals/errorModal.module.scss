@@ -1,0 +1,84 @@
+.err_wrapper {
+    display: flex;
+    height: fit-content;
+    width: 400px;
+    min-height: 200px;
+    max-width: 320px;
+    background-color: white;
+    border-radius: 6px;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+    animation: animate-fade-in 0.2s linear forwards;
+    flex-direction: column;
+    position: relative;
+    .err_icon {
+      display: flex;
+      height: fit-content;
+      min-height: 60px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+    .err_info {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .err_info > h2 {
+      font-size: 20px;
+    }
+    .err_info > p {
+        display: flex;
+        height: fit-content;
+        min-height: 60px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+      justify-content: center;
+    }
+    .err_btns {
+      display: flex;
+      height: 40px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+    .err_btns > button {
+      display: flex;
+      height: 40px;
+      width: fit-content;
+      padding: 10px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      border: none;
+      background: rgba(80, 48, 229, 0.65);
+      color: white;
+      transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+      transition-duration: 0.4s;
+    }
+    .err_btns > button:hover {
+      border: 0.5px solid rgb(81, 48, 229);
+      background: rgba(80, 48, 229, 1);
+      cursor: pointer;
+      color: white;
+      box-shadow: 1px 1px 10px 2px rgb(81, 48, 229);
+    }
+  }
+  
+  @keyframes animate-fade-in {
+    0% {
+      opacity: 0.5;
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

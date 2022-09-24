@@ -2,6 +2,7 @@ import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
+import { ModalCtxProvider } from "../providers";
 
 interface Props extends AppProps {
   pageProps: {
@@ -12,7 +13,9 @@ interface Props extends AppProps {
 function MyApp({ Component, pageProps: { session, ...pageProps } }: Props) {
   return (
     // <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <ModalCtxProvider>
+        <Component {...pageProps} />
+      </ModalCtxProvider>
     // </SessionProvider>
   )
 }

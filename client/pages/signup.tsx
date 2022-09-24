@@ -1,8 +1,11 @@
 import styles from "../styles/pages/login.module.scss";
-import { Header, FormContainer, Signupform } from "../components";
+import { Header, FormContainer, Signupform, Modal } from "../components";
 import Image from "next/image";
+import { useModal } from "../hooks";
 
 export default function Signup() {
+    const { modal } = useModal();
+
     return (
         <div className={`app ${styles.login_app}`}>
             <Header title="Login" description="Project management app. Login" />
@@ -19,6 +22,7 @@ export default function Signup() {
                     </div>
                 </div>
             </div>
+            {modal.open == true && <Modal data={modal.data} />}
         </div>
     )
 }
