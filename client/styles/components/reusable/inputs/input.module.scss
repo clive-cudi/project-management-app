@@ -4,7 +4,7 @@
     width: 100%;
     align-items: center;
     justify-content: space-evenly;
-    max-width: 270px;
+    max-width: 350px;
     > span {
         display: flex;
         height: 40px;
@@ -18,5 +18,13 @@
         height: 100%;
         width: 100%;
         padding: 10px;
+        border: 0.5px solid white;
+        outline: none;
+        &:hover {
+            border: 0.5px solid rgb(95, 95, 253);
+        }
+        &:focus {
+            box-shadow: 1px 1px 10px 2px rgb(95, 95, 253);
+        }
     }
 }

@@ -1,0 +1,45 @@
+.regular_btn {
+    display: flex;
+    height: 40px;
+    width: fit-content;
+    min-width: 141px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    // font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.4s;
+    &.regular_btn_text {
+        background: none;
+        border: none;
+        color: white;
+        &:hover {
+            background: rgba(80, 48, 229, 0.65);
+            // background: rgba(255, 255, 255, 0.512);
+            // color: black;
+        }
+    }
+    &.regular_btn_contained {
+        background: white;
+        border: none;
+        &:hover {
+            background: rgba(80, 48, 229, 1);
+            color: white;
+            box-shadow: 1px 1px 10px 2px rgb(81, 48, 229);
+        }
+    }
+    &.regular_btn_outlined {
+        background: none;
+        border: 0.5px solid white;
+        color: white;
+    }
+    &:hover {
+        cursor: pointer;
+    }
+}
