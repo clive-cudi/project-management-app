@@ -42,4 +42,19 @@
     &:hover {
         cursor: pointer;
     }
+    .regular_btn_loading_icon {
+        display: flex;
+        height: 100%;
+        width: fit-content;
+        align-items: center;
+        justify-content: center;
+        animation: animate-load-spin 0.8s linear infinite;
+    }
+}
+
+@keyframes animate-load-spin {
+    100%
+    {
+        transform: rotate(360deg);
+    }
 }

@@ -3,6 +3,7 @@ import styles from "../../../styles/pages/login.module.scss";
 import { InputDiv, RegularBtn, InputSelect, ErrorModal } from "../../reusable";
 import { FiUser } from "react-icons/fi";
 import { useModal } from "../../../hooks";
+import axios from "axios";
 
 export const Signupform = (): JSX.Element => {
     const icon_img_styling: React.CSSProperties = {
@@ -26,6 +27,7 @@ export const Signupform = (): JSX.Element => {
     });
     const [canSubmit, setCanSubmit] = useState<boolean>(false);
     const { openModal } = useModal();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         const type = e.target.type;
@@ -62,6 +64,14 @@ export const Signupform = (): JSX.Element => {
     function submit(): void {
         if (checkInputs()) {
             console.log(data);
+            setIsLoading(true)
+            axios.post(`${process.env.BACKEND_API_URL}/auth/signup`, {...data}).then((res)=> {
+                setIsLoading(false)
+                console.log(res);
+            }).catch((e) => {
+                setIsLoading(false)
+                console.log(e);
+            })
         }
     }
 
@@ -76,7 +86,7 @@ export const Signupform = (): JSX.Element => {
             {/* eslint-disable-next-line */}
             <InputDiv type={`password`} placeholder={`Confirm Password *`} inputArgs={{name: "confirm"}} onChange={(e)=>{handleChange(e)}} icon={<img src="/auth/lock_icon.png" alt="U" style={{...icon_img_styling}} />} />
             <InputSelect options={selectOptions} withIcon={{status: true, icon: <FiUser fontSize={20} />}} name={"usertype"} onChange={(e)=>{handleChange(e)}} />
-            <RegularBtn type={"submit"} label="Sign Up" variant="contained" onClick={submit} />
+            <RegularBtn type={"submit"} label="Sign Up" variant="contained" onClick={submit} isLoading={{status: isLoading}} />
         </form>
     )
 }

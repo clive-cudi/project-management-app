@@ -48,7 +48,8 @@ const userSchema = new Schema({
             default: String,
             other: [String]
         },
-        phone: String
+        phone: String,
+        language: String
     },
 }, {
     timestamps: true
