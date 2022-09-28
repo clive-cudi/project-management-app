@@ -1,0 +1,39 @@
+.av_app {
+    background: #E5E5E5;
+    .av_content {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        background: rgba(80, 48, 229, 0.65);
+        padding: 10%;
+        flex-direction: column;
+        h2 {
+            color: white;
+        }
+        .av_form_cont {
+            display: flex;
+            height: fit-content;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            .av_form_profile_wrapper {
+                display: flex;
+                height: 200px;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                h4 {
+                    color: white;
+                    font-size: 14px;
+                    margin-top: 6px;
+                }
+            }
+            .av_form {
+                display: grid;
+            }
+        }
+    }
+}

@@ -16,6 +16,7 @@ router.post("/signup", (req, res) => {
 
     if (!req.body.username || !req.body.email || !req.body.password || !req.body.confirm) {
         return res.status(400).json({
+            success: false,
             message: "Missing credentials",
             usertoken: {
                 user: null,
@@ -34,6 +35,7 @@ router.post("/signup", (req, res) => {
 
     if (password !== confirm) {
         return res.status(403).json({
+            success: false,
             message: "Passwords do not match",
             usertoken: {
                 user: null,
@@ -49,13 +51,14 @@ router.post("/signup", (req, res) => {
     User.findOne({email: email}, async (err, user) => {
         if (err) {
             console.log(err);
-            return res.json({ error: {status: true, code: "db_error"}});
+            return res.json({success: false, error: {status: true, code: "db_error"}});
         }
 
         if (user !== null) {
             console.log("User exists!!");
             existing_user_status = true;
             return res.status(400).json({
+                success: false,
                 message: `User with the email: ${email}, already exists.`,
                 usertoken: {
                     user: null,
@@ -94,6 +97,7 @@ router.post("/signup", (req, res) => {
                 );
 
                 return res.json({
+                    success: true,
                     message: "User Created",
                     usertoken: {
                         ...user?._doc,
@@ -107,6 +111,7 @@ router.post("/signup", (req, res) => {
             }).catch((err)=> {
                 console.log(err);
                 return res.status(400).json({
+                    success: false,
                     message: "Error pushing user to DB",
                     usertoken: {
                         user: null,
@@ -124,6 +129,7 @@ router.post("/signup", (req, res) => {
         .catch((err)=> {
             console.log(err);
             return res.status(400).json({
+                success: false,
                 message: "Error creating user",
                 usertoken: {
                     user: null,
@@ -143,6 +149,7 @@ router.post("/login", (req, res) => {
 
     if (!email || !password) {
         return res.status(400).json({
+            success: false,
             message: "Missing credentials",
             usertoken: {
                 user: null,
@@ -174,6 +181,7 @@ router.post("/login", (req, res) => {
                 console.log({token});
 
                 return res.json({
+                    success: true,
                     message: "Successful Login",
                     usertoken: {
                         user,
@@ -187,6 +195,7 @@ router.post("/login", (req, res) => {
                 })
             } else {
                 return res.json({
+                    success: false,
                     message: "Invalid credentials",
                     usertoken: {
                         user: null,
@@ -200,6 +209,7 @@ router.post("/login", (req, res) => {
             }
         } else {
             return res.status(404).json({
+                success: false,
                 message: "User not found",
                 usertoken: {
                     user: null,
@@ -214,6 +224,7 @@ router.post("/login", (req, res) => {
     }).catch((err) => {
         console.log(err);
         return res.status(400).json({
+            success: false,
             message: "An error occurred",
             usertoken: {
                 user: null,
@@ -267,10 +278,12 @@ router.post("/verify", authVerify, (req, res) => {
                         other: Array.from([...new Set(user.info.timezones.other.includes(timezone) ? user.info.timezones.other : [...user.info.timezones.other, timezone])])
                     },
                     "info.phone": phone,
-                    "info.language": language
+                    "info.language": language,
+                    isVerified: true
                 }}
             ).then(()=> {
                 return res.status(200).json({
+                    success: true,
                     message: "Verification Done",
                     usertoken: {
                         user: user,
@@ -283,6 +296,7 @@ router.post("/verify", authVerify, (req, res) => {
                 });
             }).catch((error) => {
                 return res.status(400).json({
+                    success: false,
                     message: "Verification Error",
                     usertoken: {
                         user: null,
@@ -297,6 +311,7 @@ router.post("/verify", authVerify, (req, res) => {
             })
         } else {
             return res.status(404).json({
+                success: false,
                 message: "User not found",
                 usertoken: {
                     user: null,

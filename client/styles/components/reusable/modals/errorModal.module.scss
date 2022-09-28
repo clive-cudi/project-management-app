@@ -19,6 +19,15 @@
       width: 100%;
       align-items: center;
       justify-content: center;
+      &.err_icon_error {
+        animation: animate-err-icon-shake_error 1s linear infinite;
+      }
+      &.err_icon_info {
+        animation: animate-err-icon-shake_error 1s linear infinite;
+      }
+      &.err_icon_success {
+        animation: animate-err-icon-shake_success 1s linear infinite;
+      }
     }
     .err_info {
       display: flex;
@@ -48,7 +57,7 @@
       align-items: center;
       justify-content: center;
     }
-    .err_btns > button {
+    .err_btns > .err_btns_button {
       display: flex;
       height: 40px;
       width: fit-content;
@@ -62,7 +71,7 @@
       transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
       transition-duration: 0.4s;
     }
-    .err_btns > button:hover {
+    .err_btns >.err_btns_button:hover {
       border: 0.5px solid rgb(81, 48, 229);
       background: rgba(80, 48, 229, 1);
       cursor: pointer;
@@ -71,14 +80,80 @@
     }
   }
   
-  @keyframes animate-fade-in {
-    0% {
-      opacity: 0.5;
-      transform: scale(1.1);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
+@keyframes animate-fade-in {
+  0% {
+    opacity: 0.5;
+    transform: scale(1.1);
   }
-  
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes animate-err-icon-shake_error {
+  0%
+  {
+    transform: rotate(0deg) scale(1);
+  }
+  10%
+  {
+    transform: rotate(20deg);
+  }
+  20%
+  {
+    transform: rotate(0deg);
+  }
+  30%
+  {
+    transform: rotate(-20deg);
+  }
+  40%
+  {
+    transform: rotate(0deg);
+  }
+  50%
+  {
+    transform: scale(1.1);
+  }
+  100%
+  {
+    transform: scale(1);
+  }
+}
+
+@keyframes animate-err-icon-shake_info {
+  0%
+  {
+    transform: scale(1);
+  }
+  70%
+  {
+    transform: scale(1.2);
+  }
+  100%
+  {
+    transform: scale(1);
+  }
+}
+
+@keyframes animate-err-icon-shake_success {
+  0%
+  {
+    transform: scale(1);
+    margin-top: 0px;
+  }
+  40%
+  {
+    margin-top: 4px;
+  }
+  50%
+  {
+    transform: scale(1.1);
+  }
+  100%
+  {
+    transform: scale(1);
+    margin-top: 0px;
+  }
+}

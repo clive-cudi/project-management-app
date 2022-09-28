@@ -1,0 +1,56 @@
+.profile_pic_wrapper {
+    display: flex;
+    height: 150px;
+    width: 150px;
+    background: white;
+    border-radius: 50%;
+    position: relative;
+    border: 0.5px solid gray;
+    &.profile_pic_wrapper_loading {
+        animation: animate-profile-pic-border-loading 1s linear infinite;
+    }
+    .profile_pic_upload_btn {
+        display: flex;
+        height: 40px;
+        width: 40px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 0.5px solid gray;
+        position: absolute;
+        bottom: 0%;
+        right: 0%;
+        font-size: 18px;
+        background: white;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.4s;
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.04);
+            font-size: 20px;
+            background: rgba(80, 48, 229, 1);
+        }
+    }
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+@keyframes animate-profile-pic-border-loading {
+    0%
+    {
+        border: 0.5px solid red;
+    }
+    25%
+    {
+        border: 0.5px solid greenyellow;
+    }
+    50%
+    {
+        border: 0.5px solid blue;
+    }
+    75%
+    {
+        border: 0.5px solid crimson;
+    }
+}

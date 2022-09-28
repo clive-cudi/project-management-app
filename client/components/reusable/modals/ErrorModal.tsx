@@ -3,6 +3,7 @@ import styles from "../../../styles/components/reusable/modals/errorModal.module
 import { useModal } from "../../../hooks";
 import { GoAlert } from 'react-icons/go';
 import { useRouter } from "next/router";
+import { RegularBtn } from "../../reusable";
 
 interface ErrorModalPropTypes {
     message: string
@@ -12,9 +13,10 @@ interface ErrorModalPropTypes {
     btn_label?: string
     btn_onclick?: ()=> void
     disable_close_btn?: boolean
+    type?: "error" | "info" | "success"
 }
 
-export function ErrorModal({message, redirectUrl, icon, title, btn_label, btn_onclick, disable_close_btn}: ErrorModalPropTypes): JSX.Element{
+export function ErrorModal({type = "error", message, redirectUrl, icon, title, btn_label, btn_onclick, disable_close_btn}: ErrorModalPropTypes): JSX.Element{
     const { closeModal } = useModal();
     const router = useRouter();
 
@@ -24,20 +26,27 @@ export function ErrorModal({message, redirectUrl, icon, title, btn_label, btn_on
 
     return (
         <div className={styles.err_wrapper}>
-            <div className={styles.err_icon}>
+            <div className={`${styles.err_icon} ${styles[`err_icon_${type}`]}`}>
                 {icon ? icon : <GoAlert  fontSize={50} color='crimson' /> }
             </div>
             <div className={styles.err_info}>
                 {/* <h2>{title ? title : `Error !`}</h2> */}
                 <p>{message}</p>
                 <div className={styles.err_btns}>
-                    <button onClick={()=>{
+                    {/* <button className={styles.err_btns_button} onClick={()=>{
                         redirectUrl && redirect(redirectUrl);
                         if (disable_close_btn !== true){
                             closeModal()
                         }
                         btn_onclick && btn_onclick()
-                    }}>{btn_label ? btn_label : `Ok, Try Again`}</button>
+                    }}>{btn_label ? btn_label : `Ok, Try Again`}</button> */}
+                    <RegularBtn label={btn_label ? btn_label : `Ok, Try Again`} onClick={() => {
+                        redirectUrl && redirect(redirectUrl);
+                        if (disable_close_btn !== true){
+                            closeModal()
+                        }
+                        btn_onclick && btn_onclick()
+                    }} variant={"outlined"} className={styles.err_btns_button} />
                 </div>
             </div>
         </div>

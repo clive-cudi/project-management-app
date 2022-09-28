@@ -4,6 +4,7 @@ import { InputDiv, RegularBtn, InputSelect, ErrorModal } from "../../reusable";
 import { FiUser } from "react-icons/fi";
 import { useModal } from "../../../hooks";
 import axios from "axios";
+import { FaCheckCircle } from "react-icons/fa";
 
 export const Signupform = (): JSX.Element => {
     const icon_img_styling: React.CSSProperties = {
@@ -68,8 +69,17 @@ export const Signupform = (): JSX.Element => {
             axios.post(`${process.env.BACKEND_API_URL}/auth/signup`, {...data}).then((res)=> {
                 setIsLoading(false)
                 console.log(res);
+                if (res.data.success === true) {
+                    // push to page for providing more information
+                    openModal(<ErrorModal message={`${res.data.message}`} type={"success"} icon={<FaCheckCircle fontSize={40} color={"rgb(0, 255, 38)"} />} btn_label={"Proceed"} />)
+                }
             }).catch((e) => {
                 setIsLoading(false)
+                if (e.code === "ERR_BAD_REQUEST") {
+                    openModal(<ErrorModal message={`${e.response.data.message}`} type={"error"} />)
+                } else {
+                    openModal(<ErrorModal message={`${e.message}`} />);
+                }
                 console.log(e);
             })
         }
