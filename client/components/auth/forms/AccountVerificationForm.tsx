@@ -21,7 +21,7 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
         location: "",
         street: ""
     });
-    const languagesData = useMemo(()=> languageData, []);
+    const languagesData = useMemo(()=> languageData, [languageData]);
     // const timezonesData = useMemo(()=> [], []);
     const [timezonesData, setTimezonesData] = useState([])
     const [countryData, setCountryData] = useState([]);
@@ -47,8 +47,7 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
     useEffect(()=> {
         getTimeZoneList().then((tzList)=> {setTimezonesData(tzList as [])})
         getCountriesOptionList().then((list)=> {setCountryData(list as [])});
-        console.log(languageData)
-    }, [])
+    }, [getTimeZoneList, getCountriesOptionList])
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
         const type = e.target.type;
@@ -78,23 +77,23 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
     return (
         <form className={styles.av_form} onSubmit={(e)=>{e.preventDefault()}}>
             <fieldset>
-                <legend>Phone Number</legend>
+                <legend>Phone Number *</legend>
                 <InputDiv type={`tel`} placeholder={`+254 ...`} onChange={(e)=>{handleChange(e)}} inputArgs={{name: "phone"}} />
             </fieldset>
             <fieldset>
                 <legend>Choose your Language:</legend>
-                <InputSelect options={languagesData} />
+                <InputSelect options={languagesData} defaultOption={{label: "English", value: "en"}} />
             </fieldset>
             <fieldset>
                 <legend>Choose your timezone:</legend>
-                <InputSelect options={timezonesData} />
+                <InputSelect options={timezonesData} defaultOption={{label: "Africa/Nairobi", value: "Africa/Nairobi"}} />
             </fieldset>
             <fieldset>
                 <legend>Choose your Country:</legend>
-                <InputSelect options={countryData} />
+                <InputSelect options={countryData} defaultOption={{label: "Kenya", value: "KE"}} />
             </fieldset>
             <fieldset>
-                <legend>Gender:</legend>
+                <legend>Gender: *</legend>
                 <InputSelect options={genderData} />
             </fieldset>
             <fieldset>
