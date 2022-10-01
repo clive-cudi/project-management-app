@@ -8,7 +8,7 @@ interface AccountVerificationForm_Props {
 }
 
 export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm_Props): JSX.Element => {
-    const { getCountriesOptionList, getTimeZoneList } = useServices();
+    const { getCountriesOptionList, getTimeZoneList, languageData } = useServices();
     const [verificationData, setVerificationData] = useState({
         profilePicUrl: "",
         about: "",
@@ -21,7 +21,7 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
         location: "",
         street: ""
     });
-    const languagesData = useMemo(()=> [], []);
+    const languagesData = useMemo(()=> languageData, []);
     // const timezonesData = useMemo(()=> [], []);
     const [timezonesData, setTimezonesData] = useState([])
     const [countryData, setCountryData] = useState([]);
@@ -47,6 +47,7 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
     useEffect(()=> {
         getTimeZoneList().then((tzList)=> {setTimezonesData(tzList as [])})
         getCountriesOptionList().then((list)=> {setCountryData(list as [])});
+        console.log(languageData)
     }, [])
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
