@@ -13,7 +13,7 @@ interface InputDiv_Props {
 export const InputDiv = ({type, placeholder, icon, styling, onChange, inputArgs}: InputDiv_Props): JSX.Element => {
     return (
         <div className={styles.input_div_wrapper} style={styling} data-elm-type={"input"}>
-            <span>{icon}</span>
+            {icon && <span>{icon}</span>}
             <input type={type} placeholder={placeholder} onChange={onChange} {...inputArgs} />
         </div>
     )

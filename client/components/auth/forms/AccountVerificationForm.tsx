@@ -1,12 +1,14 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect} from "react";
 import styles from "../../../styles/pages/account_verification.module.scss";
 import { InputDiv, InputSelect, RegularBtn } from "../../reusable";
+import { useServices } from "../../../hooks";
 
 interface AccountVerificationForm_Props {
     profileImgURL?: string
 }
 
 export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm_Props): JSX.Element => {
+    const { getCountriesOptionList, getTimeZoneList } = useServices();
     const [verificationData, setVerificationData] = useState({
         profilePicUrl: "",
         about: "",
@@ -20,22 +22,32 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
         street: ""
     });
     const languagesData = useMemo(()=> [], []);
-    const timezonesData = useMemo(()=> [], []);
-    const countryData = useMemo(()=> [], []);
+    // const timezonesData = useMemo(()=> [], []);
+    const [timezonesData, setTimezonesData] = useState([])
+    const [countryData, setCountryData] = useState([]);
     const genderData = useMemo(()=> [
         {
-            gender: "male",
+            label: "Choose your gender...",
+            value: ""
+        },
+        {
+            label: "male",
             value: "M"
         },
         {
-            gender: "female",
+            label: "female",
             value: "F"
         },
         {
-            gender: "non-binary",
+            label: "non-binary",
             value: "N"
         }
-    ], [])
+    ], []);
+
+    useEffect(()=> {
+        getTimeZoneList().then((tzList)=> {setTimezonesData(tzList as [])})
+        getCountriesOptionList().then((list)=> {setCountryData(list as [])});
+    }, [])
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
         const type = e.target.type;
@@ -64,7 +76,32 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
 
     return (
         <form className={styles.av_form} onSubmit={(e)=>{e.preventDefault()}}>
-            
+            <fieldset>
+                <legend>Phone Number</legend>
+                <InputDiv type={`tel`} placeholder={`+254 ...`} onChange={(e)=>{handleChange(e)}} inputArgs={{name: "phone"}} />
+            </fieldset>
+            <fieldset>
+                <legend>Choose your Language:</legend>
+                <InputSelect options={languagesData} />
+            </fieldset>
+            <fieldset>
+                <legend>Choose your timezone:</legend>
+                <InputSelect options={timezonesData} />
+            </fieldset>
+            <fieldset>
+                <legend>Choose your Country:</legend>
+                <InputSelect options={countryData} />
+            </fieldset>
+            <fieldset>
+                <legend>Gender:</legend>
+                <InputSelect options={genderData} />
+            </fieldset>
+            <fieldset>
+                <legend>Skills</legend>
+            </fieldset>
+            <div className={styles.av_form_verify_btn}>
+                <RegularBtn type="submit" label="Verify" />
+            </div>
         </form>
     )
 }
