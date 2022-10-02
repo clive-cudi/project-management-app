@@ -2,6 +2,7 @@ import styles from "../styles/pages/login.module.scss";
 import { Header, FormContainer, LoginForm, Modal } from "../components";
 import Image from "next/image";
 import { useModal } from "../hooks";
+import { getSession } from "next-auth/react";
 
 export default function Login() {
     const { modal } = useModal();
@@ -25,4 +26,26 @@ export default function Login() {
             {modal.open == true && <Modal data={modal.data} />}
         </div>
     )
+}
+
+Login.getInitialProps = async (ctx: {req: any, res: any})=>{
+    const {req, res} = ctx;
+    const session = getSession({req});
+
+    // redirect to home page if user is authenticated
+
+    if ((await session)?.user && res){
+        res.writeHead(302, {
+            Location: '/'
+        });
+
+        res.end();
+        return {
+            authSession: session
+        };
+    }
+
+    return {
+      authSession: session
+    };
 }

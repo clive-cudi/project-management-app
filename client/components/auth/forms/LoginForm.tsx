@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import styles from "../../../styles/pages/login.module.scss";
 import { InputDiv, RegularBtn, ErrorModal } from "../../reusable";
 import { useModal } from "../../../hooks";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export const LoginForm = (): JSX.Element => {
     const icon_img_styling: React.CSSProperties = {
@@ -16,6 +18,8 @@ export const LoginForm = (): JSX.Element => {
         password: ""
     });
     const { openModal } = useModal();
+    const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
+    const router = useRouter();
 
     // make username optional
 
@@ -45,6 +49,20 @@ export const LoginForm = (): JSX.Element => {
     function submit(): void {
         if (checkInputs()) {
             console.log(data);
+            setIsAuthLoading(true);
+            signIn("credentials_email", {...data, redirect: false}).then((res) => {
+                setIsAuthLoading(false);
+                console.log(res);
+                if (res?.ok) {
+                    router.push("/");
+                } else {
+                    openModal(<ErrorModal message={JSON.parse(res?.error as string).message} />)
+                }
+            }).catch((signInErr) => {
+                console.log(signInErr);
+                openModal(<ErrorModal message={signInErr.message} />)
+                setIsAuthLoading(false);
+            })
         }
     }
 
@@ -56,7 +74,7 @@ export const LoginForm = (): JSX.Element => {
             <InputDiv type={`text`} placeholder={`Enter Email *`} inputArgs={{name: "email"}} onChange={handleChange} icon={<img src="/auth/email_icon.png" alt="U" style={{...icon_img_styling}} />} />
             {/* eslint-disable-next-line */}
             <InputDiv type={`password`} placeholder={`Enter Password *`} inputArgs={{name: "password"}} onChange={handleChange} icon={<img src="/auth/lock_icon.png" alt="U" style={{...icon_img_styling}} />} />
-            <RegularBtn type={"submit"} label="Login" variant="contained" onClick={submit} />
+            <RegularBtn type={"submit"} label="Login" variant="contained" onClick={submit} isLoading={{status: isAuthLoading}} />
         </form>
     )
 }
