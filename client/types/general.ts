@@ -1,0 +1,1 @@
+export type HomeTabLabels_Type = "home" | "messages" | "workspace" | "members" | "settings";
