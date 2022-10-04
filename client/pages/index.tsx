@@ -8,11 +8,32 @@ import { useLayout } from '../hooks';
 const Home: NextPage & PageAuth = () => {
   const { switchHomeTab } = useLayout();
 
-  const navBtns = useMemo<Array<HomeTabLabels_Type>>(()=> ["home", "messages", "workspace", "members", "settings"], []);
+  const navBtns = useMemo<Array<{label: HomeTabLabels_Type, icon: React.ReactNode}>>(()=> [
+    {
+      label: "home",
+      icon: <></>
+    },
+    {
+      label: "messages",
+      icon: <></>
+    },
+    {
+      label: "workspace",
+      icon: <></>
+    },
+    {
+      label: "members",
+      icon: <></>
+    },
+    {
+      label: "settings",
+      icon: <></>
+    }
+  ], []);
 
   const navSwitchBtns: {btnComponent: JSX.Element | React.ReactNode}[] = useMemo<{btnComponent: JSX.Element | React.ReactNode}[]>(()=>{
     return navBtns.map((btn, ix)=>{
-      return {btnComponent: <button key={ix} onClick={(): void => { switchHomeTab(btn) }}>{btn}</button>}
+      return {btnComponent: <button key={ix} onClick={(): void => { switchHomeTab(btn.label) }}><span>{btn.icon}</span>{btn.label}</button>}
     })
   }, [navBtns, switchHomeTab]);
 

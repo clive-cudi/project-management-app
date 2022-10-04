@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../../styles/components/reusable/navbars/sidenav.module.scss";
 import { AiFillStar } from "react-icons/ai";
+import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 
 interface SideNav_Props {
     isMin?: boolean
@@ -11,17 +12,29 @@ interface SideNav_Props {
     projects?: [] 
 }
 
-export const SideNav = ({isMin, switchBtns, tasks, projects}: SideNav_Props): JSX.Element => {
+export const SideNav = ({switchBtns, tasks, projects}: SideNav_Props): JSX.Element => {
+    const [isMin, setIsMin] = useState<boolean>(false);
+
+    function toggleNavMin(): void {
+        if (isMin === true) {
+            setIsMin(false);
+        } else {
+            setIsMin(true);
+        }
+    }
+
     return (
-        <nav className={styles.sn_main_wrapper}>
+        <nav className={`${styles.sn_main_wrapper} ${isMin ? styles.sn_min_wrapper : styles.sn_max_wrapper}`}>
             <div className={styles.sn_content}>
                 <div className={styles.sn_logo_wrapper}>
                     <span className={styles.sn_logo}>
                         {/* logo here */}
-                        <h5>PMT</h5>
+                        {/* eslint-disable-next-line */}
+                        <img src="/logos/primaryLogoIcon.png" alt="P" />
+                        {isMin === false && <h5>PMT</h5>}
                     </span>
                     {/* minimize toggle button */}
-                    <button></button>
+                    <button onClick={toggleNavMin}>{isMin ? <BsChevronDoubleRight /> : <BsChevronDoubleLeft />}</button>
                 </div>
                 <div className={styles.sn_btn_links}>
                     <ul>

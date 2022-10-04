@@ -1,0 +1,108 @@
+.sn_main_wrapper {
+    display: flex;
+    height: 100%;
+    width: fit-content;
+    min-width: 200px;
+    max-width: 200px;
+    flex-direction: column;
+    padding: 10px;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.4s;
+    &.sn_min_wrapper {
+        max-width: 80px;
+        min-width: 80px;
+    }
+    &.sn_max_wrapper {
+        max-width: 200px;
+    }
+    .sn_content {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+        border-right: 1px solid rgba(219, 219, 219, 1);
+        .sn_logo_wrapper {
+            display: flex;
+            height: 50px;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(219, 219, 219, 1);
+            .sn_logo {
+                display: flex;
+                height: 100%;
+                width: fit-content;
+                align-items: center;
+                justify-content: center;
+                img {
+                    object-fit: contain;
+                }
+                h5 {
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 20px;
+                    // line-height: 24px;
+                    animation: animate-h5-logo 1s linear forwards;
+                }
+            }
+            button {
+                display: flex;
+                height: 30px;
+                width: 30px;
+                min-height: 30px;
+                min-width: 30px;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                border: none;
+                background: none;
+                transition-timing-function: ease-in-out;
+                transition-duration: 0.4s;
+                &:hover {
+                    cursor: pointer;
+                    background: rgba(80, 48, 229, 1);
+                    color: white;
+                }
+            }
+        }
+        .sn_btn_links {
+            display: flex;
+            height: fit-content;
+            width: 100%;
+            ul {
+                display: flex;
+                height: fit-content;
+                width: 100%;
+                list-style-type: none;
+                flex-direction: column;
+                li {
+                    display: flex;
+                    height: 50px;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: center;
+                    button {
+                        display: flex;
+                        height: 40px;
+                        width: 100%;
+                        align-items: center;
+                        border-radius: 6px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes animate-h5-logo {
+    0%
+    {
+        opacity: 0;
+        width: 0px;
+    }
+    100%
+    {
+        opacity: 1;
+    }
+}
