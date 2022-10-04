@@ -4,6 +4,9 @@ export interface LayoutCtxTypes {
     homepage?: {
         currentTab: "home" | "messages" | "workspace" | "members" | "settings"
     }
+    navbar?: {
+        isMin?: boolean
+    }
 }
 
 export interface LayoutCtx_Props {
@@ -14,6 +17,9 @@ export interface LayoutCtx_Props {
 export const LayoutCtxDefaults: LayoutCtxTypes = {
     homepage: {
         currentTab: "home"
+    },
+    navbar: {
+        isMin: false
     }
 }
 

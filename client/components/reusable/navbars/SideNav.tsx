@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../../styles/components/reusable/navbars/sidenav.module.scss";
-import { AiFillStar } from "react-icons/ai";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
+import { IoIosAdd } from "react-icons/io";
 
 interface SideNav_Props {
-    isMin?: boolean
+    isMinNav?: (isMinVal: boolean)=> void
     switchBtns: {
         btnComponent: JSX.Element | React.ReactNode
     }[]
@@ -12,7 +12,7 @@ interface SideNav_Props {
     projects?: [] 
 }
 
-export const SideNav = ({switchBtns, tasks, projects}: SideNav_Props): JSX.Element => {
+export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props): JSX.Element => {
     const [isMin, setIsMin] = useState<boolean>(false);
 
     function toggleNavMin(): void {
@@ -22,6 +22,8 @@ export const SideNav = ({switchBtns, tasks, projects}: SideNav_Props): JSX.Eleme
             setIsMin(true);
         }
     }
+
+    useEffect(() => {if (isMinNav) {isMinNav(isMin)}})
 
     return (
         <nav className={`${styles.sn_main_wrapper} ${isMin ? styles.sn_min_wrapper : styles.sn_max_wrapper}`}>
@@ -47,11 +49,11 @@ export const SideNav = ({switchBtns, tasks, projects}: SideNav_Props): JSX.Eleme
                         }
                     </ul>
                 </div>
-                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>My Tasks</span> : ''}<AiFillStar /></span>
+                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY TASKS</span> : ''}<button><IoIosAdd /></button></span>
                 <div className={styles.sn_tasks_wrapper}>
 
                 </div>
-                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>My Projects</span> : ''}<AiFillStar /></span>
+                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY PROJECTS</span> : ''}<button><IoIosAdd /></button></span>
                 <div className={styles.sn_projects_wrapper}>
 
                 </div>

@@ -11,6 +11,18 @@
     &.sn_min_wrapper {
         max-width: 80px;
         min-width: 80px;
+        .sn_content {
+            .sn_btn_links {
+                ul {
+                    li {
+                        > button {
+                            height: 40px;
+                            width: 40px;
+                        }
+                    }
+                }
+            }
+        }
     }
     &.sn_max_wrapper {
         max-width: 200px;
@@ -21,6 +33,7 @@
         width: 100%;
         flex-direction: column;
         border-right: 1px solid rgba(219, 219, 219, 1);
+        padding: 4px;
         .sn_logo_wrapper {
             display: flex;
             height: 50px;
@@ -70,6 +83,7 @@
             display: flex;
             height: fit-content;
             width: 100%;
+            border-bottom: 1px solid rgba(219, 219, 219, 1);
             ul {
                 display: flex;
                 height: fit-content;
@@ -88,9 +102,70 @@
                         width: 100%;
                         align-items: center;
                         border-radius: 6px;
+                        background: none;
+                        color: rgba(120, 116, 134, 1);
+                        border: none;
+                        // font-size: 1px;
+                        font-size: 14px;
+                        font-weight: 500;
+                        &:hover {
+                            cursor: pointer;
+                            background: rgba(80, 48, 229, 0.08);
+                        }
+                        &[data-active = true] {
+                            color: white;
+                            background: rgba(80, 48, 229, 1);
+                        }
+                        span {
+                            display: flex;
+                            height: 100%;
+                            width: 40px;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 22px;
+                        }
                     }
                 }
             }
+        }
+        .nav_mini_title {
+            display: flex;
+            height: 40px;
+            align-items: center;
+            justify-content: space-between;
+            .nav_mini_title_txt {
+                font-family: Inter;
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 17px;
+                letter-spacing: 0em;
+                text-align: left;
+            }
+            > button {
+                display: flex;
+                height: 24px;
+                width: 24px;
+                border-radius: 8px;
+                border: none;
+                align-items: center;
+                justify-content: center;
+                background: rgba(80, 48, 229, 0.08);
+                color: rgba(80, 48, 229, 1);
+                font-size: 20px;
+                transition-timing-function: ease-in-out;
+                transition-duration: 0.4s;
+                &:hover {
+                    cursor: pointer;
+                    background: rgba(80, 48, 229, 1);
+                    color: white;
+                }
+            }
+        }
+        .sn_tasks_wrapper {
+            display: flex;
+            height: fit-content;
+            width: 100%;
+            border-bottom: 1px solid rgba(219, 219, 219, 1);
         }
     }
 }
