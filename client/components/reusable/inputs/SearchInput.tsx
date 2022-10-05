@@ -6,11 +6,11 @@ interface SearchInput_Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLIn
     iconAlt?: React.ReactNode | JSX.Element
 }
 
-export const SearchInput = ({ onChange, iconAlt }: SearchInput_Props) => {
+export const SearchInput = ({ onChange, iconAlt, ...otherInputProps }: SearchInput_Props) => {
     return (
         <div className={styles.search_input_wrapper}>
             <span>{iconAlt ?? <FiSearch />}</span>
-            <input type="text" name="search_query" id="query" placeholder="Search for anything..." onChange={onChange} />
+            <input type="text" name="search_query" id="query" placeholder="Search for anything..." onChange={onChange} {...otherInputProps} />
         </div>
     )
 }
