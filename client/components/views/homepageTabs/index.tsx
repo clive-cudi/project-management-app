@@ -4,6 +4,7 @@ import { MessagesTab } from "./MessagesTab";
 import { WorkSpaceTab } from "./WorkSpaceTab";
 import { MembersTab } from "./MembersTab";
 import { SettingsTab } from "./SettingsTab";
+import styles from "../../../styles/views/homePageTabs/index_.module.scss";
 
 export const HomePageCurrentTab = ({}): JSX.Element => {
     const { currentTab } = useLayout();
@@ -26,8 +27,8 @@ export const HomePageCurrentTab = ({}): JSX.Element => {
     }
 
     return (
-        <>
+        <div className={styles.homepage_tab_wrapper}>
             {showCurrentTab()}
-        </>
+        </div>
     )
 }

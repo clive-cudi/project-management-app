@@ -1,0 +1,19 @@
+.tn_main_wrapper {
+    display: flex;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid rgba(219, 219, 219, 1);
+    .tn_content {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        padding: 10px;
+        justify-content: space-between;
+        .tn_col {
+            display: flex;
+            height: 100%;
+            width: fit-content;
+            align-items: center;
+        }
+    }
+}
