@@ -4,3 +4,4 @@ export * from "./inputs";
 export * from "./buttons";
 export * from "./modals";
 export * from "./navbars";
+export { ProfileWidget} from "./profile/ProfileWidget";

@@ -4,6 +4,7 @@ import { IconBtn } from "../buttons";
 import { BsCalendar4Week } from "react-icons/bs";
 import { VscBell } from "react-icons/vsc";
 import { MdOutlineLiveHelp } from "react-icons/md";
+import { ProfileWidget } from "../profile/ProfileWidget";
 
 export const TopNav = ({}): JSX.Element => {
     return (
@@ -27,7 +28,7 @@ export const TopNav = ({}): JSX.Element => {
                         </ul>
                     </div>
                     <div className={styles.tn_profile_wrapper}>
-
+                        <ProfileWidget includeInfo={{username: "clive flav", location: "nairobi"}} />
                     </div>
                 </div>
             </div>
