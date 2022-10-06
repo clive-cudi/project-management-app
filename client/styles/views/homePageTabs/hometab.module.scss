@@ -1,0 +1,79 @@
+.hb_content {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    flex-direction: column;
+    .hb_greetings_wrapper {
+        display: flex;
+        height: fit-content;
+        min-height: 270px;
+        width: 100%;
+        .hb_banner_wrapper {
+            display: flex;
+            height: 267px;
+            width: 100%;
+            max-width: 896px;
+            padding: 20px;
+            .hb_banner_info {
+                display: flex;
+                height: 100%;
+                width: 50%;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-evenly;
+                padding: 10px;
+                h2 {
+                    font-family: Inter;
+                    font-size: 36px;
+                    font-weight: 500;
+                    line-height: 44px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                }
+                .get_started_btn {
+                    background: rgba(80, 48, 229, 1);
+                    color: white;
+                    height: 50px;
+                    width: 150px;
+                    border-radius: 14px;
+                    span {
+                        font-size: 22px;
+                    }
+                }
+            }
+            .hb_banner_ill {
+                display: flex;
+                height: 100%;
+                width: 50%;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+                .hb_ill {
+                    display: flex;
+                    height: 100%;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    img {
+                        object-fit: contain;
+                    }
+                }
+            }
+        }
+    }
+    .hb_info_wrapper {
+        display: flex;
+        height: fit-content;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 400px;
+    }
+    .hb_projects_wrapper {
+        display: flex;
+        height: fit-content;
+        min-height: 400px;
+        width: 100%;
+    }
+}
