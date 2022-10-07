@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../../../styles/components/reusable/navbars/sidenav.module.scss";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { IoIosAdd } from "react-icons/io";
+import { IconBtn } from "../buttons";
 
 interface SideNav_Props {
     isMinNav?: (isMinVal: boolean)=> void
@@ -49,11 +50,11 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
                         }
                     </ul>
                 </div>
-                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY TASKS</span> : ''}<button><IoIosAdd /></button></span>
+                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY TASKS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} /></span>
                 <div className={styles.sn_tasks_wrapper}>
 
                 </div>
-                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY PROJECTS</span> : ''}<button><IoIosAdd /></button></span>
+                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY PROJECTS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} /></span>
                 <div className={styles.sn_projects_wrapper}>
 
                 </div>

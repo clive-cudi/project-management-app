@@ -24,7 +24,7 @@
                 padding: 10px;
                 h2 {
                     font-family: Inter;
-                    font-size: 36px;
+                    font-size: 34px;
                     font-weight: 500;
                     line-height: 44px;
                     letter-spacing: 0em;
@@ -69,6 +69,20 @@
         align-items: center;
         justify-content: space-between;
         min-height: 400px;
+        .hb_tasks_wrapper {
+            display: flex;
+            height: fit-content;
+            width: 50%;
+            align-items: center;
+            justify-content: center;
+        }
+        .hb_calendar_wrapper {
+            display: flex;
+            height: fit-content;
+            width: 50%;
+            align-items: center;
+            justify-content: center;
+        }
     }
     .hb_projects_wrapper {
         display: flex;

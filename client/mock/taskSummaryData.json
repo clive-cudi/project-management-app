@@ -1,0 +1,17 @@
+[
+    {
+        "label": "Finish app update",
+        "isChecked": false,
+        "badgeStatus": "urgent"
+    },
+    {
+        "label": "Create new issue",
+        "isChecked": false,
+        "badgeStatus": "new"
+    },
+    {
+        "label": "Update project report",
+        "isChecked": true,
+        "badgeStatus": "default"
+    }
+]

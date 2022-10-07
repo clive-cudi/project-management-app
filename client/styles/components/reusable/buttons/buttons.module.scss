@@ -110,6 +110,19 @@
             background: rgba(80, 48, 229, 1);
         }
     }
+    &.icon_btn_util {
+        height: 24px;
+        width: 24px;
+        border-radius: 8px;
+        background: rgba(80, 48, 229, 0.08);
+        color: rgba(80, 48, 229, 1);
+        font-size: 20px;
+        &:hover {
+            cursor: pointer;
+            background: rgba(80, 48, 229, 1);
+            color: white;
+        }
+    }
     &:hover {
         cursor: pointer;
     }

@@ -3,4 +3,22 @@
     height: 100%;
     width: 100%;
     overflow-y: scroll;
+    >::-webkit-scrollbar {
+        display: none;
+        width: 0px;
+    }
+    > * {
+        animation: animate-tab-wrapper-fade-in 0.4s linear forwards;
+    }
+}
+
+@keyframes animate-tab-wrapper-fade-in {
+    0%
+    {
+        opacity: 0;
+    }
+    100%
+    {
+        opacity: 1;
+    }
 }

@@ -1,9 +1,23 @@
+import { useMemo } from "react";
 import styles from "../../../styles/views/homePageTabs/hometab.module.scss";
 import Image from "next/image";
-import { RegularBtn } from "../../reusable";
+import { RegularBtn, TaskSummary } from "../../reusable";
 import { BsPlay } from "react-icons/bs";
+import type { TaskCategory } from "../../../types";
+import taskSummary_mock from "../../../mock/taskSummaryData.json";
 
 export const HomeTab = ({}): JSX.Element => {
+    type taskSummaryMock_type = typeof taskSummary_mock;
+    const taskSummaryData = useMemo<
+    {
+        label: string
+        isChecked: boolean
+        badgeStatus: TaskCategory
+    }[]>(()=>{
+        return taskSummary_mock.map((task)=> ({label: task.label, isChecked: task.isChecked == "true" ? true : false, badgeStatus: task.badgeStatus as TaskCategory}))
+    },[])
+
+
     return (
         <div className={styles.hb_content}>
             <div className={styles.hb_greetings_wrapper}>
@@ -21,7 +35,7 @@ export const HomeTab = ({}): JSX.Element => {
             </div>
             <div className={styles.hb_info_wrapper}>
                 <div className={styles.hb_tasks_wrapper}>
-
+                    <TaskSummary tasks={taskSummaryData} />
                 </div>
                 <div className={styles.hb_calendar_wrapper}>
 

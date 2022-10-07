@@ -141,25 +141,25 @@
                 letter-spacing: 0em;
                 text-align: left;
             }
-            > button {
-                display: flex;
-                height: 24px;
-                width: 24px;
-                border-radius: 8px;
-                border: none;
-                align-items: center;
-                justify-content: center;
-                background: rgba(80, 48, 229, 0.08);
-                color: rgba(80, 48, 229, 1);
-                font-size: 20px;
-                transition-timing-function: ease-in-out;
-                transition-duration: 0.4s;
-                &:hover {
-                    cursor: pointer;
-                    background: rgba(80, 48, 229, 1);
-                    color: white;
-                }
-            }
+            // > button {
+            //     display: flex;
+            //     height: 24px;
+            //     width: 24px;
+            //     border-radius: 8px;
+            //     border: none;
+            //     align-items: center;
+            //     justify-content: center;
+            //     background: rgba(80, 48, 229, 0.08);
+            //     color: rgba(80, 48, 229, 1);
+            //     font-size: 20px;
+            //     transition-timing-function: ease-in-out;
+            //     transition-duration: 0.4s;
+            //     &:hover {
+            //         cursor: pointer;
+            //         background: rgba(80, 48, 229, 1);
+            //         color: white;
+            //     }
+            // }
         }
         .sn_tasks_wrapper {
             display: flex;
