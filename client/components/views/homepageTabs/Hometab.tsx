@@ -5,6 +5,7 @@ import { RegularBtn, TaskSummary } from "../../reusable";
 import { BsPlay } from "react-icons/bs";
 import type { TaskCategory } from "../../../types";
 import taskSummary_mock from "../../../mock/taskSummaryData.json";
+import { Callendar } from "../../reusable";
 
 export const HomeTab = ({}): JSX.Element => {
     type taskSummaryMock_type = typeof taskSummary_mock;
@@ -14,7 +15,7 @@ export const HomeTab = ({}): JSX.Element => {
         isChecked: boolean
         badgeStatus: TaskCategory
     }[]>(()=>{
-        return taskSummary_mock.map((task)=> ({label: task.label, isChecked: task.isChecked == "true" ? true : false, badgeStatus: task.badgeStatus as TaskCategory}))
+        return taskSummary_mock.map((task)=> ({label: task.label, isChecked: task.isChecked, badgeStatus: task.badgeStatus as TaskCategory}))
     },[])
 
 
@@ -38,7 +39,9 @@ export const HomeTab = ({}): JSX.Element => {
                     <TaskSummary tasks={taskSummaryData} />
                 </div>
                 <div className={styles.hb_calendar_wrapper}>
-
+                    <div className={styles.hb_calendar}>
+                        <Callendar />
+                    </div>
                 </div>
             </div>
             <div className={styles.hb_projects_wrapper}>
