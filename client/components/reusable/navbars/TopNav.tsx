@@ -5,6 +5,7 @@ import { BsCalendar4Week } from "react-icons/bs";
 import { VscBell } from "react-icons/vsc";
 import { MdOutlineLiveHelp } from "react-icons/md";
 import { ProfileWidget } from "../profile/ProfileWidget";
+import { signOut } from "next-auth/react";
 
 export const TopNav = ({}): JSX.Element => {
     return (
@@ -28,7 +29,9 @@ export const TopNav = ({}): JSX.Element => {
                         </ul>
                     </div>
                     <div className={styles.tn_profile_wrapper}>
-                        <ProfileWidget includeInfo={{username: "clive flav", location: "nairobi"}} />
+                        <ProfileWidget includeInfo={{username: "clive flav", location: "nairobi"}} onClick={(e)=> {
+                            signOut({callbackUrl: "/login"});
+                        }} orientation={"normal"} />
                     </div>
                 </div>
             </div>

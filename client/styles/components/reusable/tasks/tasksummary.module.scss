@@ -92,5 +92,17 @@
         height: 100%;
         width: 100%;
         flex-direction: column;
+        overflow: auto;
+        scrollbar-width: 4px;
+        &::-webkit-scrollbar {
+            width: 4px;
+            background: rgba(245, 245, 245, 1);
+        }
+        &::-webkit-scrollbar-button {
+            display: none;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #5D5FEF;
+        }
     }
  }

@@ -1,0 +1,37 @@
+.tir_wrapper {
+    display: flex;
+    height: 60px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    .tir_header {
+        display: flex;
+        height: 100%;
+        width: fit-content;
+        align-items: center;
+        .tir_header_checker {
+            display: flex;
+            height: 100%;
+            width: 50px;
+            align-items: center;
+            justify-content: center;
+        }
+        .tir_header_title {
+            display: flex;
+            height: 100%;
+            width: fit-content;
+            align-items: center;
+            justify-content: flex-start;
+            h4 {
+                //styleName: Semibold 14 (0.2 px);
+                font-family: Mulish;
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 20px;
+                letter-spacing: 0.20000000298023224px;
+                text-align: left;
+            }
+        }
+    }
+}

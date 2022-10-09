@@ -1,0 +1,26 @@
+.badge_wrapper {
+    display: flex;
+    height: 30px;
+    width: fit-content;
+    align-items: center;
+    padding: 6px;
+    border-radius: 8px;
+    // styleName: Bold 11 (0.5 px, CAPS);
+    font-family: Mulish;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: white;
+    &.badge_urgent {
+        background: #FEC400;
+    }
+    &.badge_new {
+        background: #29CC97;
+    }
+    &.badge_default {
+        background: #F0F1F7;
+        color: #9FA2B4;
+    }
+}

@@ -13,7 +13,7 @@ export interface Badge_Props {
 export const Badge = ({type}: Badge_Props) => {
     return (
         <span className={`${styles.badge_wrapper} ${styles[`badge_${type}`]}`}>
-            {type}
+            {type.toUpperCase()}
         </span>
     )
 }

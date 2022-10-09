@@ -48,9 +48,20 @@
     }
     &.pw_orientation_reversed {
         flex-direction: row-reverse;
+        .pw_info_wrapper {
+            .pw_username_wrapper {
+                justify-content: flex-start;
+            }
+            .pw_location_wrapper {
+                justify-content: flex-start;
+            }
+        }
     }
     &.pw_hasInfo {
         width: 200px;
+        &.pw_orientation_reversed {
+            width: fit-content;
+        }
     }
     .pw_info_wrapper {
         display: flex;
