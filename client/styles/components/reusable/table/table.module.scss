@@ -39,6 +39,9 @@
         tr {
             height: 60px;
             border-bottom: 0.5px solid rgba(225, 225, 251, 1);
+            transition-timing-function: ease-in-out;
+            transition-duration: 0.4s;
+            position: relative;
             td {
                 padding: 10px;
                 //styleName: Headlines/Headline Regular Normal;
@@ -48,6 +51,14 @@
                 line-height: 19px;
                 letter-spacing: 0.005em;
                 text-align: left;
+            }
+            &.tr_clickable {
+                cursor: pointer;
+                &:hover {
+                    background: #F7F7FC;
+                    box-shadow: 1px 1px 10px 2px rgba(225, 225, 251, 1);
+                    transform: scale(1.01);
+                }
             }
         }
     }

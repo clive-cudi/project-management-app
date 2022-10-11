@@ -1,0 +1,48 @@
+.wst_content {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    flex-direction: column;
+    .wst_header {
+        display: flex;
+        height: 100px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        border-bottom: 0.5px solid rgba(219, 219, 219, 1);
+        h4 {
+            font-family: Inter;
+            font-weight: 500;
+            line-height: 44px;
+            letter-spacing: 0em;
+            text-align: left;
+        }
+        button {
+            background: rgba(80, 48, 229, 1);
+            color: white;
+            height: 50px;
+            width: 150px;
+            border-radius: 14px;
+            span {
+                font-size: 22px;
+            }
+        }
+    }
+    .wst_list {
+        display: flex;
+        height: fit-content;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 20px;
+        padding: 10px;
+        h4 {
+            font-family: Inter;
+            font-weight: 500;
+            line-height: 44px;
+            letter-spacing: 0em;
+            text-align: left;
+        }
+    }
+}
