@@ -7,3 +7,4 @@ export * from "./navbars";
 export { ProfileWidget} from "./profile/ProfileWidget";
 export * from "./tasks";
 export * from "./general";
+export * from "./Table";

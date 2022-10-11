@@ -2,6 +2,7 @@ import styles from "../../../styles/components/reusable/profilepic.module.scss";
 import Image from "next/image";
 import { MouseEventHandler } from "react";
 import { FaUserAlt } from "react-icons/fa";
+import { upperCaseFirstSentence } from "../../../utils";
 
 interface ProfileWidget_Props {
     imageURL?: string
@@ -22,12 +23,13 @@ export const ProfileWidget = ({imageURL, alt, isLoading, includeInfo, onClick, o
                 includeInfo &&
                 <div className={styles.pw_info_wrapper}>
                     <span className={styles.pw_username_wrapper}>
-                        <h4>{includeInfo.username.split(" ").map((word, i)=> {
+                        {/* <h4>{includeInfo.username.split(" ").map((word, i)=> {
                             // if the char is a space and the index is less than the length, capitalize the next char.
                             // if the char index == 0, capitalize
                             // return char == " " || i == 0 ? (i == 0 ? char.toUpperCase() : (i < includeInfo.username.length - 1 ? " " + includeInfo.username[i+1].toUpperCase() : "")) : char.toLowerCase();
                             return word.charAt(0).toUpperCase() + word.slice(1);
-                        }).join(" ")}</h4>
+                        }).join(" ")}</h4> */}
+                        <h4>{upperCaseFirstSentence(includeInfo.username)}</h4>
                     </span>
                     <span className={styles.pw_location_wrapper}>
                         <h5>{includeInfo.location}</h5>

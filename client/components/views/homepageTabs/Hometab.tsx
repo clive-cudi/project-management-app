@@ -6,6 +6,7 @@ import { BsPlay } from "react-icons/bs";
 import type { TaskCategory } from "../../../types";
 import taskSummary_mock from "../../../mock/taskSummaryData.json";
 import { Callendar } from "../../reusable";
+import { ProjectsOverview } from "../../layout";
 
 export const HomeTab = ({}): JSX.Element => {
     type taskSummaryMock_type = typeof taskSummary_mock;
@@ -45,7 +46,7 @@ export const HomeTab = ({}): JSX.Element => {
                 </div>
             </div>
             <div className={styles.hb_projects_wrapper}>
-
+                <ProjectsOverview />
             </div>
         </div>
     )

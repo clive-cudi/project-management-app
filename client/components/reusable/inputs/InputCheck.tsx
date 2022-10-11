@@ -6,10 +6,11 @@ interface InputCheck extends InputHTMLAttributes<HTMLInputElement>{
     mod?: {
         icon: JSX.Element | ReactNode
     }
+    defaultchecked?: boolean
 }
 
-export const InputCheck = ({mod, className, ...checkboxProps}: InputCheck) => {
-    const [isChecked, setIsChecked] = useState<boolean>(true);
+export const InputCheck = ({mod, className, defaultChecked = false, ...checkboxProps}: InputCheck) => {
+    const [isChecked, setIsChecked] = useState<boolean>(defaultChecked);
 
     function toggleChecked(): void {
         if (isChecked === true) {
