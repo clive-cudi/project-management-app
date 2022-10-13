@@ -3,7 +3,7 @@ import styles from "../../../styles/components/reusable/inputs/input.module.scss
 
 interface InputDiv_Props {
     type: HTMLInputTypeAttribute
-    placeholder: string
+    placeholder?: string
     icon?: JSX.Element | React.ReactNode
     styling?: React.CSSProperties
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void

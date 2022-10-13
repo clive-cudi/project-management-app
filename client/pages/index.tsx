@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
-import { Header, SideNav, TopNav, HomePageCurrentTab } from "../components";
+import { Header, SideNav, TopNav, HomePageCurrentTab, Modal } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
-import { useLayout } from "../hooks";
+import { useLayout, useModal } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
@@ -40,6 +40,7 @@ const Home: NextPage & PageAuth = () => {
     ],
     []
   );
+  const { modal } = useModal();
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {
@@ -86,6 +87,7 @@ const Home: NextPage & PageAuth = () => {
           <HomePageCurrentTab />
         </div>
       </div>
+      {modal.open == true && <Modal data={modal.data} />}
     </div>
   );
 };

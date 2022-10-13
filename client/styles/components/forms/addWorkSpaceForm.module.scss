@@ -1,0 +1,73 @@
+.form {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-direction: column;
+    .awsf_form_field {
+        display: flex;
+        height: fit-content;
+        width: 100%;
+        min-height: 50px;
+        margin-top: 10px;
+        label {
+            display: flex;
+            font-family: Poppins;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 23px;
+            letter-spacing: 0.30000001192092896px;
+            text-align: left;
+            align-items: center;
+            margin: 6px;
+        }
+        span {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+        }
+        div[data-elm-type = "input"] {
+            // border: 1px solid #7784EE;
+            // box-shadow: 0px 5px 15px rgba(119, 132, 238, 0.3);
+            select {
+                border: none;
+                &:focus {
+                    box-shadow: 0px 5px 15px rgba(119, 132, 238, 0.3);
+                }
+            }
+            input {
+                background: #efefef;
+                &:focus {
+                    box-shadow: 0px 5px 15px rgba(119, 132, 238, 0.3);
+                }
+            }
+        }
+        .awsf_form_submit_btn {
+            background: rgba(80, 48, 229, 1);
+            color: white;
+            height: 50px;
+            width: fit-content;
+            min-width: 200px;
+            border-radius: 14px;
+            font-size: 14px;
+            &:hover {
+                background: rgba(80, 48, 229, 0.65);
+            }
+        }
+        &.justify_center {
+            justify-content: center;
+        }
+        &.multi_field {
+            justify-content: space-evenly;
+        }
+        &.textarea_exception {
+            flex-direction: column;
+            > textarea {
+                border: 1px solid #7784EE;
+                box-shadow: 0px 5px 15px rgba(119, 132, 238, 0.3);
+                border-radius: 8px;
+                outline: none;
+            }
+        }
+    }
+}

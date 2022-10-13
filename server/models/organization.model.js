@@ -17,7 +17,11 @@ const OrgSchema = new Schema({
                 status: String
             }
         ]
-    }
+    },
+    // an array of user uid's
+    users: [String],
+    // an array of tID's
+    teams: [String]
 }, {
     timestamps: true
 });

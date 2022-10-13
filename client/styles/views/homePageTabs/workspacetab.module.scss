@@ -23,10 +23,12 @@
             background: rgba(80, 48, 229, 1);
             color: white;
             height: 50px;
-            width: 150px;
+            width: fit-content;
             border-radius: 14px;
+            font-size: 14px;
             span {
-                font-size: 22px;
+                font-size: 20px;
+                margin-left: 10px;
             }
         }
     }
