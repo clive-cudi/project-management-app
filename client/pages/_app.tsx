@@ -2,7 +2,11 @@ import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
-import { ModalCtxProvider, LayoutCtxProvider } from "../providers";
+import {
+  ModalCtxProvider,
+  LayoutCtxProvider,
+  SettingsTabCtxProvider,
+} from "../providers";
 import { AuthGuard } from "../components";
 import { NextComponentType } from "next";
 import type { PageAuth } from "../types";
@@ -19,16 +23,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: Props) {
     <SessionProvider session={session}>
       <LayoutCtxProvider>
         <ModalCtxProvider>
-          {Component.requireAuth?.auth === true ? (
-            <AuthGuard
-              userType={Component.requireAuth.userType}
-              multipleUserTypes={Component.requireAuth.multipleUserTypes}
-            >
+          <SettingsTabCtxProvider>
+            {Component.requireAuth?.auth === true ? (
+              <AuthGuard
+                userType={Component.requireAuth.userType}
+                multipleUserTypes={Component.requireAuth.multipleUserTypes}
+              >
+                <Component {...pageProps} />
+              </AuthGuard>
+            ) : (
               <Component {...pageProps} />
-            </AuthGuard>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
+          </SettingsTabCtxProvider>
         </ModalCtxProvider>
       </LayoutCtxProvider>
     </SessionProvider>

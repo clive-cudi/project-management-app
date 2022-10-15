@@ -128,6 +128,47 @@
     }
 }
 
+.side_nav_btn {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    align-items: center;
+    border-radius: 6px;
+    background: none;
+    color: rgba(120, 116, 134, 1);
+    border: none;
+    // font-size: 1px;
+    font-size: 14px;
+    font-weight: 500;
+    &.btn_primary {
+        &:hover {
+            cursor: pointer;
+            background: rgba(80, 48, 229, 0.08);
+        }
+        &[data-active = true] {
+            color: white;
+            background: rgba(80, 48, 229, 1);
+        }
+    }
+    &.btn_secondary {
+        &:hover {
+            cursor: pointer;
+            color: rgba(80, 48, 229, 1);
+        }
+        &[data-active = true] {
+            background: rgba(80, 48, 229, 0.08);
+        }
+    }
+    span {
+        display: flex;
+        height: 100%;
+        width: 40px;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+}
+
 @keyframes animate-load-spin {
     100%
     {

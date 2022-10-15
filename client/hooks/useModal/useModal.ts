@@ -1,4 +1,4 @@
-import { useState, useContext, ReactNode } from "react";
+import { useContext, ReactNode } from "react";
 import { ModalCtx, modalCtx_Props } from "../../context";
 
 export function useModal() {

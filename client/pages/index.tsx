@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
-import { Header, SideNav, TopNav, HomePageCurrentTab, Modal } from "../components";
+import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
 import { useLayout, useModal } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
@@ -47,15 +47,16 @@ const Home: NextPage & PageAuth = () => {
       return navBtns.map((btn, ix) => {
         return {
           btnComponent: (
-            <button
+            <SideNavBtn
               key={ix}
               onClick={(): void => {
                 switchHomeTab(btn.label);
               }}
-              data-active={
+              isActive={
                 btn.label.toLowerCase() === currentTab?.toLowerCase()
               }
               disabled={btn.label.toLowerCase() === currentTab?.toLowerCase()}
+              variant={"secondary"}
             >
               <span>{btn.icon}</span>
               {navMin
@@ -66,7 +67,7 @@ const Home: NextPage & PageAuth = () => {
                       i == 0 ? char.toUpperCase() : char.toLowerCase()
                     )
                     .join("")}
-            </button>
+            </SideNavBtn>
           ),
         };
       });
