@@ -1,5 +1,5 @@
 export { Header } from "./Header";
-export { ProfilePic } from "./profile/ProfilePic";
+export { ProfilePicUpload } from "./profile/ProfilePic";
 export * from "./inputs";
 export * from "./buttons";
 export * from "./modals";

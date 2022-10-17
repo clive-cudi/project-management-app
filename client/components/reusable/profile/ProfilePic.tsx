@@ -7,7 +7,7 @@ interface ProfilePic_Props {
     isLoading?: boolean
 }
 
-export const ProfilePic = ({imageURL, alt, isLoading}: ProfilePic_Props): JSX.Element => {
+export const ProfilePicUpload = ({imageURL, alt, isLoading}: ProfilePic_Props): JSX.Element => {
     return (
         <div className={`${styles.profile_pic_wrapper} ${isLoading ? styles.profile_pic_wrapper_loading : "" }`}>
             <button className={styles.profile_pic_upload_btn}><FcCameraIdentification /></button>

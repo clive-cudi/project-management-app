@@ -2,7 +2,7 @@ import styles from "../../../styles/views/settings/accountTab.module.scss";
 import { IconBtn, RegularBtn } from "../../reusable";
 import { VscBell } from "react-icons/vsc";
 import { MdOutlineSecurity } from "react-icons/md";
-import { InputDiv, InputSelect } from "../../reusable";
+import { InputDiv, InputSelect, ProfilePicUpload, InputCheck } from "../../reusable";
 
 export const AccountTab = ():JSX.Element => {
     return (
@@ -101,7 +101,34 @@ export const AccountTab = ():JSX.Element => {
                     </div>
                 </div>
                 <div className={styles.at_user_profile_wrapper}>
-
+                    <div className={styles.user_profile_info_strip}>
+                        <div className={styles.user_profile_info_strip_title}>
+                            <h4>Profile Photo</h4>
+                        </div>
+                        <div className={styles.profile_info_strip_content} data-elm-exception={"profile-wrapper"}>
+                            <ProfilePicUpload />
+                        </div>
+                    </div>
+                    <div className={styles.user_profile_info_strip}>
+                        <div className={styles.user_profile_info_strip_title}>
+                            <h4>Choose your main interest</h4>
+                        </div>
+                        <div className={styles.profile_info_strip_content}>
+                            <InputSelect options={[]} />
+                        </div>
+                    </div>
+                    <div className={styles.user_profile_info_strip}>
+                        <div className={styles.user_profile_info_strip_title}>
+                            <h4>Select your gender</h4>
+                        </div>
+                        <div className={styles.profile_info_strip_content}>
+                            <div className={styles.radio_grp}>
+                                <InputCheck />
+                                <InputCheck />
+                                <InputCheck />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
