@@ -77,5 +77,113 @@
         display: flex;
         height: 100%;
         width: 100%;
+        .at_user_info_wrapper {
+            display: flex;
+            height: 100%;
+            width: 70%;
+            flex-direction: column;
+            .user_info_strip {
+                display: flex;
+                height: fit-content;
+                width: 100%;
+                flex-direction: column;
+                justify-content: center;
+                .user_info_strip_title {
+                    display: flex;
+                    height: fit-content;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: flex-start;
+                    padding: 12px;
+                    h3 {
+                        color: #404D61;
+                        //styleName: H2 • 24 sp / Bold;
+                        font-family: DM Sans;
+                        font-size: 24px;
+                        font-weight: 700;
+                        line-height: 32px;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+                    h4 {
+                        color: #404D61;
+                        //styleName: Body (L) • 18 sp/Medium;
+                        font-family: DM Sans;
+                        font-size: 18px;
+                        font-weight: 500;
+                        line-height: 24px;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+                }
+                .user_info_strip_content {
+                    display: grid;
+                    height: fit-content;
+                    width: 100%;
+                    &.user_info_strip_grid_cols_0 {
+                        display: flex;
+                        height: fit-content;
+                        width: 100%;
+                    }
+                    &.user_info_strip_grid_cols_2 {
+                        display: grid;
+                        grid-template-columns: auto auto;
+                        column-gap: 10px;
+                    }
+                    &.user_info_strip_grid_cols_3 {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 130px;
+                        column-gap: 10px;
+                        row-gap: 10px;
+                    }
+                    p {
+                        color: #757D8A;
+                        //styleName: Body (L) • 18 sp/Regular;
+                        font-family: DM Sans;
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 24px;
+                        letter-spacing: 0em;
+                        text-align: left; 
+                        padding: 12px;
+                    }
+                    span {
+                        display: flex;
+                        width: 100%;
+                        height: fit-content;
+                        align-items: center;
+                        div[data-elm-type = "input"] {
+                            max-width: none;
+                            border: 1px solid rgba(225, 227, 230, 1);
+                            border-radius: 6px;
+                            transition-timing-function: ease-in-out;
+                            transition-duration: 0.4s;
+                            input {
+                                border: none;
+                                border-radius: 6px;
+                            }
+                            select {
+                                border: none;
+                                border-radius: 6px;
+                            }
+                            &:hover {
+                                box-shadow: 0px 5px 15px rgba(119, 132, 238, 0.3);
+                                border: 1px solid rgb(95 95 253);
+                                border-radius: 6px;
+                            }
+                        }
+                        &[data-span = "full"] {
+                            grid-column: 1 / span 3;
+                        }
+                    }
+                }
+            }
+        }
+        .at_user_profile_wrapper {
+            display: flex;
+            height: 100%;
+            width: 30%;
+            flex-direction: column;
+        }
     }
 }
