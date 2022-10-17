@@ -8,6 +8,7 @@ import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
 import { FiUsers, FiSettings } from "react-icons/fi";
+import { upperCaseFirstLetter } from "../utils";
 
 const Home: NextPage & PageAuth = () => {
   const { currentTab, switchHomeTab } = useLayout();
@@ -56,17 +57,18 @@ const Home: NextPage & PageAuth = () => {
                 btn.label.toLowerCase() === currentTab?.toLowerCase()
               }
               disabled={btn.label.toLowerCase() === currentTab?.toLowerCase()}
-              variant={"secondary"}
+              variant={"primary"}
             >
               <span>{btn.icon}</span>
-              {navMin
+              {/* {navMin
                 ? ""
                 : btn.label
                     .split("")
                     .map((char, i) =>
                       i == 0 ? char.toUpperCase() : char.toLowerCase()
                     )
-                    .join("")}
+                    .join("")} */}
+              {navMin ? "" : upperCaseFirstLetter(btn.label)}
             </SideNavBtn>
           ),
         };

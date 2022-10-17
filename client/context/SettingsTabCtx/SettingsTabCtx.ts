@@ -1,7 +1,8 @@
 import React from "react";
+import { SettingsTabs_ } from "../../types";
 
 export interface SettingsTabTypes {
-    currentNavOption: "account" | "connections" | "preferences" | "security"
+    currentNavOption: SettingsTabs_
 }
 
 export interface SettingsTabCtx_Props {

@@ -4,6 +4,8 @@ export type TaskStatus = "open" | "pending" | "completed" | "accepted" | "reject
 
 export type TaskCategory = "urgent" | "new" | "default";
 
-export type TaskDificulty = "Very Easy" | "Easy" | "Fair" | "Difficult" | "Very Difficult"
+export type TaskDificulty = "Very Easy" | "Easy" | "Fair" | "Difficult" | "Very Difficult";
 
-export type UserStatus = "Very Busy" | "Busy" | "Free"
+export type UserStatus = "Very Busy" | "Busy" | "Free";
+
+export type SettingsTabs_ = "account" | "connections" | "preferences" | "security"

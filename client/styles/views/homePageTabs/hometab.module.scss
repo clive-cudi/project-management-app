@@ -39,6 +39,9 @@
                     span {
                         font-size: 22px;
                     }
+                    &:hover {
+                        box-shadow: 1px 1px 10px 4px rgba(94, 94, 94, 0.25);
+                    }
                 }
             }
             .hb_banner_ill {

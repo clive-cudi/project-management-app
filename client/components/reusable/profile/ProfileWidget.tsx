@@ -37,7 +37,7 @@ export const ProfileWidget = ({imageURL, alt, isLoading, includeInfo, onClick, o
                 </div>
             }
             {/* profile pic here */}
-            <div className={styles.pw_pic_wrapper} >
+            <div className={styles.pw_pic_wrapper} data-elm-type="profile-widget">
                 <span className={styles.pw_pic} onClick={onClick}>
                     {
                         imageURL ? <Image src={imageURL} alt={alt ?? "@"} layout={"fill"} /> : <FaUserAlt />

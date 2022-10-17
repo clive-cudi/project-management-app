@@ -1,0 +1,81 @@
+.account_tab_content {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    padding: 10px;
+    .at_nav_wrapper {
+        display: flex;
+        height: 90px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border-bottom: 1px solid rgba(225, 227, 230, 1);
+        .at_nav_content {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            .at_nav_col {
+                display: flex;
+                height: 100%;
+                width: fit-content;
+                span {
+                    display: flex;
+                    height: 100%;
+                    width: fit-content;
+                    align-items: center;
+                    justify-content: center;
+                    h4 {
+                        color: #404D61;
+                        font-family: DM Sans;
+                        font-size: 26px;
+                        font-weight: 700;
+                        line-height: 40px;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+                    button {
+                        &[data-elm-btn-cluster = "account-tab-nav-btn"] {
+                            color: #757D8A;
+                            height: 38px;
+                            width: 52px;
+                            border-radius: 8px;
+                            margin-left: 10px;
+                            box-shadow: 0px 4px 2px -2px rgba(27, 46, 94, 0.02);
+                            border: 1px solid #E1E3E6;
+                            &:hover {
+                                color: white;
+                            }
+                        }
+                        &.at_nav_col_confirm_btn {
+                            width: 139px;
+                            height: 46px;
+                            border-radius: 8px;
+                            background: linear-gradient(180deg, #5030E5 84.09%, #3C64F4 100%);
+                            margin-left: 20px;
+                            color: white;
+                            //styleName: Body (L) • 18 sp/Medium;
+                            font-family: DM Sans;
+                            font-size: 16px;
+                            font-weight: 500;
+                            line-height: 24px;
+                            letter-spacing: 0em;
+                            text-align: center;
+                            &:hover {
+                                box-shadow: 1px 1px 10px 4px rgba(94, 94, 94, 0.25);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .at_content_view_wrapper {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+}

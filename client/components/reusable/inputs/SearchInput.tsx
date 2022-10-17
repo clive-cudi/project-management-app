@@ -4,13 +4,15 @@ import { FiSearch } from "react-icons/fi";
 
 interface SearchInput_Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     iconAlt?: React.ReactNode | JSX.Element
+    wrapperOnClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+    inputRef?: any
 }
 
-export const SearchInput = ({ onChange, iconAlt, ...otherInputProps }: SearchInput_Props) => {
+export const SearchInput = ({ onChange, iconAlt, wrapperOnClick, inputRef, ...otherInputProps }: SearchInput_Props) => {
     return (
-        <div className={styles.search_input_wrapper}>
+        <div className={styles.search_input_wrapper} onClick={wrapperOnClick} data-elm-type="search-input">
             <span>{iconAlt ?? <FiSearch />}</span>
-            <input type="text" name="search_query" id="query" placeholder="Search for anything..." onChange={onChange} {...otherInputProps} />
+            <input type="text" name="search_query" id="query" placeholder="Search for anything..." onChange={onChange} ref={inputRef} {...otherInputProps} />
         </div>
     )
 }
