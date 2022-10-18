@@ -13,11 +13,11 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
         profilePicUrl: "",
         about: "",
         phone: "",
-        language: "",
-        timezone: "",
+        language: "en",
+        timezone: "Africa/Nairobi",
         gender: "",
         skills: [],
-        country: "",
+        country: "KE",
         location: "",
         street: ""
     });
@@ -62,6 +62,8 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
             }
         }
 
+        console.log(value());
+
         setVerificationData((prevVerificationData) => {
             return {
                 ...prevVerificationData,
@@ -70,8 +72,14 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
         })
     }
 
-    function submitVerification(): void {
+    function checkInputs():boolean {
+        return true;
+    }
 
+    function submitVerification(): void {
+        if (checkInputs()) {
+            console.log(verificationData)
+        }
     }
 
     return (
@@ -82,25 +90,25 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
             </fieldset>
             <fieldset>
                 <legend>Choose your Language:</legend>
-                <InputSelect options={languagesData} defaultOption={{label: "English", value: "en"}} />
+                <InputSelect options={languagesData} defaultOption={{label: "English", value: "en"}} name={"language"} onChange={(e)=>{handleChange(e)}} />
             </fieldset>
             <fieldset>
                 <legend>Choose your timezone:</legend>
-                <InputSelect options={timezonesData} defaultOption={{label: "Africa/Nairobi", value: "Africa/Nairobi"}} />
+                <InputSelect options={timezonesData} defaultOption={{label: "Africa/Nairobi", value: "Africa/Nairobi"}} name={"timezone"} onChange={handleChange} />
             </fieldset>
             <fieldset>
                 <legend>Choose your Country:</legend>
-                <InputSelect options={countryData} defaultOption={{label: "Kenya", value: "KE"}} />
+                <InputSelect options={countryData} defaultOption={{label: "Kenya", value: "KE"}} onChange={handleChange} name={"country"} />
             </fieldset>
             <fieldset>
                 <legend>Gender: *</legend>
-                <InputSelect options={genderData} />
+                <InputSelect options={genderData} onChange={handleChange} name={"gender"} />
             </fieldset>
             <fieldset>
                 <legend>Skills</legend>
             </fieldset>
             <div className={styles.av_form_verify_btn}>
-                <RegularBtn type="submit" label="Verify" />
+                <RegularBtn type="submit" label="Verify" onClick={()=>{submitVerification()}} />
             </div>
         </form>
     )

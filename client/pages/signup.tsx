@@ -8,7 +8,7 @@ export default function Signup() {
 
     return (
         <div className={`app ${styles.login_app}`}>
-            <Header title="Login" description="Project management app. Login" />
+            <Header title="Sign Up" description="Project management app. Sign Up." />
             <div className={`content ${styles.login_content}`}>
                 <div className={styles.login_col}>
                     <div className={styles.login_ill_wrapper}>
