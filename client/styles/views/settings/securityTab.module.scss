@@ -1,0 +1,126 @@
+.security_tab_content {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    padding: 10px;
+    .st_nav_wrapper {
+        display: flex;
+        height: 90px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border-bottom: 1px solid rgba(225, 227, 230, 1);
+        .st_nav_content {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            .st_nav_col {
+                display: flex;
+                height: 100%;
+                width: fit-content;
+                span {
+                    display: flex;
+                    height: 100%;
+                    width: fit-content;
+                    align-items: center;
+                    justify-content: center;
+                    h4 {
+                        color: #404D61;
+                        font-family: DM Sans;
+                        font-size: 26px;
+                        font-weight: 700;
+                        line-height: 40px;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+    .st_content_view_wrapper {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+        .st_info_wrapper {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            .st_info_strip {
+                display: flex;
+                height: fit-content;
+                width: 100%;
+                flex-direction: column;
+                justify-content: center;
+                .st_info_strip_title {
+                    display: flex;
+                    height: fit-content;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: flex-start;
+                    padding: 12px;
+                    h3 {
+                        color: #404D61;
+                        //styleName: H2 • 24 sp / Bold;
+                        font-family: DM Sans;
+                        font-size: 22px;
+                        font-weight: 600;
+                        line-height: 32px;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+                    h4 {
+                        color: #404D61;
+                        //styleName: Body (L) • 18 sp/Medium;
+                        font-family: DM Sans;
+                        font-size: 16px;
+                        font-weight: 500;
+                        line-height: 24px;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+                }
+                .st_info_strip_content {
+                    display: flex;
+                    height: fit-content;
+                    width: 100%;
+                    flex-direction: column;
+                    p {
+                        color: #757D8A;
+                        //styleName: Body (L) • 18 sp/Regular;
+                        font-family: DM Sans;
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 24px;
+                        letter-spacing: 0em;
+                        text-align: left; 
+                        padding: 12px;
+                    }
+                    .st_reset_psswd_btn {
+                        width: 139px;
+                        height: 46px;
+                        border-radius: 8px;
+                        background: linear-gradient(180deg, #5030E5 84.09%, #3C64F4 100%);
+                        margin-left: 20px;
+                        color: white;
+                        //styleName: Body (L) • 18 sp/Medium;
+                        font-family: DM Sans;
+                        font-size: 16px;
+                        font-weight: 500;
+                        line-height: 24px;
+                        letter-spacing: 0em;
+                        text-align: center;
+                        &:hover {
+                            box-shadow: 1px 1px 10px 4px rgba(94, 94, 94, 0.25);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

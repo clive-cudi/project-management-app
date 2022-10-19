@@ -5,6 +5,38 @@
     align-items: center;
     justify-content: space-evenly;
     max-width: 350px;
+    &.input_div_wrapper_default {
+        display: flex;
+    }
+    &.input_div_wrapper_util {
+        display: flex;
+    }
+    &.input_div_wrapper_primary {
+        display: flex;
+        border: 1px solid rgba(225, 227, 230, 1);
+        border-radius: 6px;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.4s;
+        input {
+            border: none;
+            border-radius: 6px;
+            &:hover {
+                border: none;
+            }
+        }
+        select {
+            border: none;
+            border-radius: 6px;
+        }
+        &:hover {
+            box-shadow: 0px 5px 15px rgba(119, 132, 238, 0.3);
+            border: 1px solid rgb(95 95 253);
+            border-radius: 6px;
+        }
+    }
+    &.input_div_wrapper_secondary {
+        display: flex;
+    }
     > span {
         display: flex;
         height: 40px;

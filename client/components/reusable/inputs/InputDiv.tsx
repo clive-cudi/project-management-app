@@ -8,11 +8,12 @@ interface InputDiv_Props {
     styling?: React.CSSProperties
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     inputArgs?: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+    variant?: "default" | "util" | "primary" | "secondary"
 }
 
-export const InputDiv = ({type, placeholder, icon, styling, onChange, inputArgs}: InputDiv_Props): JSX.Element => {
+export const InputDiv = ({type, placeholder, icon, styling, onChange, variant, inputArgs}: InputDiv_Props): JSX.Element => {
     return (
-        <div className={styles.input_div_wrapper} style={styling} data-elm-type={"input"}>
+        <div className={`${styles.input_div_wrapper} ${styles[`input_div_wrapper_${variant ?? "default"}`]}`} style={styling} data-elm-type={"input"}>
             {icon && <span>{icon}</span>}
             <input type={type} placeholder={placeholder} onChange={onChange} {...inputArgs} />
         </div>

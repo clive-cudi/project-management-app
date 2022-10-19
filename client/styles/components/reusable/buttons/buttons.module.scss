@@ -42,6 +42,21 @@
             background: rgba(80, 48, 229, 0.65);
         }
     }
+    &.regular_btn_gradient {
+        border-radius: 8px;
+        background: linear-gradient(180deg, #5030E5 84.09%, #3C64F4 100%);
+        color: white;
+        //styleName: Body (L) • 18 sp/Medium;
+        font-family: DM Sans;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: center;
+        &:hover {
+            box-shadow: 1px 1px 10px 4px rgba(94, 94, 94, 0.25);
+        }
+    }
     &:hover {
         cursor: pointer;
     }
