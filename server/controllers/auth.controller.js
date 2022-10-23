@@ -3,6 +3,8 @@ const { v4: v4ID } = require('uuid');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const speakeasy = require('speakeasy');
+const qrcode = require('qrcode');
 
 const signup = (req, res, next) => {
     // collect credentials
@@ -322,10 +324,47 @@ const verify = (req, res, next) => {
             })
         }
     })
+};
+
+const enableTwoFactorAuthStep1 = (req, res, next) => {
+    const secret = speakeasy.generateSecret();
+    const { usertoken } = req.body;
+    
+    qrcode.toDataURL(secret.otpauth_url, (err, qrImg) => {
+        if (err) {
+            res.status(403).json({
+                success: false,
+                message: "Error generating QR code",
+                usertoken: {
+                    user: {...usertoken},
+                    token: usertoken.token
+                },
+                error: {
+                    status: true,
+                    code: "qr_code_gen_error",
+                    debug: err
+                }
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "QR Code generated successfully",
+            usertoken: {
+                user: {...usertoken},
+                token: usertoken.token
+            },
+            error: {
+                status: false,
+                code: null
+            }
+        })
+    })
 }
 
 module.exports = {
     signup,
     login,
-    verify
+    verify,
+    enableTwoFactorAuthStep1
 }

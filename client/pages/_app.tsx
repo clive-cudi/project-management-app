@@ -7,7 +7,7 @@ import {
   LayoutCtxProvider,
   SettingsTabCtxProvider,
 } from "../providers";
-import { AuthGuard } from "../components";
+import { AuthGuard, Header } from "../components";
 import { NextComponentType } from "next";
 import type { PageAuth } from "../types";
 
@@ -21,6 +21,9 @@ interface Props extends AppProps {
 function MyApp({ Component, pageProps: { session, ...pageProps } }: Props) {
   return (
     <SessionProvider session={session}>
+      {/* <Header>
+        <meta name="color-scheme" content="only light" />
+      </Header> */}
       <LayoutCtxProvider>
         <ModalCtxProvider>
           <SettingsTabCtxProvider>
