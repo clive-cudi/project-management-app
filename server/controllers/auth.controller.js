@@ -354,6 +354,10 @@ const enableTwoFactorAuthStep1 = (req, res, next) => {
                 user: {...usertoken},
                 token: usertoken.token
             },
+            resdata: {
+                qrImg,
+                secret
+            },
             error: {
                 status: false,
                 code: null

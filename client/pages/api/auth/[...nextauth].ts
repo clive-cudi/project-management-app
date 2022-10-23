@@ -69,7 +69,12 @@ export default NextAuth({
         },
         session: async ({session, user, token}) => {
             console.log("User");
-            console.log(session)
+            console.log(token);
+
+            Object.keys(token).forEach((parentKey) => {
+                session.user[parentKey] = token[parentKey]
+            })
+
             return session;
         },
     },

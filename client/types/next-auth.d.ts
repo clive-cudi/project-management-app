@@ -1,6 +1,7 @@
 import NextAuth, { DefaultSession }  from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { Api_User_res } from "./apiRes";
+import { userType_ } from "./auth";
 
 declare module "next-auth" {
     interface Session {
@@ -15,6 +16,10 @@ declare module "next-auth" {
 
 declare module "next-auth/jwt" {
     interface JWT {
-        address: string
+        name?: string,
+        email?: string,
+        usertype?: userType_,
+        uid?: string,
+        token?: string
     }
 }
