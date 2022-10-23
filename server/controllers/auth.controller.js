@@ -332,7 +332,7 @@ const enableTwoFactorAuthStep1 = (req, res, next) => {
     
     qrcode.toDataURL(secret.otpauth_url, (err, qrImg) => {
         if (err) {
-            res.status(403).json({
+            return res.status(403).json({
                 success: false,
                 message: "Error generating QR code",
                 usertoken: {
@@ -347,7 +347,7 @@ const enableTwoFactorAuthStep1 = (req, res, next) => {
             })
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "QR Code generated successfully",
             usertoken: {
@@ -364,11 +364,179 @@ const enableTwoFactorAuthStep1 = (req, res, next) => {
             }
         })
     })
+};
+
+const enableTwoFactorAuthStep2 = (req, res, next) => {
+    const { base32secret, usertoken, totptoken } = req.body;
+
+    const isVerified = speakeasy.totp.verify({
+        secret: base32secret,
+        encoding: "base32",
+        token: totptoken
+    });
+
+    if (isVerified) {
+        User.findOne({email: usertoken.email, uid: usertoken.uid}).then((user) => {
+            if (user) {
+                // update the 2FA field in schema
+                User.updateOne(
+                    {uid: usertoken.uid},
+                    {$set: {
+                        "twoFA.status": true,
+                        "twoFA.secret": base32secret
+                    }}
+                ).then(()=> {
+                    return res.status(200).json({
+                        success: true,
+                        message: "2FA Enabled successfully!",
+                        usertoken: {
+                            user: {...usertoken},
+                            token: usertoken.token
+                        },
+                        error: {
+                            status: false,
+                            code: null
+                        }
+                    })
+                }).catch((err) => {
+                    return res.status(400).json({
+                        success: false,
+                        message: "2FA update DB failed",
+                        usertoken: {
+                            user: {...usertoken},
+                            token: usertoken.token
+                        },
+                        error: {
+                            status: true,
+                            code: "update_db_2fa_error",
+                            debug: err
+                        }
+                    })
+                })
+            } else {
+                return res.status(200).json({
+                    success: false,
+                    message: "User does not exist in DB!",
+                    usertoken: {
+                        user: {...usertoken},
+                        token: usertoken.token
+                    },
+                    error: {
+                        status: true,
+                        code: "user_not_found_2fa"
+                    }
+                })
+            }
+        }).catch((err) => {
+            return res.status(400).json({
+                success: false,
+                message: "Error fetching user from DB!",
+                usertoken: {
+                    user: {...usertoken},
+                    token: usertoken.token
+                },
+                error: {
+                    status: true,
+                    code: "db_error",
+                    debug: err
+                }
+            })
+        })
+    } else {
+        return res.status(300).json({
+            success: false,
+            message: "Failed to activate 2FA! Invalid Token!",
+            usertoken: {
+                user: {...usertoken},
+                token: usertoken.token
+            },
+            error: {
+                status: true,
+                code: "invalid_2FA_token"
+            }
+        })
+    }
+}
+
+const validate2FAtoken = (req, res, next) => {
+    const { usertoken, totptoken } = req.body;
+
+    User.findOne({email: usertoken.email}).then((user) => {
+        if (user) {
+            // check if user has 2FA enabled, if not throw Error
+            if (user.twoFA.status == true || user.twoFA.secret.trim() != "") {
+                const secret_2FA = user.twoFA.secret;
+
+                const isValidated = speakeasy.totp.verify({
+                    secret: secret_2FA,
+                    encoding: "base32",
+                    token: totptoken
+                });
+
+                if (isValidated) {
+                    return res.status(200).json({
+                        success: true,
+                        message: "Successfull 2FA Login",
+                        usertoken: {
+                            user: usertoken,
+                            token: usertoken.token
+                        },
+                        error: {
+                            status: false,
+                            code: null
+                        }
+                    })
+                } else {
+                    return res.status(403).json({
+                        success: false,
+                        message: "Invalid 2FA token!",
+                        usertoken: {
+                            user: usertoken,
+                            token: usertoken.token
+                        },
+                        error: {
+                            status: true,
+                            code: "invalid_2fa_token"
+                        }
+                    })
+                };
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message: "2FA not enabled!",
+                    usertoken: {
+                        user: usertoken,
+                        token: usertoken.token
+                    },
+                    error: {
+                        status: true,
+                        code: "2fa_disabled"
+                    }
+                });
+            }
+        }
+    }).catch((error) => {
+        return res.status(400).json({
+            success: false,
+            message: "Error Fetching user from DB!!",
+            usertoken: {
+                user: null,
+                token: null
+            },
+            error: {
+                status: true,
+                code: "db_error",
+                debug: error
+            }
+        })
+    })
 }
 
 module.exports = {
     signup,
     login,
     verify,
-    enableTwoFactorAuthStep1
+    enableTwoFactorAuthStep1,
+    enableTwoFactorAuthStep2,
+    validate2FAtoken
 }

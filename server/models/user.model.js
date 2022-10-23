@@ -51,6 +51,10 @@ const userSchema = new Schema({
         phone: String,
         language: String
     },
+    twoFA: {
+        status: Boolean,
+        secret: String
+    }
 }, {
     timestamps: true
 });

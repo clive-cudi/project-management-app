@@ -10,8 +10,8 @@ router.post("/verify", authVerify, AuthController.verify);
 
 router.post("/enabletwofactorstep1", authVerify, AuthController.enableTwoFactorAuthStep1);
 
-router.post("/enabletwofactorstep2");
+router.post("/enabletwofactorstep2", authVerify, AuthController.enableTwoFactorAuthStep2);
 
-router.post("/validatetoken");
+router.post("/validatetoken", authVerify, AuthController.validate2FAtoken);
 
 module.exports = router;
