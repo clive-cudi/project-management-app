@@ -18,7 +18,7 @@ export const TwoFactorSetupTokenForm = ({ base32Secret }: TwoFactorSetupTokenFor
     function handleTokenSubmit() {
         if (totptoken !== "") {
             axios.post(`${process.env.BACKEND_API_URL}/auth/enabletwofactorstep2`, {
-                base32Secret,
+                base32secret: base32Secret,
                 totptoken
             }, {
                 headers: {
@@ -32,7 +32,7 @@ export const TwoFactorSetupTokenForm = ({ base32Secret }: TwoFactorSetupTokenFor
                     openModal(<ErrorModal message={`${res.data.message}`} />)
                 }
             }).catch((err) => {
-                console.log(err);
+                console.log(err.response.data);
                 openModal(<ErrorModal message={`${err.message}`} />);
             })
         }

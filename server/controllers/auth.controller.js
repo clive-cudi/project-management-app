@@ -375,6 +375,8 @@ const enableTwoFactorAuthStep2 = (req, res, next) => {
         token: totptoken
     });
 
+    console.log(`base32: ${base32secret}\ntoken: ${totptoken}`)
+
     if (isVerified) {
         User.findOne({email: usertoken.email, uid: usertoken.uid}).then((user) => {
             if (user) {
@@ -443,7 +445,7 @@ const enableTwoFactorAuthStep2 = (req, res, next) => {
             })
         })
     } else {
-        return res.status(300).json({
+        return res.status(400).json({
             success: false,
             message: "Failed to activate 2FA! Invalid Token!",
             usertoken: {
