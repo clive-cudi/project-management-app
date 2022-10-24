@@ -60,7 +60,8 @@ export default NextAuth({
                     email: user.user.email,
                     usertype: user.user.usertype,
                     uid: user.user.uid,
-                    token: user.token
+                    token: user.token,
+                    twoFA: user.user.twoFA.status
                 }
             }
 
@@ -72,7 +73,7 @@ export default NextAuth({
             console.log(token);
 
             Object.keys(token).forEach((parentKey) => {
-                session.user[parentKey] = token[parentKey]
+                session.user[parentKey] = token[parentKey];
             })
 
             return session;

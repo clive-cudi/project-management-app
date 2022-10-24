@@ -6,6 +6,7 @@ import {
   ModalCtxProvider,
   LayoutCtxProvider,
   SettingsTabCtxProvider,
+  RoutingCtxProvider,
 } from "../providers";
 import { AuthGuard, Header } from "../components";
 import { NextComponentType } from "next";
@@ -24,22 +25,24 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: Props) {
       {/* <Header>
         <meta name="color-scheme" content="only light" />
       </Header> */}
-      <LayoutCtxProvider>
-        <ModalCtxProvider>
-          <SettingsTabCtxProvider>
-            {Component.requireAuth?.auth === true ? (
-              <AuthGuard
-                userType={Component.requireAuth.userType}
-                multipleUserTypes={Component.requireAuth.multipleUserTypes}
-              >
+      <RoutingCtxProvider>
+        <LayoutCtxProvider>
+          <ModalCtxProvider>
+            <SettingsTabCtxProvider>
+              {Component.requireAuth?.auth === true ? (
+                <AuthGuard
+                  userType={Component.requireAuth.userType}
+                  multipleUserTypes={Component.requireAuth.multipleUserTypes}
+                >
+                  <Component {...pageProps} />
+                </AuthGuard>
+              ) : (
                 <Component {...pageProps} />
-              </AuthGuard>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </SettingsTabCtxProvider>
-        </ModalCtxProvider>
-      </LayoutCtxProvider>
+              )}
+            </SettingsTabCtxProvider>
+          </ModalCtxProvider>
+        </LayoutCtxProvider>
+      </RoutingCtxProvider>
     </SessionProvider>
   );
 }

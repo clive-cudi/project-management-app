@@ -96,11 +96,15 @@ const signup = (req, res, next) => {
                     { expiresIn: "1h" }
                 );
 
+                const { twoFA, ...dataToInclude} = user?._doc;
+
+                console.log(dataToInclude);
+
                 return res.json({
                     success: true,
                     message: "User Created",
                     usertoken: {
-                        ...user?._doc,
+                        dataToInclude,
                         token
                     },
                     error: {
@@ -178,13 +182,13 @@ const login = (req, res, next) => {
                     }
                 );
 
-                console.log({token});
+                const { twoFA, password, ...dataToInclude} = user._doc;
 
                 return res.json({
                     success: true,
                     message: "Successful Login",
                     usertoken: {
-                        user,
+                        user: {...dataToInclude, twoFA: {status: twoFA.status}},
                         token: token
                     },
                     error: {

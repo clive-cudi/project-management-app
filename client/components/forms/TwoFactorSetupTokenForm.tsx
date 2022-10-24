@@ -42,8 +42,8 @@ export const TwoFactorSetupTokenForm = ({ base32Secret }: TwoFactorSetupTokenFor
         <form className={styles.tf_token_form} onSubmit={(e)=>{e.preventDefault()}}>
             <InputDiv type={'text'} placeholder={"Enter token"} onChange={(e)=>{
                 setTotptoken(e.target.value);
-            }} icon={<FcLock fontSize={20} />} />
-            <RegularBtn type="submit" label="Enable 2FA" variant="contained" onClick={()=>{
+            }} icon={<FcLock fontSize={20} />} variant={"primary"} />
+            <RegularBtn type="submit" label="Enable 2FA" variant="gradient" onClick={()=>{
                 handleTokenSubmit()
             }} />
         </form>

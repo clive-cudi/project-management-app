@@ -6,7 +6,8 @@
         width: 100%;
         align-items: center;
         justify-content: center;
-        background: rgba(80, 48, 229, 0.65);
+        // background: rgba(80, 48, 229, 0.65);
+        background: white;
         flex-direction: column;
         .tf_qr_image_wrapper {
             display: flex;
@@ -23,7 +24,8 @@
             }
         }
         p {
-            color: #ffffff;
+            // color: #ffffff;
+            color: black;
             font-family: DM Sans;
             font-size: 16px;
             font-weight: 700;

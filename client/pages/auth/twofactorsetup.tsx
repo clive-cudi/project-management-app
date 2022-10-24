@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React from "react";
 import styles from "../../styles/pages/auth/twofactorsetup.module.scss";
 import { getSession } from "next-auth/react";
 import axios from "axios";
@@ -21,7 +21,6 @@ interface TwoFactorSetup_Props {
 export default function TwoFactorSetup({ qrcodeData }: TwoFactorSetup_Props) {
     const { modal } = useModal();
     
-    useEffect(()=>{console.log(qrcodeData)}, []);
 
     return (
         <div className={`app ${styles.tf_app}`}>

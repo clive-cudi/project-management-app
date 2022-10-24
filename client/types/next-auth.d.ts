@@ -11,6 +11,7 @@ declare module "next-auth" {
     interface User {
         user: Api_User_res,
         token: string
+        twoFA: boolean
     }
 }
 
@@ -21,5 +22,6 @@ declare module "next-auth/jwt" {
         usertype?: userType_,
         uid?: string,
         token?: string
+        twoFA?: boolean
     }
 }

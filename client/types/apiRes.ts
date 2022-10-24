@@ -7,6 +7,9 @@ export interface Api_User_res {
     teams: []
     orgs: []
     about?: string
+    twoFA: {
+        status: boolean
+    }
 }
 
 export interface API_res_model {

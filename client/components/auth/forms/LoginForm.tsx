@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styles from "../../../styles/pages/login.module.scss";
 import { InputDiv, RegularBtn, ErrorModal } from "../../reusable";
 import { useModal } from "../../../hooks";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export const LoginForm = (): JSX.Element => {
@@ -20,6 +20,7 @@ export const LoginForm = (): JSX.Element => {
     const { openModal } = useModal();
     const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
     const router = useRouter();
+    const session = useSession();
 
     // make username optional
 
@@ -54,7 +55,16 @@ export const LoginForm = (): JSX.Element => {
                 setIsAuthLoading(false);
                 console.log(res);
                 if (res?.ok) {
-                    router.push("/");
+
+
+                    //check is the user has 2FA enabled and redirect
+                    if (session.data?.user.twoFA === true) {
+                        router.push("/auth/twofactorauth");
+                    } else {
+                        // two factor not enabled
+                        // router.push("/");
+                        console.log(session)
+                    }
                 } else {
                     openModal(<ErrorModal message={JSON.parse(res?.error as string).message} />)
                 }
