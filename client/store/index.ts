@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+interface storeTypes {}
+
 const createEmitter = () => {
     const subscriptions = new Map();
 

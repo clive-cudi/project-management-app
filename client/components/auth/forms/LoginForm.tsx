@@ -58,12 +58,14 @@ export const LoginForm = (): JSX.Element => {
 
 
                     //check is the user has 2FA enabled and redirect
-                    if (session.data?.user.twoFA === true) {
-                        router.push("/auth/twofactorauth");
-                    } else {
-                        // two factor not enabled
-                        // router.push("/");
-                        console.log(session)
+                    if (session.status === "authenticated") {
+                        if (session.data?.user.twoFA === true) {
+                            router.push("/auth/twofactorauth");
+                        } else {
+                            // two factor not enabled
+                            router.push("/");
+                            console.log(session)
+                        }
                     }
                 } else {
                     openModal(<ErrorModal message={JSON.parse(res?.error as string).message} />)

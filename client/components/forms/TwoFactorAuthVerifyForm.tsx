@@ -28,7 +28,7 @@ export const TwoFactorAuthVerifyForm = (): JSX.Element => {
                 }
             }).catch((err) => {
                 console.log(err);
-                openModal(<ErrorModal message={`${err.message}`} />)
+                openModal(<ErrorModal message={`${err.response.data.message}`} />)
             })
         }
     }

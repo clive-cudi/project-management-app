@@ -1,5 +1,5 @@
 import styles from "../../styles/pages/auth/twofactorsetup.module.scss";
-import { TwoFactorAuthVerifyForm, Modal, ErrorModal } from "../../components";
+import { TwoFactorAuthVerifyForm, Modal, ErrorModal, Header } from "../../components";
 import { useModal } from "../../hooks";
 import Image from "next/image";
 
@@ -8,6 +8,7 @@ export default function TwoFactorAuthPage() {
 
     return (
         <div className={`app ${styles.tf_app}`}>
+            <Header title="2FA Login" description="Project management app. Two Factor Auth Login." />
             <div className={`content ${styles.tf_content}`}>
                 <div className={styles.tf_qr_image_wrapper}>
                     <div className={styles.tf_qr_image}>
