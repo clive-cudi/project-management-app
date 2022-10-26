@@ -53,6 +53,10 @@
         allRoutes: string[]
     }
 
+    interface RouterTypes {
+        getRoutes: ()
+    }
+
     class Router {
         routes: string[]
         constructor({allRoutes}: Router_instance_args){

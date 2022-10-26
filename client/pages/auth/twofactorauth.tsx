@@ -1,10 +1,21 @@
+import { useState, useEffect } from "react";
 import styles from "../../styles/pages/auth/twofactorsetup.module.scss";
 import { TwoFactorAuthVerifyForm, Modal, ErrorModal, Header } from "../../components";
 import { useModal } from "../../hooks";
 import Image from "next/image";
+import { getSession } from "next-auth/react";
+import axios from "axios";
+import { useRouter } from "next/router";
 
-export default function TwoFactorAuthPage() {
+export default function TwoFactorAuthPage({isTwoFA}: {isTwoFA: boolean}) {
     const { modal } = useModal();
+    const router = useRouter();
+
+    useEffect(()=>{
+        if (isTwoFA !== true) {
+            router.push("/");
+        }
+    }, [isTwoFA])
 
     return (
         <div className={`app ${styles.tf_app}`}>
@@ -36,4 +47,41 @@ TwoFactorAuthPage.requireAuth = {
       status: true,
       supported: ["individual", "organization"],
     },
+}
+
+export async function getServerSideProps(ctx: {req: any, res: any}) {
+    const {req, res} = ctx;
+    const session = getSession({req});
+
+    const { data } = await axios.get(`${process.env.BACKEND_API_URL}/auth/tfa-enabled`, {
+        headers: {
+            Authorization: (await session)?.user.token ?? ""
+        }
+    });
+
+    if (data.isTwoFA.status !== true) {
+        // redirect to homePage since 2FA is not enabled
+        console.log('@FA disabled')
+        res.writeHead(302, {
+            Location: '/'
+        });
+
+        res.end();
+
+        return {
+            // redirect: {
+            //     permanent: false,
+            //     destination: "/"
+            // },
+            props: {
+                isTwoFA: data.isTwoFA.status ?? null
+            }
+        }
+    }
+
+    return {
+        props: {
+            isTwoFA: data.isTwoFA.status ?? null
+        }
+    }
 }

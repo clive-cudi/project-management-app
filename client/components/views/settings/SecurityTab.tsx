@@ -4,12 +4,15 @@ import styles from "../../../styles/views/settings/securityTab.module.scss";
 import { RegularBtn, InputModal, ErrorModal } from "../../reusable";
 import { useModal } from "../../../hooks";
 import { useSession } from "next-auth/react";
-import jwt from "next-auth/jwt";
+import { useRouter } from "next/router";
 
 export const SecurityTab = (): JSX.Element => {
     const { openModal, closeModal } = useModal();
     const [resetEmail, setResetEmail] = useState<string>("");
     const session = useSession();
+    const router = useRouter();
+    const [disable2fatoken, setDisable2fatoken] = useState<string>("");
+    const [disable2faStatus, setDisable2faStatus] = useState<boolean>(session.data?.user.twoFA ?? false);
 
     function handlePasswordReset(email: string) {
         console.log(email)
@@ -22,13 +25,35 @@ export const SecurityTab = (): JSX.Element => {
     useEffect(()=>{console.log(session)}, []);
 
     function handle2FAquery() {
-        axios.post(`${process.env.BACKEND_API_URL}/auth/enabletwofactorstep1`, {}, {
+        if (session.data?.user.twoFA == false && session.status === "authenticated") {
+            router.push("/auth/twofactorsetup");
+        }
+    }
+
+
+    function handle2FADisable(token: string) {
+        axios.post(`${process.env.BACKEND_API_URL}/auth/tfa-disable`, {
+            totptoken: token
+        }, {
             headers: {
-                Authorization : session.data?.user.token ?? ""
+                Authorization: session.data?.user.token ?? ""
             }
         }).then((res) => {
-            console.log(res.data);
+            if (res.data.success == true) {
+                setDisable2faStatus(false);
+                openModal(<ErrorModal message={`${res.data.message}`} type={"success"} />);
+            }
+        }).catch((err) => {
+            console.log(err);
+            openModal(<ErrorModal message={`${err.response.data.message}`} type={"error"} />);
         })
+    }
+
+    function handle2FAdisableQuery() {
+        console.log("2fa disable")
+        openModal(<InputModal inputType={"text"} placeholder={"Enter token"} submitOnClick={(e, value) => {
+            handle2FADisable(value ?? "");
+        }} /> )
     }
 
     return (
@@ -66,8 +91,8 @@ export const SecurityTab = (): JSX.Element => {
                             <p>
                                 A password reset link will be sent to the given email.
                             </p>
-                            <RegularBtn label={`Enable 2FA`} className={styles.st_reset_psswd_btn} onClick={() => {
-                                handle2FAquery();
+                            <RegularBtn label={session.data?.user.twoFA === true ? `Enable 2FA` : `Disable 2FA`} className={styles.st_reset_psswd_btn} onClick={() => {
+                                session.data?.user.twoFA === true ? handle2FAdisableQuery() : handle2FAquery()
                             }} />
                         </div>
                     </div>

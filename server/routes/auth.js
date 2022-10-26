@@ -14,4 +14,8 @@ router.post("/enabletwofactorstep2", authVerify, AuthController.enableTwoFactorA
 
 router.post("/validatetoken", authVerify, AuthController.validate2FAtoken);
 
+router.get("/tfa-enabled", authVerify, AuthController.isTwoFA);
+
+router.post("/tfa-disable", authVerify, AuthController.disable2FA)
+
 module.exports = router;

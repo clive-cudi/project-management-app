@@ -4,6 +4,7 @@ import { InputDiv, RegularBtn, ErrorModal } from "../../reusable";
 import { useModal } from "../../../hooks";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 export const LoginForm = (): JSX.Element => {
     const icon_img_styling: React.CSSProperties = {
@@ -49,24 +50,47 @@ export const LoginForm = (): JSX.Element => {
 
     function submit(): void {
         if (checkInputs()) {
-            console.log(data);
             setIsAuthLoading(true);
             signIn("credentials_email", {...data, redirect: false}).then((res) => {
                 setIsAuthLoading(false);
                 console.log(res);
                 if (res?.ok) {
-
-
                     //check is the user has 2FA enabled and redirect
-                    if (session.status === "authenticated") {
-                        if (session.data?.user.twoFA === true) {
-                            router.push("/auth/twofactorauth");
-                        } else {
-                            // two factor not enabled
-                            router.push("/");
-                            console.log(session)
-                        }
-                    }
+                    // if the twoFA field doesn't exist on the session object, query the backend to check if a user has twoFA enabled
+
+                    router.push("/auth/twofactorauth");
+
+                    // console.log(session);
+                    // router.push("/auth/twofactorauth");
+                    // if (session.data?.user.twoFA == true) {
+                    //     router.push("/auth/twofactorauth");
+                    // } else {
+                        // axios.get(`${process.env.BACKEND_API_URL}/auth/tfa-enabled`, {
+                        //     headers: {
+                        //         Authorization: session.data?.user.token ?? ""
+                        //     }
+                        // }).then((res)=>{
+                        //     console.log(res);
+                        //     if (res.data.success == true) {
+                        //         if (res.data.isTwoFA == true) {
+                        //             router.push("/auth/twofactorauth");
+                        //         } else {
+                        //             router.push("/");
+                        //         }
+                        //     } else {
+                        //         router.push("/");
+                        //     }
+                        // }).catch((err) => {
+                        //     console.log(err);
+                        //     // recheck if the session has the 2FA field
+                        //     if (session.data?.user.twoFA == true) {
+                        //         router.push("/auth/twofactorauth");
+                        //     } else {
+                        //         router.push("/");
+                        //     }
+                        // })
+                    // }
+                    console.log(session.status)
                 } else {
                     openModal(<ErrorModal message={JSON.parse(res?.error as string).message} />)
                 }
