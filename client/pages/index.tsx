@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
 import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
-import { useLayout, useModal } from "../hooks";
+import { useLayout, useModal, useTabRenderer } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
@@ -11,7 +11,7 @@ import { FiUsers, FiSettings } from "react-icons/fi";
 import { upperCaseFirstLetter } from "../utils";
 
 const Home: NextPage & PageAuth = () => {
-  const { currentTab, switchHomeTab } = useLayout();
+  // const { currentTab, switchHomeTab } = useLayout();
   const [navMin, setNavMin] = useState<boolean>(false);
 
   const navBtns = useMemo<
@@ -42,6 +42,7 @@ const Home: NextPage & PageAuth = () => {
     []
   );
   const { modal } = useModal();
+  const { currentTab, switchTab } = useTabRenderer();
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {
@@ -51,12 +52,15 @@ const Home: NextPage & PageAuth = () => {
             <SideNavBtn
               key={ix}
               onClick={(): void => {
-                switchHomeTab(btn.label);
+                // switchHomeTab(btn.label);
+                switchTab({
+                  label: btn.label
+                });
               }}
               isActive={
-                btn.label.toLowerCase() === currentTab?.toLowerCase()
+                btn.label.toLowerCase() === currentTab.label.toLowerCase()
               }
-              disabled={btn.label.toLowerCase() === currentTab?.toLowerCase()}
+              disabled={btn.label.toLowerCase() === currentTab.label.toLowerCase()}
               variant={"primary"}
             >
               <span>{btn.icon}</span>
@@ -73,7 +77,7 @@ const Home: NextPage & PageAuth = () => {
           ),
         };
       });
-    }, [navBtns, switchHomeTab, currentTab, navMin]);
+    }, [navBtns, switchTab, currentTab, navMin]);
 
   return (
     <div className={`app ${styles.app}`}>

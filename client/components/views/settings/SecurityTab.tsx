@@ -91,7 +91,7 @@ export const SecurityTab = (): JSX.Element => {
                             <p>
                                 A password reset link will be sent to the given email.
                             </p>
-                            <RegularBtn label={session.data?.user.twoFA === true ? `Enable 2FA` : `Disable 2FA`} className={styles.st_reset_psswd_btn} onClick={() => {
+                            <RegularBtn label={session.data?.user.twoFA === true ? `Disable 2FA` :`Enable 2FA`} className={styles.st_reset_psswd_btn} onClick={() => {
                                 session.data?.user.twoFA === true ? handle2FAdisableQuery() : handle2FAquery()
                             }} />
                         </div>
