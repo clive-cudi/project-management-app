@@ -15,7 +15,7 @@ const Home: NextPage & PageAuth = () => {
   const [navMin, setNavMin] = useState<boolean>(false);
 
   const navBtns = useMemo<
-    Array<{ label: HomeTabLabels_Type; icon: React.ReactNode }>
+    Array<{ label: HomeTabLabels_Type | "test"; icon: React.ReactNode }>
   >(
     () => [
       {
@@ -38,6 +38,10 @@ const Home: NextPage & PageAuth = () => {
         label: "settings",
         icon: <FiSettings />,
       },
+      {
+        label: "test",
+        icon: <></>
+      }
     ],
     []
   );
@@ -54,8 +58,10 @@ const Home: NextPage & PageAuth = () => {
               onClick={(): void => {
                 // switchHomeTab(btn.label);
                 switchTab({
-                  label: btn.label
+                  label: btn.label,
+                  component: btn.label == "test" ? <h1>Test worked</h1> : null
                 });
+                console.log(btn.label)
               }}
               isActive={
                 btn.label.toLowerCase() === currentTab.label.toLowerCase()

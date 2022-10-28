@@ -8,3 +8,4 @@ export { ProfileWidget} from "./profile/ProfileWidget";
 export * from "./tasks";
 export * from "./general";
 export * from "./Table";
+export * from "./widgets";

@@ -9,7 +9,7 @@ import { ProjectDashBoardTab, ProjectDetailsTab, ProjectSummaryTab, ProjectsBoar
 
 export function useTabRenderer() {
     const { tabRender, setTabRender } = useContext(TabRenderCtx) as TabRenderCtx_Props;
-    const homePageTabs = useMemo<TabRenderCtxTypes[]>(()=> [
+    const homePageTabs = useMemo<TabRenderCtxTypes[]>(()=> [...new Set<TabRenderCtxTypes>([
         {
             label: "home",
             component: <HomeTab />
@@ -45,8 +45,12 @@ export function useTabRenderer() {
         {
             label: "project_summary",
             component: <ProjectSummaryTab />
+        },
+        {
+            label: "test",
+            component: <ProjectDashBoardTab />
         }
-    ], [])
+    ])], [])
 
     // implement some tab history logic i.e: using a stack
 
@@ -54,9 +58,7 @@ export function useTabRenderer() {
     function switchTab(tab: {label: string, component?: JSX.Element | React.ReactNode}): TabRenderCtxTypes {
         if (tabRender.label !== tab.label) {
             // check if the tab exists in the tab list, if not, add it to the list if there is a component provided
-            if (homePageTabs.includes({label: tab.label}) === false && tab.component) {
-                homePageTabs.push(tab)
-            }
+
             setTabRender({
                 label: tab.label,
                 component: tab.component ?? <></>
