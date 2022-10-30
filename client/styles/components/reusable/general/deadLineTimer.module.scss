@@ -1,0 +1,51 @@
+.timer_wrapper {
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    .timer_widget_wrapper {
+        display: flex;
+        height: 130px;
+        width: 130px;
+        flex-direction: column;
+        .timer_label_wrapper {
+            display: flex;
+            height: 30px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            h5 {
+                font-family: Roboto;
+                font-weight: 400;
+                letter-spacing: 0em;
+                text-align: left;
+            }
+        }
+        .timer_countdown_wrapper {
+            display: flex;
+            height: 100px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            //styleName: Time Input 1;
+            font-family: Roboto;
+            font-size: 56px;
+            font-weight: 400;
+            line-height: 64px;
+            letter-spacing: 0px;
+            text-align: center;
+            color: #6200EE;
+            background: #F2E7FE;
+            border-radius: 5px;
+        }
+    }
+    .timer_countdown_separator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 20px;
+        font-size: 20px;
+    }
+}

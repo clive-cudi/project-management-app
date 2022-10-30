@@ -1,5 +1,5 @@
 import styles from "../../../styles/views/project/projectDashboardTab.module.scss";
-import { SetTimeTracker, ProjectDeadlineTimer } from "../../reusable";
+import { SetTimeTracker, ProjectDeadlineTimer, WeekWorkDuration } from "../../reusable";
 
 export const ProjectDashBoardTab = () => {
     return (
@@ -20,14 +20,14 @@ export const ProjectDashBoardTab = () => {
             <div className={styles.pdt_time}>
                 <div className={styles.pdt_deadline_banner_wrapper}>
                     <ProjectDeadlineTimer projectName={"mobile app design"} countDownStart={{
-                        days: 0,
-                        hours: 0,
-                        minutes: 0,
-                        seconds: 0
+                        days: 3,
+                        hours: 24,
+                        minutes: 60,
+                        seconds: 12
                     }} />
                 </div>
                 <div className={styles.pdt_time_worked_wrapper}>
-
+                    <WeekWorkDuration />
                 </div>
             </div>
             <div className={styles.pdt_summary}>
