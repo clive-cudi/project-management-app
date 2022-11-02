@@ -28,11 +28,11 @@ export default NextAuth({
                 }
             },
             async authorize(credentials, req) {
-                console.log(credentials);
+                // console.log(credentials);
 
                 const loginRes: AxiosResponse<API_res_model> = await axios.post<API_res_model>(`${process.env.BACKEND_API_URL}/auth/login`, credentials);
 
-                console.log(loginRes.data);
+                // console.log(loginRes.data);
 
                 if (loginRes.data.success === true) {
                     return {...loginRes.data.usertoken};
@@ -49,9 +49,9 @@ export default NextAuth({
     ],
     callbacks: {
         jwt: async ({token, user}) => {
-            console.log('Token\n')
-            console.log(token);
-            console.log(user);
+            // console.log('Token\n')
+            // console.log(token);
+            // console.log(user);
 
             if (user) {
                 token = {
@@ -69,8 +69,8 @@ export default NextAuth({
             return token;
         },
         session: async ({session, user, token}) => {
-            console.log("User");
-            console.log(token);
+            // console.log("User");
+            // console.log(token);
 
             Object.keys(token).forEach((parentKey) => {
                 session.user[parentKey] = token[parentKey];

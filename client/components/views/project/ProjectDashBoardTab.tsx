@@ -1,6 +1,5 @@
 import styles from "../../../styles/views/project/projectDashboardTab.module.scss";
-import { SetTimeTracker, ProjectDeadlineTimer, WeekWorkDuration } from "../../reusable";
-import { ProjectSummaryDashWidget } from "../../reusable";
+import { SetTimeTracker, ProjectDeadlineTimer, WeekWorkDuration, GeneralTaskStatsWidget, ProjectSummaryDashWidget } from "../../reusable";
 
 export const ProjectDashBoardTab = () => {
     return (
@@ -43,11 +42,56 @@ export const ProjectDashBoardTab = () => {
                             label: "Hello",
                             progress: 20,
                             time: "30"
+                        },
+                        {
+                            label: "Task 1",
+                            progress: 40,
+                            time: "40"
+                        },
+                        {
+                            label: "Hello",
+                            progress: 20,
+                            time: "30"
+                        },
+                        {
+                            label: "Task 1",
+                            progress: 40,
+                            time: "40"
+                        },
+                        {
+                            label: "Hello",
+                            progress: 20,
+                            time: "30"
+                        },
+                        {
+                            label: "Task 1",
+                            progress: 40,
+                            time: "40"
+                        },
+                        {
+                            label: "Hello",
+                            progress: 20,
+                            time: "30"
                         }
                     ]} />
                 </div>
-                <div className={styles.pdt_summary_item_wrapper}></div>
-                <div className={styles.pdt_summary_item_wrapper}></div>
+                <div className={styles.pdt_summary_item_wrapper}>
+                    <ProjectSummaryDashWidget title="Projects" summaryData={[
+                        {
+                            label: "Project 1",
+                            progress: 90,
+                            time: "10"
+                        },
+                        {
+                            label: "Project 2",
+                            progress: 40,
+                            time: "5"
+                        }
+                    ]} />
+                </div>
+                <div className={styles.pdt_summary_item_wrapper}>
+                    <GeneralTaskStatsWidget title="Tasks" />
+                </div>
                 <div className={styles.pdt_summary_item_wrapper}></div>
             </div>
         </div>

@@ -42,7 +42,11 @@ export const ProjectSummaryDashWidget = ({ title, summaryData }: ProjectSummaryD
                                             </span>
                                         </div>
                                         <div className={styles.tw_col}>
-                                            
+                                            <div className={styles.tw_col_progress_wrapper}>
+                                                <span className={styles.tw_col_progress_juice} style={{width: `${taskWidget.progress ?? 0}%`}}>
+
+                                                </span>
+                                            </div>
                                         </div>
                                     </li>
                                 )
