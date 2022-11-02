@@ -387,6 +387,8 @@
     border-radius: 16px;
     padding: 10px;
     flex-direction: column;
+    position: relative;
+    align-items: center;
     .psb_header {
         display: flex;
         height: 80px;
@@ -435,6 +437,34 @@
         padding: 10px;
         flex-direction: column;
         align-items: center;
+        &.board_empty {
+            justify-content: center;
+            p {
+                font-family: Mulish;
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 30px;
+                letter-spacing: 0.4000000059604645px;
+                text-align: left;
+            }
+        }
+    }
+    button[data-elm-type = "btn-add"] {
+        position: absolute;
+        height: 40px;
+        border-radius: 10px;
+        color: #787486;
+        border: 1px solid rgba(223, 224, 235, 1);
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 29px;
+        letter-spacing: 0em;
+        text-align: left;
+        &:hover {
+            color: white;
+        }
+        bottom: 0%;
     }
 }
 
