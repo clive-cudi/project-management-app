@@ -48,7 +48,7 @@ export function useTabRenderer() {
         },
         {
             label: "test",
-            component: <ProjectDashBoardTab />
+            component: <ProjectsBoard />
         }
     ])], [])
 

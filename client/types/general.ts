@@ -8,4 +8,6 @@ export type TaskDificulty = "Very Easy" | "Easy" | "Fair" | "Difficult" | "Very 
 
 export type UserStatus = "Very Busy" | "Busy" | "Free";
 
-export type SettingsTabs_ = "account" | "connections" | "preferences" | "security"
+export type SettingsTabs_ = "account" | "connections" | "preferences" | "security";
+
+export type Priority_ = "high" | "medium" | "low";

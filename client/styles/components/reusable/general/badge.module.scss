@@ -23,4 +23,13 @@
         background: #F0F1F7;
         color: #9FA2B4;
     }
+    &.badge_high {
+        background: red;
+    }
+    &.badge_medium {
+        background: green;
+    }
+    &.badge_low {
+        background: #dfa874de;
+    }
 }

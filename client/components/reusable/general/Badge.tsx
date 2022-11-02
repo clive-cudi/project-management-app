@@ -1,8 +1,8 @@
 import styles from "../../../styles/components/reusable/general/badge.module.scss";
-import type { TaskCategory, TaskStatus } from "../../../types";
+import type { TaskCategory, TaskStatus, Priority_ } from "../../../types";
 
 export interface Badge_Props {
-    type: TaskCategory | TaskStatus
+    type: TaskCategory | TaskStatus | Priority_
     mod?: {
         type: string
         label: string
