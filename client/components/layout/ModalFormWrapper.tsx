@@ -7,13 +7,16 @@ interface ModalFormWrapper_Props {
     form: JSX.Element | React.ReactNode
     title?: string
     footer?: string
+    children?: any
+    className?: string
+    childrenContClassName?: string
 }
 
-export const ModalFormWrapper = ({form, title, footer}: ModalFormWrapper_Props) => {
+export const ModalFormWrapper = ({form, title, footer, children, className, childrenContClassName }: ModalFormWrapper_Props) => {
     const { closeModal } = useModal();
 
     return (
-        <div className={styles.modal_form_wrapper}>
+        <div className={`${styles.modal_form_wrapper} ${className ?? ""}`}>
             {
                 title && 
                 <div className={styles.mf_header}>
@@ -25,8 +28,8 @@ export const ModalFormWrapper = ({form, title, footer}: ModalFormWrapper_Props) 
                     }} />
                 </div>
             }
-            <div className={styles.mf_form}>
-                {form}
+            <div className={`${styles.mf_form} ${childrenContClassName ?? ""}`}>
+                {form ?? children}
             </div>
             {
                 footer && 

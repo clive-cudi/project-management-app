@@ -3,6 +3,9 @@ import styles from "../../../styles/components/reusable/navbars/sidenav.module.s
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { IoIosAdd } from "react-icons/io";
 import { IconBtn } from "../buttons";
+import { useModal } from "../../../hooks";
+import { ModalFormWrapper } from "../../layout";
+import { CreateProjectForm, CreateTaskFormWithAssignees } from "../../forms";
 
 interface SideNav_Props {
     isMinNav?: (isMinVal: boolean)=> void
@@ -15,6 +18,7 @@ interface SideNav_Props {
 
 export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props): JSX.Element => {
     const [isMin, setIsMin] = useState<boolean>(false);
+    const { openModal } = useModal();
 
     function toggleNavMin(): void {
         if (isMin === true) {
@@ -50,11 +54,15 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
                         }
                     </ul>
                 </div>
-                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY TASKS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} /></span>
+                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY TASKS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} onClick={() => {
+                    openModal(<CreateTaskFormWithAssignees />)
+                }} /></span>
                 <div className={styles.sn_tasks_wrapper}>
 
                 </div>
-                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY PROJECTS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} /></span>
+                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY PROJECTS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} onClick={() => {
+                    openModal(<ModalFormWrapper form={<CreateProjectForm />} title={`Create Project`} />)
+                }} /></span>
                 <div className={styles.sn_projects_wrapper}>
 
                 </div>
