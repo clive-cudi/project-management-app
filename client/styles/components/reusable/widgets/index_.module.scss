@@ -538,3 +538,47 @@
         }
     }
 }
+
+.msw_wrapper {
+    display: flex;
+    height: 300px;
+    width: 310px;
+    padding: 10px;
+    flex-direction: column;
+    border-radius: 20px;
+    border: 1px solid rgba(223, 224, 235, 1);
+    justify-content: space-between;
+    box-shadow: 0px 30px 60px rgba(32, 56, 85, 0.15);
+    .msw_ill_cont {
+        display: flex;
+        height: 190px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        .msw_ill {
+            height: 140px;
+            width: 140px;
+            position: relative;
+        }
+    }
+    .msw_info {
+        display: flex;
+        height: fit-content;
+        width: 100%;
+        p {
+            font-family: Poppins;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 24px;
+            letter-spacing: 0.30000001192092896px;
+            text-align: left;
+        }
+    }
+    .msw_add {
+        display: flex;
+        height: fit-content;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+}

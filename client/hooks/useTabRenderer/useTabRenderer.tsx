@@ -6,6 +6,7 @@ import { WorkSpaceTab } from "../../components/views/homepageTabs/WorkSpaceTab";
 import { MembersTab } from "../../components/views/homepageTabs/MembersTab";
 import { SettingsTab } from "../../components/views/homepageTabs/SettingsTab";
 import { ProjectDashBoardTab, ProjectDetailsTab, ProjectSummaryTab, ProjectsBoard } from "../../components/views/project";
+import { TasksOverviewTab } from "../../components/views/tasks";
 
 export function useTabRenderer() {
     const { tabRender, setTabRender } = useContext(TabRenderCtx) as TabRenderCtx_Props;
@@ -47,8 +48,12 @@ export function useTabRenderer() {
             component: <ProjectSummaryTab />
         },
         {
+            label: "tasks_overview",
+            component: <TasksOverviewTab />
+        },
+        {
             label: "test",
-            component: <ProjectsBoard />
+            component: <TasksOverviewTab />
         }
     ])], [])
 
