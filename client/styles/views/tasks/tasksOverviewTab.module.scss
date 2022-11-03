@@ -54,4 +54,135 @@
             }
         }
     }
+    .tot_task_list_wrapper {
+        display: flex;
+        height: fit-content;
+        width: 100%;
+        flex-direction: column;
+        .tot_task_list_header {
+            display: flex;
+            height: 90px;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            .tot_tl_title {
+                display: flex;
+                height: 100%;
+                width: fit-content;
+                align-items: center;
+                justify-content: center;
+                h4 {
+                    font-family: Poppins;
+                    font-size: 26px;
+                    font-weight: 500;
+                }
+            }
+            .tot_tl_utils {
+                display: flex;
+                height: 100%;
+                width: fit-content;
+                align-items: center;
+            }
+        }
+        .tot_task_list_content {
+            display: flex;
+            height: fit-content;
+            width: 100%;
+            ul {
+                display: flex;
+                height: fit-content;
+                width: 100%;
+                flex-direction: column;
+                list-style-type: none;
+                padding: 10px;
+                li {
+                    display: flex;
+                    height: 90px;
+                    width: 100%;
+                    padding: 10px;
+                    align-items: center;
+                    justify-content: space-between;
+                    border-radius: 14px;
+                    transition-timing-function: ease-in-out;
+                    transition-duration: 0.4s;
+                    .tot_tlist_col {
+                        display: flex;
+                        height: 100%;
+                        width: fit-content;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: flex-start;
+                        .tot_tlist_row {
+                            display: flex;
+                            height: 50%;
+                            width: 100%;
+                            align-items: center;
+                            justify-content: flex-start;
+                            h4 {
+                                font-family: Poppins;
+                                font-size: 16px;
+                                font-weight: 400;
+                            }
+                            h5 {
+                                font-family: Poppins;
+                                font-size: 14px;
+                                font-weight: 400;
+                            }
+                            button[data-elm-ctx = "tlist_util"] {
+                                width: fit-content;
+                                min-width: 0px;
+                                color: #787486;
+                                border-radius: 6px;
+                                font-family: Inter;
+                                font-size: 12px;
+                                font-weight: 500;
+                                line-height: 15px;
+                                letter-spacing: 0em;
+                                text-align: left;
+                                &:hover {
+                                    color: white;
+                                }
+                            }
+                            .tot_tlist_progress_cont {
+                                display: flex;
+                                height: 14px;
+                                width: 100%;
+                                background-color: #C4C4C4;
+                                border-radius: 14px;
+                                .tot_tlist_progress_juice {
+                                    background: #D58D49;
+                                    border-radius: inherit;
+                                }
+                            }
+                        }
+                        button[data-elm-ctx = "tlist_reminder"] {
+                            width: fit-content;
+                            min-width: 0px;
+                            color: #787486;
+                            border-radius: 6px;
+                            font-family: Inter;
+                            font-size: 12px;
+                            font-weight: 500;
+                            line-height: 15px;
+                            letter-spacing: 0em;
+                            text-align: left;
+                            background: #C4C4C421;
+                            &:hover {
+                                color: white;
+                                background: rgba(80, 48, 229, 1);
+                            }
+                        }
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        box-shadow: 0px 10px 40px 20px rgba(32, 56, 85, 0.15);
+                        > * {
+                            color: rgba(80, 48, 229, 1);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

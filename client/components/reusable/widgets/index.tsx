@@ -6,3 +6,4 @@ export { GeneralTaskStatsWidget } from "./GeneralTaskStatsWidget";
 export { ProjectsSummaryBoard } from "./ProjectsSummaryBoard";
 export { ProjectBoardCard } from "./ProjectBoardCard";
 export { MilestoneWidget } from "./MilestoneWidget";
+export { TaskListStartWidget } from "./TaskListStartWidget";
