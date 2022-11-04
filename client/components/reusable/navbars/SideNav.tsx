@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "../../../styles/components/reusable/navbars/sidenav.module.scss";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { IoIosAdd } from "react-icons/io";
-import { IconBtn } from "../buttons";
+import { IconBtn, RegularBtn } from "../buttons";
 import { useModal } from "../../../hooks";
 import { ModalFormWrapper } from "../../layout";
-import { CreateProjectForm, CreateTaskFormWithAssignees } from "../../forms";
+import { CreateProjectForm, CreateTaskFormWithAssignees, AddWorkSpaceForm } from "../../forms";
+import { BiMessageSquareAdd } from "react-icons/bi";
 
 interface SideNav_Props {
     isMinNav?: (isMinVal: boolean)=> void
@@ -54,6 +55,9 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
                         }
                     </ul>
                 </div>
+                <RegularBtn label={isMin ? "" : "Create WorkSpace"} withIcon={{status: true, icon: <BiMessageSquareAdd />, orientation: "start"}} variant={"gradient"} data-id={"create-workspace-btn"} onClick={() => {
+                    openModal(<ModalFormWrapper form={<AddWorkSpaceForm />} title={`Create Workspace`} />)
+                }} />
                 <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY TASKS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} onClick={() => {
                     openModal(<CreateTaskFormWithAssignees />)
                 }} /></span>
