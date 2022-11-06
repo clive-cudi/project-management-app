@@ -3,8 +3,7 @@ import { ProjectsSummaryBoard, InputSelect, RegularBtn, IconBtn, ProjectBoardCar
 import { BsPlus, BsThreeDotsVertical } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 import { useModal } from "../../../hooks";
-import { ModalFormWrapper } from "../../layout";
-import { CreateProjectForm, CreateTaskFormWithAssignees } from "../../forms";
+import { CreateTaskFormWithAssignees } from "../../forms";
 
 export const TasksBoard = () => {
     const { modal, openModal } = useModal();

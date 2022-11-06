@@ -6,8 +6,11 @@ import { VscBell } from "react-icons/vsc";
 import { MdOutlineLiveHelp } from "react-icons/md";
 import { ProfileWidget } from "../profile/ProfileWidget";
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export const TopNav = ({}): JSX.Element => {
+    const session = useSession();
+
     return (
         <nav className={styles.tn_main_wrapper}>
             <div className={styles.tn_content}>
@@ -29,7 +32,7 @@ export const TopNav = ({}): JSX.Element => {
                         </ul>
                     </div>
                     <div className={styles.tn_profile_wrapper}>
-                        <ProfileWidget includeInfo={{username: "clive flav", location: "nairobi"}} onClick={(e)=> {
+                        <ProfileWidget includeInfo={{username: session.data?.user.name ?? "", location: "nairobi"}} onClick={(e)=> {
                             signOut({callbackUrl: "/login"});
                         }} orientation={"normal"} />
                     </div>

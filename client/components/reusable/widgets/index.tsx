@@ -7,3 +7,5 @@ export { ProjectsSummaryBoard } from "./ProjectsSummaryBoard";
 export { ProjectBoardCard } from "./ProjectBoardCard";
 export { MilestoneWidget } from "./MilestoneWidget";
 export { TaskListStartWidget } from "./TaskListStartWidget";
+export { DropDownNavWidget } from "./DropDownNavWidget";
+export type { DropDownWidget_Props, DropDownoption_ } from "./DropDownNavWidget";

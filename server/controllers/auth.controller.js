@@ -672,6 +672,55 @@ const disable2FA = (req, res, next) => {
     });
 }
 
+const me = (req, res, next) => {
+    const { usertoken } = req.body;
+
+    User.findOne({email: usertoken.email}).then((user) => {
+        if (user) {
+            const { twoFA, password, ...dataToInclude} = user._doc;
+            return res.status(200).json({
+                success: true,
+                message: "Fetched Me User Details Successfully",
+                usertoken: {
+                    user: dataToInclude,
+                    token: usertoken.token
+                },
+                error: {
+                    status: false,
+                    code: null
+                }
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+                usertoken: {
+                    user: null,
+                    token: null,
+                },
+                error: {
+                    status: true,
+                    code: "user_not_found",
+                }
+            })
+        }
+    }).catch((err) => {
+        return res.status(400).json({
+            success: false,
+            message: "Error Fetching user from DB!!",
+            usertoken: {
+                user: null,
+                token: null
+            },
+            error: {
+                status: true,
+                code: "db_error",
+                debug: error
+            }
+        });
+    });
+}
+
 module.exports = {
     signup,
     login,
@@ -680,5 +729,6 @@ module.exports = {
     enableTwoFactorAuthStep2,
     validate2FAtoken,
     isTwoFA,
-    disable2FA
+    disable2FA,
+    me
 }

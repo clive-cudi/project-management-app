@@ -7,6 +7,7 @@ import { MembersTab } from "../../components/views/homepageTabs/MembersTab";
 import { SettingsTab } from "../../components/views/homepageTabs/SettingsTab";
 import { ProjectDashBoardTab, ProjectDetailsTab, ProjectSummaryTab, ProjectsBoard } from "../../components/views/project";
 import { TasksOverviewTab, TasksBoard } from "../../components/views/tasks";
+import { CreateTaskFormWithAssignees } from "../../components";
 
 export function useTabRenderer() {
     const { tabRender, setTabRender } = useContext(TabRenderCtx) as TabRenderCtx_Props;
@@ -48,7 +49,7 @@ export function useTabRenderer() {
             component: <ProjectSummaryTab />
         },
         {
-            label: "tasks_overview",
+            label: "overview",
             component: <TasksOverviewTab />
         },
         {
@@ -56,8 +57,16 @@ export function useTabRenderer() {
             component: <TasksBoard />
         },
         {
+            label: "task_list",
+            component: <><h1>Task List ...</h1></>
+        },
+        {
+            label: "gantt_chart",
+            component: <><h1>Gantt Chart ...</h1></>
+        },
+        {
             label: "test",
-            component: <TasksBoard />
+            component: <CreateTaskFormWithAssignees/>
         }
     ])], [])
 

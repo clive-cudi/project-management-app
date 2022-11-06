@@ -1,9 +1,4 @@
 import { useLayout, useTabRenderer } from "../../../hooks";
-import { HomeTab } from "./Hometab";
-import { MessagesTab } from "./MessagesTab";
-import { WorkSpaceTab } from "./WorkSpaceTab";
-import { MembersTab } from "./MembersTab";
-import { SettingsTab } from "./SettingsTab";
 import styles from "../../../styles/views/homePageTabs/index_.module.scss";
 
 export const HomePageCurrentTab = ({}): JSX.Element => {

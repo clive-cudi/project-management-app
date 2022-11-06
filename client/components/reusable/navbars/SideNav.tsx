@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, MouseEvent } from "react";
 import styles from "../../../styles/components/reusable/navbars/sidenav.module.scss";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { IoIosAdd } from "react-icons/io";
 import { IconBtn, RegularBtn } from "../buttons";
-import { useModal } from "../../../hooks";
+import { useModal, useTabRenderer } from "../../../hooks";
 import { ModalFormWrapper } from "../../layout";
 import { CreateProjectForm, CreateTaskFormWithAssignees, AddWorkSpaceForm } from "../../forms";
 import { BiMessageSquareAdd } from "react-icons/bi";
+import { DropDownNavWidget, DropDownoption_, DropDownWidget_Props } from "../widgets";
 
 interface SideNav_Props {
     isMinNav?: (isMinVal: boolean)=> void
@@ -20,12 +21,68 @@ interface SideNav_Props {
 export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props): JSX.Element => {
     const [isMin, setIsMin] = useState<boolean>(false);
     const { openModal } = useModal();
+    const myTasksDropDownOptions = useMemo<DropDownoption_[]>(() => {
+        return [
+            {
+                label: "overview",
+                onClickHandler: (e) => {
+                    
+                }
+            },
+            {
+                label: "create_new_task",
+                onClickHandler: (e) => {
+                    
+                }
+            },
+            {
+                label: "import_tasks",
+                onClickHandler: (e) => {
+                    
+                }
+            },
+            {
+                label: "task_list",
+                onClickHandler: (e) => {
+
+                }
+            },
+            {
+                label: "tasks_board",
+                onClickHandler: (e) => {
+
+                }
+            },
+            {
+                label: "gantt_chart",
+                onClickHandler: (e) => {
+
+                }
+            }
+        ]
+    }, []);
+    const { switchTab } = useTabRenderer();
+    const modalInitTabs = useMemo(() => ["create_new_task", "import_tasks"], [])
 
     function toggleNavMin(): void {
         if (isMin === true) {
             setIsMin(false);
         } else {
             setIsMin(true);
+        }
+    }
+
+    function handleTaskDropDownTabActionClick(optionTab: string) {
+        // handle the exceptional click cases i.e click options that don't implement useTabRenderer
+        switch(optionTab) {
+            case "create_new_task":
+                return openModal(<CreateTaskFormWithAssignees />);
+            case "import_tasks":
+                return openModal(<></>);
+            default:
+                return switchTab({
+                    label: optionTab
+                })
         }
     }
 
@@ -62,7 +119,7 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
                     openModal(<CreateTaskFormWithAssignees />)
                 }} /></span>
                 <div className={styles.sn_tasks_wrapper}>
-
+                    <DropDownNavWidget options={myTasksDropDownOptions.map((option) => ({...option, onClickHandler: () => {handleTaskDropDownTabActionClick(option.label)}, hasActiveTabSwitch: !modalInitTabs.includes(option.label)}))} />
                 </div>
                 <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY PROJECTS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} onClick={() => {
                     openModal(<ModalFormWrapper form={<CreateProjectForm />} title={`Create Project`} />)

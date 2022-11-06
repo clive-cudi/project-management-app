@@ -12,6 +12,7 @@ declare module "next-auth" {
         user: Api_User_res,
         token: string
         twoFA: boolean
+        name: string
     }
 }
 
