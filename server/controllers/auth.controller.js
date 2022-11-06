@@ -715,7 +715,7 @@ const me = (req, res, next) => {
             error: {
                 status: true,
                 code: "db_error",
-                debug: error
+                debug: err
             }
         });
     });

@@ -36,6 +36,7 @@ const userSchema = new Schema({
     teams: [String],
     // orgs that the user is part of
     orgs: [String],
+    tasks: [String],
     info: {
         address: {
             country: String,

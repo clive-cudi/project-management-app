@@ -6,11 +6,31 @@ const TaskSchema = new Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
+    description: String,
+    priority: {
+        type: String,
+        required: true
+    },
+    type: {
+        // deliverable | milestone
+        type: String,
+        required: true
+    },
     parent: {
         // parent can be, a team, individual or organization
         usertype: String,
-        parentID: String
+        parentID: String,
+        // project details as a parent to the task
+        project: {
+            pid: String
+        }
     },
+    // uid of the assignees
+    assignees: [Array],
     info: {
         created: {
             date: String,
