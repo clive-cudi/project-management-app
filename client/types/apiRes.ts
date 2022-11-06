@@ -2,11 +2,27 @@ export interface Api_User_res {
     username: string
     email: string
     uid: string
+    profilePicUrl?: string
+    about?: string
     isVerified: boolean
     usertype: "individual" | "organization"
-    teams: []
-    orgs: []
-    about?: string
+    teams: string[]
+    orgs: string[]
+    info?: {
+        address?: {
+            country?: string
+            location?: string
+            street?: string
+        }
+        skills?: string[]
+        gender?: string
+        timezones: {
+            default: string
+            other?: string[]
+        }
+        phone?: string
+        language?: string
+    }
     twoFA: {
         status: boolean
     }

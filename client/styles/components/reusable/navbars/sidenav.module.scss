@@ -8,6 +8,19 @@
     padding: 10px;
     transition-timing-function: ease-in-out;
     transition-duration: 0.4s;
+    overflow: auto;
+    scrollbar-width: 4px;
+    &::-webkit-scrollbar {
+        width: 4px;
+        background: rgba(245, 245, 245, 1);
+        display: none;
+    }
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #5D5FEF;
+    }
     &.sn_min_wrapper {
         max-width: 80px;
         min-width: 80px;
@@ -37,6 +50,7 @@
         .sn_logo_wrapper {
             display: flex;
             height: 50px;
+            min-height: 50px;
             width: 100%;
             align-items: center;
             justify-content: space-between;
@@ -131,8 +145,11 @@
         .nav_mini_title {
             display: flex;
             height: 40px;
+            min-height: 40px;
             align-items: center;
             justify-content: space-between;
+            padding: 4px;
+            border-radius: 8px;
             .nav_mini_title_txt {
                 font-family: Inter;
                 font-size: 14px;
@@ -160,6 +177,10 @@
             //         color: white;
             //     }
             // }
+            &:hover {
+                cursor: pointer;
+                background: rgba(80, 48, 229, 0.08);
+            }
         }
         .sn_tasks_wrapper {
             display: flex;

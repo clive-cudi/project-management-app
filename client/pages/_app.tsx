@@ -12,6 +12,7 @@ import {
 import { AuthGuard, Header } from "../components";
 import { NextComponentType } from "next";
 import type { PageAuth } from "../types";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 interface Props extends AppProps {
   Component: NextComponentType & PageAuth;
@@ -21,31 +22,37 @@ interface Props extends AppProps {
 }
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: Props) {
+  const queryClient = new QueryClient();
+
   return (
     <SessionProvider session={session}>
       {/* <Header>
         <meta name="color-scheme" content="only light" />
       </Header> */}
-      <RoutingCtxProvider>
-        <TabRenderCtxProvider>
-          <LayoutCtxProvider>
-            <ModalCtxProvider>
-              <SettingsTabCtxProvider>
-                {Component.requireAuth?.auth === true ? (
-                  <AuthGuard
-                    userType={Component.requireAuth.userType}
-                    multipleUserTypes={Component.requireAuth.multipleUserTypes}
-                  >
+      <QueryClientProvider client={queryClient}>
+        <RoutingCtxProvider>
+          <TabRenderCtxProvider>
+            <LayoutCtxProvider>
+              <ModalCtxProvider>
+                <SettingsTabCtxProvider>
+                  {Component.requireAuth?.auth === true ? (
+                    <AuthGuard
+                      userType={Component.requireAuth.userType}
+                      multipleUserTypes={
+                        Component.requireAuth.multipleUserTypes
+                      }
+                    >
+                      <Component {...pageProps} />
+                    </AuthGuard>
+                  ) : (
                     <Component {...pageProps} />
-                  </AuthGuard>
-                ) : (
-                  <Component {...pageProps} />
-                )}
-              </SettingsTabCtxProvider>
-            </ModalCtxProvider>
-          </LayoutCtxProvider>
-        </TabRenderCtxProvider>
-      </RoutingCtxProvider>
+                  )}
+                </SettingsTabCtxProvider>
+              </ModalCtxProvider>
+            </LayoutCtxProvider>
+          </TabRenderCtxProvider>
+        </RoutingCtxProvider>
+      </QueryClientProvider>
     </SessionProvider>
   );
 }

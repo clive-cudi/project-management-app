@@ -1,4 +1,4 @@
-import React, { MouseEvent, MouseEventHandler, useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import styles from "../../../styles/components/reusable/widgets/index_.module.scss";
 import { upperCaseFirstSentence } from "../../../utils";
 

@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import styles from "../../../styles/components/reusable/navbars/topnav.module.scss";
 import { SearchInput } from "../inputs";
 import { IconBtn } from "../buttons";
@@ -7,9 +8,14 @@ import { MdOutlineLiveHelp } from "react-icons/md";
 import { ProfileWidget } from "../profile/ProfileWidget";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { useAuthUser } from "../../../hooks";
 
 export const TopNav = ({}): JSX.Element => {
     const session = useSession();
+    const { getAlluserDetails } = useAuthUser();
+    const { info, username } = getAlluserDetails();
+
+    // useEffect(() => {console.log(getAlluserDetails())})
 
     return (
         <nav className={styles.tn_main_wrapper}>
@@ -32,7 +38,7 @@ export const TopNav = ({}): JSX.Element => {
                         </ul>
                     </div>
                     <div className={styles.tn_profile_wrapper}>
-                        <ProfileWidget includeInfo={{username: session.data?.user.name ?? "", location: "nairobi"}} onClick={(e)=> {
+                        <ProfileWidget includeInfo={{username: session.data?.user.name ?? "", location: info?.address?.country ?? ""}} onClick={(e)=> {
                             signOut({callbackUrl: "/login"});
                         }} orientation={"normal"} />
                     </div>

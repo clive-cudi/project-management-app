@@ -62,12 +62,16 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
         ]
     }, []);
     const { switchTab } = useTabRenderer();
-    const modalInitTabs = useMemo(() => ["create_new_task", "import_tasks"], [])
+    const modalInitTabs = useMemo(() => ["create_new_task", "import_tasks"], []);
+    const [isTasksCollapsed, setIsTasksCollapsed] = useState<boolean>(false);
 
     function toggleNavMin(): void {
         if (isMin === true) {
             setIsMin(false);
         } else {
+            if (isTasksCollapsed === true) {
+                setIsTasksCollapsed(false);
+            }
             setIsMin(true);
         }
     }
@@ -86,7 +90,15 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
         }
     }
 
-    useEffect(() => {if (isMinNav) {isMinNav(isMin)}})
+    function toggleIsTasksCollapsed(): void {
+        if (isTasksCollapsed === true) {
+            setIsTasksCollapsed(false);
+        } else {
+            setIsTasksCollapsed(true);
+        }
+    }
+
+    useEffect(() => {if (isMinNav) {isMinNav(isMin)}});
 
     return (
         <nav className={`${styles.sn_main_wrapper} ${isMin ? styles.sn_min_wrapper : styles.sn_max_wrapper}`}>
@@ -115,11 +127,18 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
                 <RegularBtn label={isMin ? "" : "Create WorkSpace"} withIcon={{status: true, icon: <BiMessageSquareAdd />, orientation: "start"}} variant={"gradient"} data-id={"create-workspace-btn"} onClick={() => {
                     openModal(<ModalFormWrapper form={<AddWorkSpaceForm />} title={`Create Workspace`} />)
                 }} />
-                <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY TASKS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} onClick={() => {
+                <span className={styles.nav_mini_title} onClick={() => {
+                    // if the navbar is min then expand it for task collapse items fit.
+                    if (isMin === true && isTasksCollapsed === false) {
+                        setIsMin(false);
+                    }
+                    toggleIsTasksCollapsed();
+                }}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY TASKS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} onClick={(e) => {
+                    e.stopPropagation();
                     openModal(<CreateTaskFormWithAssignees />)
                 }} /></span>
                 <div className={styles.sn_tasks_wrapper}>
-                    <DropDownNavWidget options={myTasksDropDownOptions.map((option) => ({...option, onClickHandler: () => {handleTaskDropDownTabActionClick(option.label)}, hasActiveTabSwitch: !modalInitTabs.includes(option.label)}))} />
+                    {isTasksCollapsed ? <DropDownNavWidget options={myTasksDropDownOptions.map((option) => ({...option, onClickHandler: () => {handleTaskDropDownTabActionClick(option.label)}, hasActiveTabSwitch: !modalInitTabs.includes(option.label)}))} /> : null}
                 </div>
                 <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY PROJECTS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} onClick={() => {
                     openModal(<ModalFormWrapper form={<CreateProjectForm />} title={`Create Project`} />)

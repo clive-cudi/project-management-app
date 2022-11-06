@@ -6,3 +6,4 @@ export * from "./store";
 export { useTabRenderer } from "./useTabRenderer/useTabRenderer";
 export { useCountDown } from "./useCountDown/useCountDown";
 export { useTime } from "./useTime/useTime";
+export { useAuthUser } from "./useAuthUser/useAuthUser";
