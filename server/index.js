@@ -8,6 +8,7 @@ const MONGO_URI = process.env.NODE_ENV === "development" ? process.env.MONGO_URI
 const mongoose = require("mongoose");
 const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');
+const projectRouter = require('./routes/project');
 
 app.use(cors());
 
@@ -32,6 +33,7 @@ mongoose.connect(MONGO_URI, {
 
 app.use("/auth", authRouter);
 app.use("/task", taskRouter);
+app.use("/project", projectRouter);
 
 app.listen(PORT, () => {
     console.log(`Server up at PORT: ${PORT}`);

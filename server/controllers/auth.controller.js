@@ -2,9 +2,10 @@ const authVerify = require('../middleware/auth_verify');
 const { v4: v4ID } = require('uuid');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
+const { User } = require('../models/user.model');
 const speakeasy = require('speakeasy');
 const qrcode = require('qrcode');
+const { generateResponse } = require('../helpers');
 
 const signup = (req, res, next) => {
     // collect credentials
@@ -678,29 +679,29 @@ const me = (req, res, next) => {
     User.findOne({email: usertoken.email}).then((user) => {
         if (user) {
             const { twoFA, password, ...dataToInclude} = user._doc;
-            return res.status(200).json({
-                success: true,
-                message: "Fetched Me User Details Successfully",
-                usertoken: {
-                    user: dataToInclude,
-                    token: usertoken.token
-                },
-                error: {
-                    status: false,
-                    code: null
+            return generateResponse({
+                req,
+                res,
+                type: "success",
+                data: {
+                    message: "Fetched Me User Details Successfully",
+                    usertoken: {
+                        user: dataToInclude,
+                        token: usertoken.token
+                    }
                 }
             })
         } else {
-            return res.status(404).json({
-                success: false,
-                message: "User not found",
-                usertoken: {
-                    user: null,
-                    token: null,
-                },
-                error: {
-                    status: true,
-                    code: "user_not_found",
+            return generateResponse({
+                req,
+                res,
+                type: "not_found_db",
+                data: {
+                    message: "User not found",
+                    error: {
+                        status: true,
+                        code: "user_not_found",
+                    }
                 }
             })
         }

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const User = require('./user.model');
-const Team = require('./team.model');
-const Task = require('./task.model');
+const { User, UserSchema } = require('./user.model');
+const { Team, TeamSchema } = require('./team.model');
+const { Task, TaskSchema } = require('./task.model');
 
 const ProjectSchema = new Schema({
     pid: {
@@ -10,8 +10,8 @@ const ProjectSchema = new Schema({
         required: true
     },
     contributors: {
-        teams: [Team],
-        individuals: [User]
+        teams: [TeamSchema],
+        individuals: [UserSchema]
     },
     info: {
         created: {
@@ -41,11 +41,14 @@ const ProjectSchema = new Schema({
             uid: String
         }
     },
-    tasks: [Task]
+    tasks: [TaskSchema]
 }, {
     timestamps: true
 });
 
 const Project = mongoose.model("Project", ProjectSchema);
 
-module.exports = Project;
+module.exports = {
+    Project,
+    ProjectSchema
+};

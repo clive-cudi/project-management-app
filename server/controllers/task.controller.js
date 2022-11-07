@@ -1,7 +1,9 @@
 const authVerify = require('../middleware/auth_verify');
-const User = require('../models/user.model');
+const { User } = require('../models/user.model');
 const { v4: v4ID } = require('uuid');
-const Task = require('../models/task.model');
+const { Task } = require('../models/task.model');
+const { generateResponse } = require('../helpers/index');
+const e = require('express');
 
 const getAllTasks = (req, res, next) => {
     const { usertoken } = req.body;
@@ -79,6 +81,7 @@ const createTask = (req, res, next) => {
             });
 
             // update the parent project task field with the TID
+            // if project === me, then assign the task directly to the user
             newTask.save().then((taskDoc) => {
                 User.updateOne(
                     {uid: usertoken.uid},
@@ -157,8 +160,118 @@ const createTask = (req, res, next) => {
 };
 
 // getTask/[tid]
+const getTaskById = (req, res, next) => {
+    const { tid } = req.params;
+    const { usertoken } = req.body;
+    
+    Task.findOne({taskID: tid}).then((task) => {
+        if (task) {
+            return generateResponse({
+                req,
+                res,
+                type: "success",
+                data: {
+                    task: task._doc
+                }
+            })
+        } else {
+            return generateResponse({
+                req,
+                res,
+                type: "not_found_db"
+            })
+        }
+    }).catch((error) => {
+        return generateResponse({
+            req,
+            res,
+            type: "db_error",
+            error
+        })
+    });
+}
+
+const getMultipleTasksById = (req, res, next) => {
+    const { tids, usertoken } = req.body;
+
+    // tids: string[]
+    Task.find({taskID: {$in: tids}}).then((tasks) => {
+        console.log("Tasks")
+        console.log(tasks)
+        if (!tasks) {
+            console.log("no tasks")
+        }
+        return generateResponse({
+            req,
+            res,
+            type: "success",
+            data: {
+                tasks: tasks.map((tsk) => tsk)
+            }
+        })
+    }).catch((err) => {
+        if (err) {
+            console.log(err);
+            return generateResponse({
+                req,
+                res,
+                type: "db_error"
+            })
+        }
+    })
+}
+
+const getMyTasksById = (req, res, next) => {
+    const { usertoken } = req.body;
+
+    // find the user by uid in db
+    User.findOne({uid: usertoken.uid}).then((user) => {
+        if (user) {
+            const tasks = user._doc.tasks;
+
+            console.log("req: ")
+            req = {...req, body: {...req.body, tids: tasks}};
+
+            console.log(req);
+
+            // pass on the task list to the getMultipleTasksById() controller
+
+            return getMultipleTasksById(req, res, next);
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+                usertoken: {
+                    user: null,
+                    token: null,
+                },
+                error: {
+                    status: true,
+                    code: "user_not_found",
+                }
+            })
+        }
+    }).catch((error) => {
+        return res.status(400).json({
+            success: false,
+            message: "Error Fetching user from DB!!",
+            usertoken: {
+                user: null,
+                token: null
+            },
+            error: {
+                status: true,
+                code: "db_error",
+                debug: error
+            }
+        });
+    })
+}
 
 module.exports = {
     getAllTasks,
-    createTask
+    createTask,
+    getTaskById,
+    getMultipleTasksById,
+    getMyTasksById
 }
