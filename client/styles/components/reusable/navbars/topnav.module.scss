@@ -37,5 +37,41 @@
                 align-items: center;
             }
         }
+        .tn_links_wrapper {
+            display: flex;
+            height: 100%;
+            width: fit-content;
+            ul {
+                display: flex;
+                height: 100%;
+                width: fit-content;
+                align-items: center;
+                list-style-type: none;
+                column-gap: 10px;
+                padding: 10px;
+                li {
+                    display: flex;
+                    height: 100%;
+                    width: fit-content;
+                    align-items: center;
+                    a {
+                        //styleName: Subtitle Semi Bold;
+                        font-family: Inter;
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: rgba(120, 116, 134, 1);
+                        text-decoration: none;
+                        &:hover {
+                            color: #2E2E3A;
+                        }
+                    }
+                    &.active_true {
+                        > a {
+                            color: #0062FF;
+                         }
+                    }
+                }
+            }
+        }
     }
 }

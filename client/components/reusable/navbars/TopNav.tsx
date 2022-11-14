@@ -9,11 +9,14 @@ import { ProfileWidget } from "../profile/ProfileWidget";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useAuthUser } from "../../../hooks";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const TopNav = ({}): JSX.Element => {
     const session = useSession();
     const { getAlluserDetails } = useAuthUser();
     const { info, username } = getAlluserDetails();
+    const router = useRouter();
 
     // useEffect(() => {console.log(getAlluserDetails())})
 
@@ -24,6 +27,15 @@ export const TopNav = ({}): JSX.Element => {
                     <SearchInput />
                 </div>
                 <div className={styles.tn_col}>
+                    <div className={styles.tn_links_wrapper}>
+                        <ul>
+                            <li className={styles[`active_${router.pathname == "/"}`]}><Link href={"/"}>Dashboard</Link></li>
+                            <li className={styles[`active_${router.pathname == "/contracts"}`]}><Link href={"/contracts"}>Contracts</Link></li>
+                            <li className={styles[`active_${router.pathname == "/workflow"}`]}><Link href={"/workflow"}>Workflow</Link></li>
+                            <li className={styles[`active_${router.pathname == "/activity"}`]}><Link href={"/activity"}>Activity</Link></li>
+                            <li className={styles[`active_${router.pathname == "/reports"}`]}><Link href={"/reports"}>Reports</Link></li>
+                        </ul>
+                    </div>
                     <div className={styles.tn_notifications_wrapper}>
                         <ul>
                             <li><IconBtn icon={<BsCalendar4Week />} variant={"text"} /></li>
