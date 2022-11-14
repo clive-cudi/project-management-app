@@ -30,9 +30,13 @@ export default NextAuth({
             async authorize(credentials, req) {
                 // console.log(credentials);
 
+                console.log("AUTH");
+
+                console.log(process.env.BACKEND_API_URL);
+
                 const loginRes: AxiosResponse<API_res_model> = await axios.post<API_res_model>(`${process.env.BACKEND_API_URL}/auth/login`, credentials);
 
-                // console.log(loginRes.data);
+                console.log(loginRes.data);
 
                 if (loginRes.data.success === true) {
                     return {...loginRes.data.usertoken};

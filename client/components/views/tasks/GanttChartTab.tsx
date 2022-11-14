@@ -8,7 +8,7 @@ export const GanttChartTab = (): JSX.Element => {
         <div className={styles.gct_content}>
             <div className={styles.gct_header}>
                 <div className={styles.gct_title_block}>
-                    <h2>My Tasks</h2>
+                    <h2>Tasks & Milestones</h2>
                 </div>
             </div>
             <div className={styles.gct_nav_wrapper}>
@@ -19,8 +19,12 @@ export const GanttChartTab = (): JSX.Element => {
                     <div className={styles.gct_nav_col}>
                         <InputSelect options={[]} onChange={() => {}} />
                         <RegularBtn label={"Add Task"} withIcon={{status: true, icon: <BsPlus />, orientation: "start"}} variant={"outlined"} data-elm-type={"btn-add"} onClick={() => {}} />
+                        <RegularBtn label={"Add Milestone"} withIcon={{status: true, icon: <BsPlus />, orientation: "start"}} variant={"outlined"} data-elm-type={"btn-add"} onClick={() => {}} />
                     </div>
                 </div>
+            </div>
+            <div className={styles.gct_chart_wrapper}>
+                {/* use gantt-task-react chart for the gantt chart */}
             </div>
         </div>
     )

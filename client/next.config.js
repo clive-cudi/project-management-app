@@ -8,8 +8,8 @@ const nextConfig = {
     ]
   },
   env: {
-    NEXTAUTH_URL: "http://localhost:3000",
-    BACKEND_API_URL: "http://localhost:4767"
+    NEXTAUTH_URL: `${process.env.NEXTAUTH_URL}`,
+    BACKEND_API_URL: `${process.env.BACKEND_API_URL}`,
   }
 }
 
