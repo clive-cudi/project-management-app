@@ -37,6 +37,7 @@ const UserSchema = new Schema({
     // orgs that the user is part of
     orgs: [String],
     tasks: [String],
+    projects: [String],
     info: {
         address: {
             country: String,

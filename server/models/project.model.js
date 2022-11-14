@@ -13,6 +13,10 @@ const ProjectSchema = new Schema({
         teams: [TeamSchema],
         individuals: [UserSchema]
     },
+    name: {
+        type: String,
+        required: true
+    },
     info: {
         created: {
             date: String,
@@ -26,20 +30,15 @@ const ProjectSchema = new Schema({
         bugdet: String,
         status: String,
         manager: String,
-        clients: [
-            {
-                firstName: String,
-                LastName: String,
-                title: String,
-                email: String,
-                businessName: String,
-                mobile: String
-            }
-        ],
+        // clients by clientID (cid)
+        clients: [String],
         parent: {
-            usertype: String,
             uid: String
         }
+    },
+    stage: {
+        type: String,
+        required: true
     },
     tasks: [TaskSchema]
 }, {
