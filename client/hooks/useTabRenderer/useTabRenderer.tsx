@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState, useEffect } from "react";
 import { TabRenderCtx, TabRenderCtx_Props, TabRenderCtxTypes, TabRenderCtxDefaults } from "../../context";
 import { HomeTab } from "../../components/views/homepageTabs/Hometab";
 import { MessagesTab } from "../../components/views/homepageTabs/MessagesTab";
@@ -9,9 +9,11 @@ import { ProjectDashBoardTab, ProjectDetailsTab, ProjectSummaryTab, ProjectsBoar
 import { TasksOverviewTab, TasksBoard, TaskListTab, GanttChartTab } from "../../components/views/tasks";
 import { CreateTaskFormWithAssignees } from "../../components";
 import { MyContractsTab, AddContractTab, SearchContractsTab, ContractsBoardTab } from "../../components/views/contracts";
+import { useRouter } from "next/router";
 
 export function useTabRenderer() {
     const { tabRender, setTabRender } = useContext(TabRenderCtx) as TabRenderCtx_Props;
+    const router = useRouter();
     const Tabs: TabRenderCtxTypes[] = [
         {
             label: "home",
@@ -86,7 +88,53 @@ export function useTabRenderer() {
             component: <CreateTaskFormWithAssignees/>
         }
     ];
-    const homePageTabs = useMemo<TabRenderCtxTypes[]>(()=> [...new Set<TabRenderCtxTypes>([...Tabs])], []);
+    const homePageTabs = useMemo<TabRenderCtxTypes[]>(()=> [...new Set<TabRenderCtxTypes>([...Tabs])], [router]);
+    // const [homePageTabs, setHomePageTabs] = useState<TabRenderCtxTypes[]>([...Tabs]);
+
+    const [tabRendererConfig, setTabRendererConfig] = useState<{
+        route: string;
+        defaultTab: string;
+        tabs: string[];
+    }[]>([
+        {
+            route: "/",
+            defaultTab: "",
+            tabs: []
+        },
+        {
+            route: "/contracts",
+            defaultTab: "",
+            tabs: []
+        },
+        {
+            route: "/workflow",
+            defaultTab: "",
+            tabs: []
+        },
+        {
+            route: "/activity",
+            defaultTab: "",
+            tabs: []
+        },
+        {
+            route: "/reports",
+            defaultTab: "",
+            tabs: []
+        }
+    ]);
+    // when switchTab is called, it checks against the tabRenderer config for the parent route associated with the target tab, if the parentRoute is the same as the current route, then the tab is rendered else, the default tab is rendered.
+    // this implementation is to prevent tab renderer state persistence across routes
+    function validTab() {
+        const currentRoute = router.pathname;
+        const routeIndex = tabRendererConfig.findIndex((configRoute) => currentRoute === configRoute.route);
+        
+        // check if the currentTab exists in the tabs[] list
+        if (tabRendererConfig[routeIndex].tabs.includes(tabRender.label)) {
+            return tabRender.label;
+        } else {
+            return tabRendererConfig[routeIndex].defaultTab;
+        }
+    }
 
     // implement some tab history logic i.e: using a stack
 
@@ -103,6 +151,9 @@ export function useTabRenderer() {
 
         return tab;
     }
+
+    // implement default tab to be rendered on route change to prevent tab state persistence across routes.
+
 
     function showCurrentTab(): JSX.Element | React.ReactNode {
         if (homePageTabs.some((tab_) => tab_.label === tabRender.label)) {
