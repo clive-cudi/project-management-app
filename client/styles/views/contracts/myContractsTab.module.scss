@@ -1,0 +1,83 @@
+.mct_content {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    .mct_content_col {
+        display: flex;
+        height: fit-content;
+        flex-direction: column;
+        &:first-child {
+            width: 66%;
+        }
+        &:last-child {
+            width: 34%;
+        }
+        .mct_content_col_header {
+            display: flex;
+            height: 70px;
+            width: 100%;
+            padding: 10px;
+            align-items: center;
+            justify-content: space-between;
+            .mct_header_col {
+                display: flex;
+                height: 100%;
+                width: fit-content;
+                align-items: center;
+                h2 {
+                    //styleName: Header/H1;
+                    font-family: Inter;
+                    font-size: 40px;
+                    font-weight: 700;
+                }
+                button[data-elm-func = "add-btn"] {
+                    height: 30px;
+                    border: 1px solid #0062FF;
+                    border-radius: 6px;
+                    //styleName: Button label;
+                    font-family: Inter;
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: #0062FF;
+                    margin-left: 10px;
+                    &:hover {
+                        color: white;
+                    }
+                }
+                div[data-elm-type = "input"] {
+                    max-width: none;
+                    border: 1px solid rgba(225, 227, 230, 1);
+                    border-radius: 6px;
+                    transition-timing-function: ease-in-out;
+                    transition-duration: 0.4s;
+                    margin-right: 10px;
+                    input {
+                        border: none;
+                        border-radius: 6px;
+                    }
+                    select {
+                        border: none;
+                        border-radius: 6px;
+                    }
+                    &:hover {
+                        box-shadow: 0px 5px 15px rgba(119, 132, 238, 0.3);
+                        border: 1px solid rgb(95 95 253);
+                        border-radius: 6px;
+                    }
+                }
+                button[data-elm-func = "icon-btn"] {
+                    min-height: 30px;
+                    min-width: 30px;
+                }
+            }
+        }
+        .mct_stats_strip {
+            display: flex;
+            height: fit-content;
+            width: 100%;
+            align-items: center;
+            justify-content: space-evenly;
+            padding: 10px;
+        }
+    }
+}
