@@ -68,3 +68,7 @@
 - react-full-event-calendar
 - npm install @daypilot/daypilot-lite-react
 - full calendar
+
+
+- add a new route track for personal development
+- add a link on the topnav routing to /personal --handle personal development stuff--
