@@ -9,3 +9,5 @@ export { MilestoneWidget } from "./MilestoneWidget";
 export { TaskListStartWidget } from "./TaskListStartWidget";
 export { DropDownNavWidget } from "./DropDownNavWidget";
 export type { DropDownWidget_Props, DropDownoption_ } from "./DropDownNavWidget";
+export { ContractStatsWidget } from "./ContractStatsWidget";
+export type { ContractStatsWidgetData } from "./ContractStatsWidget";
