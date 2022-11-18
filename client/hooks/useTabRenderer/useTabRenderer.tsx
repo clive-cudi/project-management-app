@@ -85,7 +85,7 @@ export function useTabRenderer() {
         },
         {
             label: "test",
-            component: <CreateTaskFormWithAssignees/>
+            component: <ProjectDashBoardTab />
         }
     ];
     const homePageTabs = useMemo<TabRenderCtxTypes[]>(()=> [...new Set<TabRenderCtxTypes>([...Tabs])], [router]);

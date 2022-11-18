@@ -664,6 +664,94 @@
     }
 }
 
+.cswg_wrapper {
+    display: flex;
+    height: 300px;
+    width: 500px;
+    max-width: 600px;
+    border: 0.5px solid rgba(223, 224, 235, 1);
+    border-radius: 8px;
+    flex-direction: column;
+    .cswg_header {
+        display: flex;
+        height: 80px;
+        width: 100%;
+        padding: 10px;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 80px;
+        .cswg_header_title {
+            display: flex;
+            height: 100%;
+            width: fit-content;
+            align-items: center;
+            h4 {
+                font-family: Roboto;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 33px;
+                letter-spacing: 0em;
+                text-align: left;
+            }
+        }
+        .cswg_header_util {
+            display: flex;
+            height: 100%;
+            width: fit-content;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    .cswg_content {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        .cswg_col {
+            display: flex;
+            height: 100%;
+            width: 50%;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            .cswg_col_list_labels {
+                height: fit-content;
+                width: fit-content;
+                list-style-type: none;
+                li {
+                    display: flex;
+                    height: 30px;
+                    width: fit-content;
+                    align-items: center;
+                    justify-content: flex-start;
+                    padding: 4px;
+                    .cswg_indicator {
+                        height: 12px;
+                        width: 12px;
+                        border-radius: 50%;
+                        margin: 10px;
+                        &._blue {
+                            background: #567DF4;
+                        }
+                        &._dark {
+                            background: #22215B;
+                        }
+                        &._yellow {
+                            background: #FFC700;
+                        }
+                    }
+                    h5 {
+                        font-family: Inter;
+                        font-weight: 600;
+                        line-height: 22px;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+}
+
 @keyframes animate-ul-dropdown {
     0% {
         transform: scaleY(0)
