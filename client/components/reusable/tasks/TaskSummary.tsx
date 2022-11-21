@@ -1,8 +1,11 @@
+import { useState } from "react";
 import type { TaskCategory } from "../../../types";
 import styles from "../../../styles/components/reusable/tasks/tasksummary.module.scss";
 import { IconBtn } from "../buttons";
 import { BsFilter, BsPlus } from "react-icons/bs";
 import { TaskInfoRow } from "./TaskInfoRow";
+import { useModal } from "../../../hooks";
+import { CreateTaskFormWithAssignees } from "../../forms";
 
 interface TaskSummary_Props {
     tasks: {
@@ -14,6 +17,13 @@ interface TaskSummary_Props {
 }
 
 export const TaskSummary = ({tasks, period = "today"}: TaskSummary_Props) => {
+    const [newTaskName, setNewTaskName] = useState<string>("");
+    const { openModal } = useModal();
+
+    function handleCreateTask() {
+        openModal(<CreateTaskFormWithAssignees initialValues={{name: newTaskName}} />)
+    }
+
     return (
         <div className={styles.task_summary_wrapper}>
             <div className={styles.ts_nav_wrapper}>
@@ -27,8 +37,8 @@ export const TaskSummary = ({tasks, period = "today"}: TaskSummary_Props) => {
                 </div>
             </div>
             <div className={styles.ts_new_task_wrapper}>
-                <input type={"text"} placeholder={"Create new task"} />
-                <IconBtn icon={<BsPlus />} variant={"util"} />
+                <input type={"text"} placeholder={"Create new task"} onChange={(e) => {setNewTaskName(e.target.value)}}/>
+                <IconBtn icon={<BsPlus />} variant={"util"} onClick={() => {handleCreateTask()}} />
             </div>
             <div className={styles.ts_tasks_lists}>
                 {
