@@ -7,7 +7,7 @@ import { MembersTab } from "../../components/views/homepageTabs/MembersTab";
 import { SettingsTab } from "../../components/views/homepageTabs/SettingsTab";
 import { ProjectDashBoardTab, ProjectDetailsTab, ProjectSummaryTab, ProjectsBoard } from "../../components/views/project";
 import { TasksOverviewTab, TasksBoard, TaskListTab, GanttChartTab } from "../../components/views/tasks";
-import { CreateTaskFormWithAssignees } from "../../components";
+import { CreateTaskFormWithAssignees, ContextMenu, ContextMenuWrapper } from "../../components";
 import { MyContractsTab, AddContractTab, SearchContractsTab, ContractsBoardTab } from "../../components/views/contracts";
 import { useRouter } from "next/router";
 
@@ -85,7 +85,7 @@ export function useTabRenderer() {
         },
         {
             label: "test",
-            component: <ProjectDashBoardTab />
+            component: <ContextMenuWrapper elmList={[<button>Hey</button>, <button>Close</button>, <button>Hey</button>, <button>Close</button>]} />
         }
     ];
     const homePageTabs = useMemo<TabRenderCtxTypes[]>(()=> [...new Set<TabRenderCtxTypes>([...Tabs])], [router]);

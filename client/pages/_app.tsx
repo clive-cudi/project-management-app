@@ -8,6 +8,7 @@ import {
   SettingsTabCtxProvider,
   RoutingCtxProvider,
   TabRenderCtxProvider,
+  ContextMenuCtxProvider,
 } from "../providers";
 import { AuthGuard, Header } from "../components";
 import { NextComponentType } from "next";
@@ -31,26 +32,28 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: Props) {
       </Header> */}
       <QueryClientProvider client={queryClient}>
         <RoutingCtxProvider>
-          <TabRenderCtxProvider>
-            <LayoutCtxProvider>
-              <ModalCtxProvider>
-                <SettingsTabCtxProvider>
-                  {Component.requireAuth?.auth === true ? (
-                    <AuthGuard
-                      userType={Component.requireAuth.userType}
-                      multipleUserTypes={
-                        Component.requireAuth.multipleUserTypes
-                      }
-                    >
+          <ContextMenuCtxProvider>
+            <TabRenderCtxProvider>
+              <LayoutCtxProvider>
+                <ModalCtxProvider>
+                  <SettingsTabCtxProvider>
+                    {Component.requireAuth?.auth === true ? (
+                      <AuthGuard
+                        userType={Component.requireAuth.userType}
+                        multipleUserTypes={
+                          Component.requireAuth.multipleUserTypes
+                        }
+                      >
+                        <Component {...pageProps} />
+                      </AuthGuard>
+                    ) : (
                       <Component {...pageProps} />
-                    </AuthGuard>
-                  ) : (
-                    <Component {...pageProps} />
-                  )}
-                </SettingsTabCtxProvider>
-              </ModalCtxProvider>
-            </LayoutCtxProvider>
-          </TabRenderCtxProvider>
+                    )}
+                  </SettingsTabCtxProvider>
+                </ModalCtxProvider>
+              </LayoutCtxProvider>
+            </TabRenderCtxProvider>
+          </ContextMenuCtxProvider>
         </RoutingCtxProvider>
       </QueryClientProvider>
     </SessionProvider>

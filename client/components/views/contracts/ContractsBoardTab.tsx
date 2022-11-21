@@ -1,16 +1,23 @@
+import React, { useMemo } from "react";
 import styles from "../../../styles/views/project/projectsBoard.module.scss";
 import { ProjectsSummaryBoard, InputSelect, RegularBtn, IconBtn, ProjectBoardCard } from "../../reusable";
 import { BsPlus, BsThreeDotsVertical } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
-import { useModal } from "../../../hooks";
+import { useModal, useContextMenu } from "../../../hooks";
 import { CreateTaskFormWithAssignees } from "../../forms";
 
 export const ContractsBoardTab = () => {
     const { modal, openModal } = useModal();
+    const { openAtCursor } = useContextMenu();
 
     function openCreateProjectModalForm() {
         openModal(<CreateTaskFormWithAssignees />)
     }
+
+    const contractNavOptions = useMemo(() => [
+        <button>Open Contracts</button>,
+        <button>Hide Status</button>
+    ], [])
 
     return (
         <div className={styles.prb_content}>
@@ -30,7 +37,7 @@ export const ContractsBoardTab = () => {
                             <InputSelect options={[{label: "Date", value: "date"}]} />
                         </span>
                         <RegularBtn label={"Add Contract"} withIcon={{status: true, icon: <BsPlus />, orientation: "start"}} variant={"outlined"} data-elm-type={"btn-add"} onClick={(e) => {openCreateProjectModalForm()}} />
-                        <IconBtn icon={<BsThreeDotsVertical />} variant={"outlined"} onClick={() => {}} />
+                        <IconBtn icon={<BsThreeDotsVertical />} variant={"outlined"} onClick={(e) => {openAtCursor(e, contractNavOptions)}} />
                     </div>
                 </div>
             </div>

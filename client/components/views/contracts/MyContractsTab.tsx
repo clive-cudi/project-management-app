@@ -4,6 +4,7 @@ import { InputSelect, RegularBtn, IconBtn, ContractStatsCard, ContractStatsWidge
 import { BsPlus } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 import { upperCaseFirstSentence } from "../../../utils";
+import { useContextMenu } from "../../../hooks";
 
 export const MyContractsTab = (): JSX.Element => {
     const [statsData, setStatsData] = useState<{title: string, stats: number}[]>([
@@ -49,7 +50,8 @@ export const MyContractsTab = (): JSX.Element => {
             ["1/5/22", "Y", "B"],
             ["18/5/22", "Z", "C"]
         ]
-    })
+    });
+    const { ctxMenu, openAtCursor } = useContextMenu();
 
     return (
         <div className={styles.mct_content}>

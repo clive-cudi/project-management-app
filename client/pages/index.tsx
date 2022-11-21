@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
-import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn } from "../components";
+import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn, ContextMenuWrapper } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
-import { useLayout, useModal, useTabRenderer } from "../hooks";
+import { useLayout, useModal, useTabRenderer, useContextMenu } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
@@ -47,6 +47,7 @@ const Home: NextPage & PageAuth = () => {
   );
   const { modal } = useModal();
   const { currentTab, switchTab } = useTabRenderer();
+  const { ctxMenu, openAtCursor } = useContextMenu();
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {
@@ -87,6 +88,7 @@ const Home: NextPage & PageAuth = () => {
 
   return (
     <div className={`app ${styles.app}`}>
+      {/*onContextMenu={(e) => {e.preventDefault(); openAtCursor(e, [<button>Hey</button>, <button>Close</button>, <button>Hey</button>, <button>Close</button>])}}*/}
       <Header title="Home" description="Project management app. Home" />
       <div className={`content ${styles.content}`}>
         <SideNav
@@ -101,6 +103,7 @@ const Home: NextPage & PageAuth = () => {
         </div>
       </div>
       {modal.open == true && <Modal data={modal.data} />}
+      {ctxMenu.open === true && <ContextMenuWrapper elmList={ctxMenu.elements} />}
     </div>
   );
 };
