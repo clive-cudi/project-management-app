@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import styles from "../../../styles/views/homePageTabs/hometab.module.scss";
 import Image from "next/image";
 import { RegularBtn, TaskSummary } from "../../reusable";
@@ -8,26 +8,31 @@ import taskSummary_mock from "../../../mock/taskSummaryData.json";
 import { Callendar } from "../../reusable";
 import { ProjectsOverview } from "../../layout";
 import { useSession } from "next-auth/react";
-import { useTime } from "../../../hooks";
+import { useTime, useTasks } from "../../../hooks";
+import { TaskQueries } from "../../../utils";
 
 export const HomeTab = ({}): JSX.Element => {
-  const taskSummaryData = useMemo<
+  const { tasks } = useTasks();
+  const [taskSummaryData, setTaskSummaryData] = useState<
     {
       label: string;
       isChecked: boolean;
       badgeStatus: TaskCategory;
     }[]
-  >(() => {
-    return taskSummary_mock.map((task) => ({
-      label: task.label,
-      isChecked: task.isChecked,
-      badgeStatus: task.badgeStatus as TaskCategory,
-    }));
-  }, []);
+  >([]);
   const session = useSession();
   const { getDayGreeting } = useTime();
 
-  // useEffect(() => {console.log(session.data)}, [])
+
+  useEffect(() => {
+    setTaskSummaryData(
+      tasks.map((tsk) => ({
+        label: tsk.name,
+        isChecked: true,
+        badgeStatus: tsk.priority
+      }))
+    )
+  }, [tasks]);
 
   return (
     <div className={styles.hb_content}>

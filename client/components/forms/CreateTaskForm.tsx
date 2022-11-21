@@ -1,9 +1,9 @@
-import { useMemo, useState, ChangeEvent } from "react";
+import { useMemo, useState, ChangeEvent, useEffect } from "react";
 import styles from "../../styles/components/forms/createTaskForm.module.scss";
 import { InputDiv, InputSelect } from "../reusable";
 import { Priority_ } from "../../types";
 
-interface TaskFormFieldData_ {
+export interface TaskFormFieldData_ {
     name: string;
     description: string;
     start: string;
@@ -16,9 +16,13 @@ interface TaskFormFieldData_ {
 interface CreateTaskForm_Props {
     isAssignedToMyself: (e: ChangeEvent<HTMLInputElement>) => void
     getTaskFormData?: (formData: TaskFormFieldData_) => void
+    initialValues?: {
+        name?: string,
+        description?: string
+    }
 }
 
-export const CreateTaskForm = ({ isAssignedToMyself, getTaskFormData }: CreateTaskForm_Props): JSX.Element => {
+export const CreateTaskForm = ({ isAssignedToMyself, getTaskFormData, initialValues }: CreateTaskForm_Props): JSX.Element => {
     const priorityOptData = useMemo<{label: string, value: Priority_}[]>(() => [
         {
             label: "High",
@@ -51,7 +55,7 @@ export const CreateTaskForm = ({ isAssignedToMyself, getTaskFormData }: CreateTa
     ], []);
     const [isAssignToMyself, setIsAssignToMyself] = useState<boolean>(false);
     const [createTaskFormData, setCreateTaskFormData] = useState<TaskFormFieldData_>({
-        name: "",
+        name: initialValues?.name ?? "",
         description: "",
         start: "",
         finish: "",
@@ -81,20 +85,20 @@ export const CreateTaskForm = ({ isAssignedToMyself, getTaskFormData }: CreateTa
                 [name]: value()
             }
         });
-
-        getTaskFormData && getTaskFormData(createTaskFormData);
     };
+
+    useEffect(() => {getTaskFormData && getTaskFormData(createTaskFormData)}, [createTaskFormData]);
 
     return (
         <form className={styles.ctf_form_wrapper}>
             <div className={styles.ctf_form_col}>
                 <div className={styles.ctf_form_field}>
                     <label>Task&nbsp;Name</label>
-                    <InputDiv type={`text`} placeholder={""} onChange={handleChange} variant={"primary"} inputArgs={{name: "name"}} />
+                    <InputDiv type={`text`} placeholder={""} onChange={handleChange} variant={"primary"} inputArgs={{name: "name", defaultValue: initialValues?.name}} />
                 </div>
                 <div className={`${styles.ctf_form_field} ${styles.textarea_exception}`}>
                     <label>Description</label>
-                    <textarea name="description" onChange={handleChange}></textarea>
+                    <textarea name="description" onChange={handleChange} defaultValue={initialValues?.description}></textarea>
                 </div>
                 <div className={styles.ctf_form_field}>
                     <input type={`checkbox`} onChange={(e) => {setIsAssignToMyself(e.target.checked), isAssignedToMyself(e)}} />
