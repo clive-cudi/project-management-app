@@ -4,8 +4,9 @@ import styles from "../../../styles/components/reusable/tasks/tasksummary.module
 import { IconBtn } from "../buttons";
 import { BsFilter, BsPlus } from "react-icons/bs";
 import { TaskInfoRow } from "./TaskInfoRow";
-import { useModal } from "../../../hooks";
+import { useModal, useTasks } from "../../../hooks";
 import { CreateTaskFormWithAssignees } from "../../forms";
+import { Spinner } from "../widgets";
 
 interface TaskSummary_Props {
     tasks: {
@@ -19,6 +20,7 @@ interface TaskSummary_Props {
 export const TaskSummary = ({tasks, period = "today"}: TaskSummary_Props) => {
     const [newTaskName, setNewTaskName] = useState<string>("");
     const { openModal } = useModal();
+    const { isLoading } = useTasks();
 
     function handleCreateTask() {
         openModal(<CreateTaskFormWithAssignees initialValues={{name: newTaskName}} />)
@@ -42,11 +44,11 @@ export const TaskSummary = ({tasks, period = "today"}: TaskSummary_Props) => {
             </div>
             <div className={styles.ts_tasks_lists}>
                 {
-                    tasks.map((task, ix)=>{
+                    tasks.length > 0 ? tasks.map((task, ix)=>{
                         return (
                             <TaskInfoRow key={ix} badge={{type: task.badgeStatus}} label={task.label} />
                         )
-                    })
+                    }) : (isLoading ? <Spinner /> : <h5>No Tasks Found</h5>)
                 }
             </div>
         </div>
