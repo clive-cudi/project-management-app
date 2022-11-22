@@ -3,7 +3,7 @@ import { ModalFormWrapper } from "../layout";
 import { CreateTaskForm, TaskFormFieldData_ } from "./CreateTaskForm";
 import styles from "../../styles/components/forms/createTaskForm.module.scss";
 import { SearchInput, Table, RegularBtn } from "../reusable";
-import { useModal, useTasks } from "../../hooks";
+import { useModal, useTasks, useTaskStore } from "../../hooks";
 import { TaskQueries, api } from "../../utils";
 import { useSession } from "next-auth/react";
 import { useMutation } from "react-query";
@@ -46,6 +46,7 @@ export const CreateTaskFormWithAssignees = ({ initialValues }: CreateTaskFormWit
         })).data;
     }
     const [submitAction, setSubmitAction] = useState<"save_close" | "save_add">("save_close");
+    const { add, tasks: storeTasks } = useTaskStore();
     const createTask = useMutation({mutationFn: addTask,
         onMutate: () => {
             setIsFormLoading(true);
@@ -54,6 +55,7 @@ export const CreateTaskFormWithAssignees = ({ initialValues }: CreateTaskFormWit
             console.log(res);
             // update the task list with res.task
             setTasks((prevTasks) => [...prevTasks, res.task]);
+            add(res.task);
             console.log(submitAction)
             if (submitAction == "save_add") {
                 openModal(null, true);
@@ -63,6 +65,7 @@ export const CreateTaskFormWithAssignees = ({ initialValues }: CreateTaskFormWit
         },
         onSettled: () => {
             setIsFormLoading(false);
+            console.log(storeTasks)
         }
     });
 
