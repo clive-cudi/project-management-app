@@ -31,13 +31,13 @@ export const CreateTaskFormWithAssignees = ({ initialValues }: CreateTaskFormWit
         finish: "",
         priority: "",
         type: "",
-        project: isAssignedToSelf ? "me" : ""
+        project: "me"
     });
-    const { closeModal } = useModal();
+    const { openModal, closeModal } = useModal();
     const [isFormLoading, setIsFormLoading] = useState<boolean>(false);
     const session = useSession();
     // const { addTask } = TaskQueries(session);
-    const { tasks } = useTasks();
+    const { tasks, setTasks } = useTasks();
     const addTask = async (form_data: TaskFormFieldData_): Promise<API_res_model & {task: taskRes}> => {
         return (await api.post("/task/add", form_data, {
             headers: {
@@ -45,24 +45,53 @@ export const CreateTaskFormWithAssignees = ({ initialValues }: CreateTaskFormWit
             }
         })).data;
     }
+    const [submitAction, setSubmitAction] = useState<"save_close" | "save_add">("save_close");
     const createTask = useMutation({mutationFn: addTask,
         onMutate: () => {
             setIsFormLoading(true);
         },
         onSuccess: (res) => {
-            console.log(res)
+            console.log(res);
+            // update the task list with res.task
+            setTasks((prevTasks) => [...prevTasks, res.task]);
+            console.log(submitAction)
+            if (submitAction == "save_add") {
+                openModal(null, true);
+            } else {
+                closeModal();
+            }
         },
         onSettled: () => {
             setIsFormLoading(false);
         }
     });
 
-    function submit() {
-        console.log(typeof addTask);
-        if (createTaskFormData) {
+    function submit(action: "save_close" | "save_add") {
+        setSubmitAction(action);
+        const {priority, type, project, ...requiredData} = createTaskFormData;
+        if ([...Object.values(requiredData)].every(Boolean)) {
             console.log(createTaskFormData);
 
-            createTask.mutate(createTaskFormData)
+            // polyfill the empty values
+            const submitData = {...createTaskFormData};
+
+            Object.keys(submitData).forEach((key) => {
+                if (submitData[key as keyof TaskFormFieldData_] === "") {
+                    switch (key) {
+                        case "priority":
+                            submitData[key] = "medium";
+                            return;
+                        case "type":
+                            submitData[key] = "deliverable";
+                            return;
+                        case "project":
+                            submitData[key] = "me";
+                            return;
+                    }
+                }
+            });
+
+            createTask.mutate(submitData);
             // console.log(data);
 
             console.log(createTask.data)
@@ -87,9 +116,9 @@ export const CreateTaskFormWithAssignees = ({ initialValues }: CreateTaskFormWit
                     null
             }
             <div className={styles.ctwa_submit_wrapper}>
-                <RegularBtn label={"Save & Close"} onClick={() => {submit()}} variant={"gradient"} disabled={isFormLoading} />
-                <RegularBtn label={"Save & Add another"} onClick={() => {}} variant={"gradient"} disabled={isFormLoading} />
-                <RegularBtn label={"Cancel"} onClick={() => {closeModal()}} variant={"gradient"} disabled={isFormLoading} />
+                <RegularBtn label={"Save & Close"} onClick={() => {submit("save_close")}} variant={"gradient"} isLoading={{status: isFormLoading}} disabled={isFormLoading} />
+                <RegularBtn label={"Save & Add another"} onClick={() => {submit("save_add")}} variant={"gradient"} isLoading={{status: isFormLoading}} disabled={isFormLoading} />
+                <RegularBtn label={"Cancel"} onClick={() => {closeModal()}} variant={"gradient"} isLoading={{status: isFormLoading}} disabled={isFormLoading} />
             </div>
         </ModalFormWrapper>
     )

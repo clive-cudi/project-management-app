@@ -33,15 +33,17 @@ export function useModal() {
 
   function openModal(
     data: JSX.Element | ReactNode | null,
+    usePrevious?: boolean,
     withTimeout?: {
       status: boolean;
       timeOut: number;
     },
-    outerClickClose?: boolean
+    outerClickClose?: boolean,
   ): { isOpen: boolean; data: JSX.Element | ReactNode | null } {
+    const prevElm = modal.data;
     setModal({
       open: true,
-      data: data,
+      data: usePrevious ? prevElm : data,
       autoClose: {
         status: withTimeout?.status ? withTimeout?.status : false,
         closeTimeOut: withTimeout?.timeOut ? withTimeout?.timeOut : 10,

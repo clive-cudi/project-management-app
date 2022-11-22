@@ -116,7 +116,7 @@ export const CreateTaskForm = ({ isAssignedToMyself, getTaskFormData, initialVal
                 </div>
                 <div className={styles.ctf_form_field}>
                     <label>Priority</label>
-                    <InputSelect options={priorityOptData} onChange={handleChange} name={"priority"} />
+                    <InputSelect options={priorityOptData} onChange={handleChange} name={"priority"} defaultValue={"medium"} />
                 </div>
                 {/* <div className={styles.ctf_form_field}>
                     <label>Duration</label>
@@ -124,7 +124,7 @@ export const CreateTaskForm = ({ isAssignedToMyself, getTaskFormData, initialVal
                 </div> */}
                 <div className={styles.ctf_form_field}>
                     <label>Task&nbsp;Property</label>
-                    <InputSelect options={taskPropData} onChange={handleChange} name={"type"} />
+                    <InputSelect options={taskPropData} onChange={handleChange} name={"type"} defaultOption={{label: "Deliverable", value: "deliverable"}} />
                 </div>
                 {/* Select field for choosing the project to be assigned the tasks */}
                 {

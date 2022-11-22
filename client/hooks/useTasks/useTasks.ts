@@ -17,6 +17,7 @@ export function useTasks() {
 
     return {
         tasks,
-        setTasks
+        setTasks,
+        isLoading
     }
 }
