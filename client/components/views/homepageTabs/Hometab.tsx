@@ -8,7 +8,7 @@ import taskSummary_mock from "../../../mock/taskSummaryData.json";
 import { Callendar } from "../../reusable";
 import { ProjectsOverview } from "../../layout";
 import { useSession } from "next-auth/react";
-import { useTime, useTasks } from "../../../hooks";
+import { useTime, useTasks, useTaskStore } from "../../../hooks";
 import { TaskQueries } from "../../../utils";
 
 export const HomeTab = ({}): JSX.Element => {
@@ -22,17 +22,18 @@ export const HomeTab = ({}): JSX.Element => {
   >([]);
   const session = useSession();
   const { getDayGreeting } = useTime();
+  const { tasks: tasks_Store } = useTaskStore();
 
 
   useEffect(() => {
     setTaskSummaryData(
-      tasks.map((tsk) => ({
+      tasks_Store.map((tsk) => ({
         label: tsk.name,
         isChecked: true,
         badgeStatus: tsk.priority
       }))
     )
-  }, [tasks]);
+  }, [tasks_Store]);
 
   return (
     <div className={styles.hb_content}>

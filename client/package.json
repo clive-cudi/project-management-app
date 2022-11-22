@@ -19,7 +19,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "react-query": "^3.39.2",
-    "sass": "^1.55.0"
+    "sass": "^1.55.0",
+    "zustand": "^4.1.4"
   },
   "devDependencies": {
     "@types/node": "18.7.18",
