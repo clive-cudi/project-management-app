@@ -9,10 +9,13 @@ const mongoose = require("mongoose");
 const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');
 const projectRouter = require('./routes/project');
+const logger = require('morgan');
 
 app.use(cors());
 
 app.use(express.json());
+
+app.use(logger("dev"));
 
 app.get("/",(req, res) => {
     return res.status(200).send("Hello World!!");

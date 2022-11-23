@@ -12,4 +12,6 @@ router.post("/getmultipletasks", authVerify, TaskController.getMultipleTasksById
 
 router.get("/mytasksbyid", authVerify, TaskController.getMyTasksById);
 
+router.delete("/remove/:tid", authVerify, TaskController.removeTask);
+
 module.exports = router;
