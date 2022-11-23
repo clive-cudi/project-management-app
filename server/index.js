@@ -40,4 +40,5 @@ app.use("/project", projectRouter);
 
 app.listen(PORT, () => {
     console.log(`Server up at PORT: ${PORT}`);
+    console.log(`MONGO_URI: ${MONGO_URI}`);
 });
