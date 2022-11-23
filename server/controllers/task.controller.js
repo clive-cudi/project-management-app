@@ -268,10 +268,86 @@ const getMyTasksById = (req, res, next) => {
     })
 }
 
+const removeTask = (req, res, next) => {
+    const { usertoken } = req.body;
+    const { tid } = req.params || req.body;
+
+    if (tid) {
+        console.log(tid);
+        // clear the task in the Task collection
+        // clear the task in the User.tasks array
+        Task.findOneAndDelete({taskID: tid}).then((task) => {
+            console.log(task);
+            if (task) {
+                User.updateOne(
+                    {uid: usertoken.uid},
+                    {$pull: {tasks: tid}}
+                ).then(() => {
+                    return res.status(200).json({
+                        success: true,
+                        message: "Task Deleted!!",
+                        task: task,
+                        error: {
+                            status: false,
+                            code: null
+                        }
+                    })
+                }).catch((err) => {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Failed to update task list",
+                        usertoken: {
+                            user: null,
+                            token: null
+                        },
+                        error: {
+                            status: true,
+                            code: "task_list_update_fail",
+                            debug: err
+                        }
+                    })
+                })
+            } else {
+                return res.status(404).json({
+                    success: false,
+                    message: "Task not found",
+                    usertoken: {
+                        user: null,
+                        token: null,
+                    },
+                    error: {
+                        status: true,
+                        code: "task_not_found",
+                    }
+                })
+            }
+        }).catch((error) => {
+            return res.status(400).json({
+                success: false,
+                message: "Task Deletion Error",
+                usertoken: {
+                    user: null,
+                    token: null
+                },
+                error: {
+                    status: true,
+                    code: "task_deletion_fail",
+                    debug: error
+                }
+            })
+        })
+    }
+}
+
+const removeMultiple = (req, res, next) => {
+    
+}
+
 module.exports = {
     getAllTasks,
     createTask,
     getTaskById,
     getMultipleTasksById,
-    getMyTasksById
+    getMyTasksById,
+    removeTask
 }
