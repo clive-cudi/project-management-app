@@ -1,14 +1,16 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
 import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn, ContextMenuWrapper } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
-import { useLayout, useModal, useTabRenderer, useContextMenu } from "../hooks";
+import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
 import { FiUsers, FiSettings } from "react-icons/fi";
-import { upperCaseFirstLetter } from "../utils";
+import { upperCaseFirstLetter, TaskQueries } from "../utils";
+import { useQuery } from "react-query";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage & PageAuth = () => {
   // const { currentTab, switchHomeTab } = useLayout();
@@ -48,6 +50,22 @@ const Home: NextPage & PageAuth = () => {
   const { modal } = useModal();
   const { currentTab, switchTab } = useTabRenderer();
   const { ctxMenu, openAtCursor } = useContextMenu();
+  const session = useSession();
+  const { addMultiple, tasks, setLoading } = useTaskStore();
+  const { getAllTasks, getMultipleTasksByID } = TaskQueries(session);
+  // fetch tasks
+  const { data: taskIDs_data} = useQuery("tasks_ids", getAllTasks);
+  const {data: fetchedTasks, isLoading, isError} = useQuery("tasks", () => getMultipleTasksByID(taskIDs_data?.tasks as string[]), {enabled: !!taskIDs_data?.tasks, onSuccess: (res) => {}});
+
+  useEffect(() => {
+    if (fetchedTasks && !isError) {
+      addMultiple(fetchedTasks.tasks);
+    }
+  }, [fetchedTasks]);
+
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading])
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {

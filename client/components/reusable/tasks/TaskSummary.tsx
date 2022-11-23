@@ -4,7 +4,7 @@ import styles from "../../../styles/components/reusable/tasks/tasksummary.module
 import { IconBtn } from "../buttons";
 import { BsFilter, BsPlus } from "react-icons/bs";
 import { TaskInfoRow } from "./TaskInfoRow";
-import { useModal, useTasks } from "../../../hooks";
+import { useModal, useTaskStore } from "../../../hooks";
 import { CreateTaskFormWithAssignees } from "../../forms";
 import { Spinner } from "../widgets";
 
@@ -20,7 +20,7 @@ interface TaskSummary_Props {
 export const TaskSummary = ({tasks, period = "today"}: TaskSummary_Props) => {
     const [newTaskName, setNewTaskName] = useState<string>("");
     const { openModal } = useModal();
-    const { isLoading } = useTasks();
+    const { isLoading } = useTaskStore();
 
     function handleCreateTask() {
         openModal(<CreateTaskFormWithAssignees initialValues={{name: newTaskName}} />)

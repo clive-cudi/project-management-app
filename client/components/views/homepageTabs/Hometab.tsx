@@ -8,11 +8,10 @@ import taskSummary_mock from "../../../mock/taskSummaryData.json";
 import { Callendar } from "../../reusable";
 import { ProjectsOverview } from "../../layout";
 import { useSession } from "next-auth/react";
-import { useTime, useTasks, useTaskStore } from "../../../hooks";
+import { useTime, useTaskStore } from "../../../hooks";
 import { TaskQueries } from "../../../utils";
 
 export const HomeTab = ({}): JSX.Element => {
-  const { tasks } = useTasks();
   const [taskSummaryData, setTaskSummaryData] = useState<
     {
       label: string;
