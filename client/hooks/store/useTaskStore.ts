@@ -4,8 +4,10 @@ import { taskRes } from "../../types";
 interface TasksStoreType {
   tasks: taskRes[];
   taskIds: string[];
+  isLoading: boolean,
   add: (task: taskRes) => void;
   addMultiple: (tasks: taskRes[]) => void;
+  setLoading: (isLoading: boolean) => void
   remove: (taskID: string) => void;
 }
 
@@ -20,9 +22,11 @@ function removeTaskById(arr: taskRes[], id: string): taskRes[] {
 }
 
 export const useTaskStore = create<TasksStoreType>()((set) => {
+  console.log("set was called")
   return {
     tasks: [],
     taskIds: [],
+    isLoading: false,
     add: (task) =>
       set((state) => {
         console.log(`Initial tasks length ${state.tasks.length}`)
@@ -32,6 +36,7 @@ export const useTaskStore = create<TasksStoreType>()((set) => {
       set((state) => {
         return { tasks: tasks };
       }),
+    setLoading: (isLoading) => set((state) => {return {isLoading: isLoading}}),
     remove: (taskID) =>
       set((state) => {
         return {
