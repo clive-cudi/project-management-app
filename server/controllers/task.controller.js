@@ -63,6 +63,7 @@ const createTask = (req, res, next) => {
                 taskID,
                 name,
                 description,
+                status: "todo",
                 priority,
                 type,
                 parent: {
@@ -341,6 +342,12 @@ const removeTask = (req, res, next) => {
 
 const removeMultiple = (req, res, next) => {
     
+}
+
+const updateTaskStatus = (req, res, next) => {
+    const { usertoken } = req.body;
+    const { tid } = req.params || req.body;
+    const { status } = req.body;
 }
 
 module.exports = {

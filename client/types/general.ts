@@ -13,3 +13,5 @@ export type SettingsTabs_ = "account" | "connections" | "preferences" | "securit
 export type Priority_ = "high" | "medium" | "low";
 
 export type ContractPageLabelsType = "my_contracts" | "add_contract" | "search_contracts" | "contracts_board";
+
+export type GeneralTaskStatus_ = "todo" | "pending" | "done"
