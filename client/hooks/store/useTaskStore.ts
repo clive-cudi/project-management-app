@@ -22,7 +22,6 @@ function removeTaskById(arr: taskRes[], id: string): taskRes[] {
 }
 
 export const useTaskStore = create<TasksStoreType>()((set) => {
-  console.log("set was called")
   return {
     tasks: [],
     taskIds: [],

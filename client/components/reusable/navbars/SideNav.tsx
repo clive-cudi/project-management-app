@@ -61,7 +61,7 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
             }
         ]
     }, []);
-    const { switchTab } = useTabRenderer();
+    const { switchTab, currentTab } = useTabRenderer();
     const modalInitTabs = useMemo(() => ["create_new_task", "import_tasks"], []);
     const [isTasksCollapsed, setIsTasksCollapsed] = useState<boolean>(false);
 
@@ -138,6 +138,7 @@ export const SideNav = ({switchBtns, tasks, projects, isMinNav}: SideNav_Props):
                     openModal(<CreateTaskFormWithAssignees />)
                 }} /></span>
                 <div className={styles.sn_tasks_wrapper}>
+                    {/*  || myTasksDropDownOptions.some((option) => option.label === currentTab.label) */}
                     {isTasksCollapsed ? <DropDownNavWidget options={myTasksDropDownOptions.map((option) => ({...option, onClickHandler: () => {handleTaskDropDownTabActionClick(option.label)}, hasActiveTabSwitch: !modalInitTabs.includes(option.label)}))} /> : null}
                 </div>
                 <span className={styles.nav_mini_title}>{isMin == false ? <span className={styles.nav_mini_title_txt}>MY PROJECTS</span> : ''}<IconBtn icon={<IoIosAdd />} variant={"util"} onClick={() => {

@@ -4,7 +4,7 @@ import styles from "../../../styles/components/reusable/tasks/tasksummary.module
 import { IconBtn } from "../buttons";
 import { BsFilter, BsPlus } from "react-icons/bs";
 import { TaskInfoRow } from "./TaskInfoRow";
-import { useModal, useTaskStore } from "../../../hooks";
+import { useModal, useTaskStore, useTabRenderer } from "../../../hooks";
 import { CreateTaskFormWithAssignees } from "../../forms";
 import { Spinner } from "../widgets";
 
@@ -21,6 +21,7 @@ export const TaskSummary = ({tasks, period = "today"}: TaskSummary_Props) => {
     const [newTaskName, setNewTaskName] = useState<string>("");
     const { openModal } = useModal();
     const { isLoading } = useTaskStore();
+    const { switchTab } = useTabRenderer();
 
     function handleCreateTask() {
         openModal(<CreateTaskFormWithAssignees initialValues={{name: newTaskName}} />)
@@ -34,7 +35,7 @@ export const TaskSummary = ({tasks, period = "today"}: TaskSummary_Props) => {
                     <span>{period}</span>
                 </div>
                 <div className={styles.ts_nav_utils}>
-                    <span>View All</span>
+                    <span onClick={(e) => {switchTab({label: "task_list"})}}>View All</span>
                     <IconBtn icon={<BsFilter />} variant={"outlined"} />
                 </div>
             </div>

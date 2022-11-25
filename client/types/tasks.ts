@@ -1,4 +1,4 @@
-import { TaskCategory } from "./general"
+import { TaskCategory, Priority_, GeneralTaskStatus_ } from "./general"
 
 export interface taskRes {
     name: string,
@@ -7,6 +7,7 @@ export interface taskRes {
     type: string
     createdAt: string
     assignees: string[]
+    status: GeneralTaskStatus_
     info: {
         created: {
             time: string
@@ -20,5 +21,5 @@ export interface taskRes {
             pid: string
         }
     }
-    priority: TaskCategory
+    priority: TaskCategory | Priority_
 }
