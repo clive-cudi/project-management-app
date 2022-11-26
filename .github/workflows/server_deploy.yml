@@ -22,3 +22,4 @@ jobs:
           environment_name: Pmt-env
           version_label: pmt-server-api
           region: us-east-1
+          deployment_package: deploy.zip
