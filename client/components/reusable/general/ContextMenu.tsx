@@ -62,7 +62,7 @@ export const ContextMenu = ({ elmList }: ContextMenu_Props) => {
             top: generateCoords(ctxMenu.coords.top, ctxMenu.coords.left).top,
             left: generateCoords(ctxMenu.coords.top, ctxMenu.coords.left).left
         })
-    }, [])
+    }, [ctxMenu.coords.left, ctxMenu.coords.top])
 
     return (
         <div className={styles.ctx_menu} style={{top: coords.top, left: coords.left}} id={"context-menu"} onClick={(e) => {e.stopPropagation()}}>

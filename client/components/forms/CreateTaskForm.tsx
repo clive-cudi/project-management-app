@@ -87,7 +87,7 @@ export const CreateTaskForm = ({ isAssignedToMyself, getTaskFormData, initialVal
         });
     };
 
-    useEffect(() => {getTaskFormData && getTaskFormData(createTaskFormData)}, [createTaskFormData]);
+    useEffect(() => {getTaskFormData && getTaskFormData(createTaskFormData)}, [createTaskFormData, getTaskFormData]);
 
     return (
         <form className={styles.ctf_form_wrapper}>

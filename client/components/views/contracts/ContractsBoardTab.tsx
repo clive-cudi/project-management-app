@@ -15,8 +15,8 @@ export const ContractsBoardTab = () => {
     }
 
     const contractNavOptions = useMemo(() => [
-        <button>Open Contracts</button>,
-        <button>Hide Status</button>
+        <button key={1}>Open Contracts</button>,
+        <button key={2}>Hide Status</button>
     ], [])
 
     return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { TaskCategory } from "../../../types";
+import type { TaskCategory, Priority_ } from "../../../types";
 import styles from "../../../styles/components/reusable/tasks/tasksummary.module.scss";
 import { IconBtn } from "../buttons";
 import { BsFilter, BsPlus } from "react-icons/bs";
@@ -12,7 +12,7 @@ interface TaskSummary_Props {
     tasks: {
         label: string
         isChecked: boolean
-        badgeStatus: TaskCategory
+        badgeStatus: TaskCategory | Priority_
     }[]
     period?: string
 }

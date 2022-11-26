@@ -15,7 +15,7 @@ export default function TwoFactorAuthPage({isTwoFA}: {isTwoFA: boolean}) {
         if (isTwoFA !== true) {
             router.push("/");
         }
-    }, [isTwoFA])
+    }, [isTwoFA, router])
 
     return (
         <div className={`app ${styles.tf_app}`}>

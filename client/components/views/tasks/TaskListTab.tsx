@@ -73,7 +73,7 @@ export const TaskListTab = (): JSX.Element => {
                 }
             })
         }
-    }, [tasks])
+    }, [tasks, addToList, taskIds]);
 
     return (
         <div className={styles.tlst_content}>
