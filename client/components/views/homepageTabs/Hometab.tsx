@@ -3,7 +3,7 @@ import styles from "../../../styles/views/homePageTabs/hometab.module.scss";
 import Image from "next/image";
 import { RegularBtn, TaskSummary } from "../../reusable";
 import { BsPlay } from "react-icons/bs";
-import type { TaskCategory } from "../../../types";
+import type { TaskCategory, Priority_ } from "../../../types";
 import taskSummary_mock from "../../../mock/taskSummaryData.json";
 import { Callendar } from "../../reusable";
 import { ProjectsOverview } from "../../layout";
@@ -16,7 +16,7 @@ export const HomeTab = ({}): JSX.Element => {
     {
       label: string;
       isChecked: boolean;
-      badgeStatus: TaskCategory;
+      badgeStatus: TaskCategory | Priority_;
     }[]
   >([]);
   const session = useSession();

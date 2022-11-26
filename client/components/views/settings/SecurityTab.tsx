@@ -22,7 +22,7 @@ export const SecurityTab = (): JSX.Element => {
         }
     }
 
-    useEffect(()=>{console.log(session)}, []);
+    // useEffect(()=>{console.log(session)}, []);
 
     function handle2FAquery() {
         if (session.data?.user.twoFA == false && session.status === "authenticated") {

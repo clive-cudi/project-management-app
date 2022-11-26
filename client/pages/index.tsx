@@ -61,11 +61,11 @@ const Home: NextPage & PageAuth = () => {
     if (fetchedTasks && !isError) {
       addMultiple(fetchedTasks.tasks);
     }
-  }, [fetchedTasks]);
+  }, [fetchedTasks, isError, addMultiple]);
 
   useEffect(() => {
     setLoading(isLoading);
-  }, [isLoading])
+  }, [isLoading, setLoading])
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {

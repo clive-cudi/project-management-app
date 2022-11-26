@@ -68,7 +68,7 @@ export const MyContractsTab = (): JSX.Element => {
                 </div>
                 <div className={styles.mct_stats_strip}>
                     {
-                        statsData.map((statCard) => <ContractStatsCard title={upperCaseFirstSentence(statCard.title, "_")} stats={statCard.stats} />)
+                        statsData.map((statCard, index) => <ContractStatsCard key={index} title={upperCaseFirstSentence(statCard.title, "_")} stats={statCard.stats} />)
                     }
                 </div>
                 <div className={styles.mct_stat_charts_strip}>
