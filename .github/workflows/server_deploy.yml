@@ -1,0 +1,25 @@
+name: Deploy Server
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        
+      - name: Zip server folder
+        run: zip -r deploy.zip ./server -x '*.git*'
+        
+      - name: Beanstalk Deploy
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: pmt
+          environment_name: Pmt-env
+          version_label: pmt-server-api
+          region: us-east-1
+          deployment_package: deploy.zip
