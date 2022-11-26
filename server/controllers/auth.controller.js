@@ -153,7 +153,7 @@ const login = (req, res, next) => {
     const { username = "", email, password } = req.body;
 
     if (!email || !password) {
-        return res.status(400).json({
+        return res.status(200).json({
             success: false,
             message: "Missing credentials",
             usertoken: {
@@ -185,7 +185,7 @@ const login = (req, res, next) => {
 
                 const { twoFA, password, ...dataToInclude} = user._doc;
 
-                return res.json({
+                return res.status(200).json({
                     success: true,
                     message: "Successful Login",
                     usertoken: {
@@ -199,7 +199,7 @@ const login = (req, res, next) => {
                     }
                 })
             } else {
-                return res.json({
+                return res.status(200).json({
                     success: false,
                     message: "Invalid credentials",
                     usertoken: {
@@ -213,7 +213,7 @@ const login = (req, res, next) => {
                 })
             }
         } else {
-            return res.status(404).json({
+            return res.status(200).json({
                 success: false,
                 message: "User not found",
                 usertoken: {
@@ -228,7 +228,7 @@ const login = (req, res, next) => {
         }
     }).catch((err) => {
         console.log(err);
-        return res.status(400).json({
+        return res.status(200).json({
             success: false,
             message: "An error occurred",
             usertoken: {
