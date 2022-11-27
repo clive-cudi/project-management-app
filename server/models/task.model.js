@@ -30,7 +30,7 @@ const TaskSchema = new Schema({
             pid: String
         }
     },
-    // uid of the assignees
+    // uid of the assignees => part of a project
     assignees: [Array],
     info: {
         created: {

@@ -20,7 +20,7 @@ const OrgSchema = new Schema({
     },
     // an array of user uid's
     users: [String],
-    // an array of tID's
+    // an array of tID's | teamID's
     teams: [String]
 }, {
     timestamps: true
