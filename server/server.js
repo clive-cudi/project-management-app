@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');
 const projectRouter = require('./routes/project');
+const teamsRouter = require('./routes/teams');
 const logger = require('morgan');
 
 app.use(cors());
@@ -37,6 +38,7 @@ mongoose.connect(MONGO_URI, {
 app.use("/auth", authRouter);
 app.use("/task", taskRouter);
 app.use("/project", projectRouter);
+app.use("/teams", teamsRouter);
 
 app.listen(PORT, () => {
     console.log(`Server up at PORT: ${PORT}`);

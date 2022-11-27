@@ -40,7 +40,9 @@ const ProjectSchema = new Schema({
         type: String,
         required: true
     },
-    tasks: [TaskSchema]
+    // tasks: [TaskSchema]
+    // task IDs
+    tasks: [String]
 }, {
     timestamps: true
 });

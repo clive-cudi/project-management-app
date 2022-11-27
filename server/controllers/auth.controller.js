@@ -175,7 +175,8 @@ const login = (req, res, next) => {
                     {
                         uid: user.uid,
                         email: `${user.email}`,
-                        username: `${user.username}`
+                        username: `${user.username}`,
+                        usertype: `${user.usertype}`
                     },
                     process.env.JWT_TOKEN_KEY ?? "hfughrvcsliidv8eiiweeopi",
                     {

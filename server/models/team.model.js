@@ -7,6 +7,10 @@ const TeamSchema = new Schema({
         type: String,
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
     // [memberUID's]
     members: [String],
     parentOrgID: {
