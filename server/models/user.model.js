@@ -38,6 +38,8 @@ const UserSchema = new Schema({
     orgs: [String],
     tasks: [String],
     projects: [String],
+    // clients under the user
+    clients: [String],
     info: {
         address: {
             country: String,

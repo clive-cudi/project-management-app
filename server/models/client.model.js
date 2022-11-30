@@ -7,6 +7,7 @@ const ClientSchema = new Schema({
         type: String,
         required: true
     },
+    parentID: String,
     firstName: {
         type: String,
         required: true

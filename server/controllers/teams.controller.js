@@ -1,4 +1,3 @@
-const authVerify = require('../middleware/auth_verify');
 const { User } = require('../models/user.model');
 const { v4: v4ID } = require('uuid');
 const { generateResponse } = require('../helpers/index');
