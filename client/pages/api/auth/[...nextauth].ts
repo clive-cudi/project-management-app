@@ -85,6 +85,8 @@ export default NextAuth({
 
                 // user = {...user, user: {...googleRes.data.usertoken?.user}};
 
+                console.log(googleRes);
+
                 console.log(account)
             }
 
