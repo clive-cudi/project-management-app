@@ -20,4 +20,8 @@ router.post("/tfa-disable", authVerify, AuthController.disable2FA);
 
 router.get("/me", authVerify, AuthController.me);
 
+router.post("/google", AuthController.googleAuth);
+
+// router.get("/logout", authVerify, AuthController.logout);
+
 module.exports = router;

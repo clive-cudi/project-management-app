@@ -7,6 +7,11 @@ import { Api_User_res, API_res_model } from "../../../types";
 export default NextAuth({
     // Configure one or more authentication providers
     providers: [
+        GoogleAuth({
+            id: "google",
+            clientId: `${process.env.GOOGLE_CLIENT_ID}`,
+            clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
+        }),
         Credentials({
             id: "credentials_email",
             name: "Credentials",
@@ -52,10 +57,36 @@ export default NextAuth({
         })
     ],
     callbacks: {
-        jwt: async ({token, user}) => {
+        jwt: async ({token, user, account}) => {
             // console.log('Token\n')
             // console.log(token);
             // console.log(user);
+
+            if (account?.provider === "google") {
+                const {access_token, id_token} = account;
+                console.log(access_token);
+
+                console.log(user);
+                
+                const googleRes: AxiosResponse<API_res_model> = await axios.post<API_res_model>(`${process.env.BACKEND_API_URL}/auth/google`, {access_token, id_token});
+
+                if (googleRes.data.success === true) {
+                    user = {
+                        id: googleRes.data.usertoken?.user?.uid ?? "",
+                        name: googleRes.data.usertoken?.user?.username ?? "",
+                        token: googleRes.data.usertoken?.token ?? "",
+                        email: googleRes.data.usertoken?.user?.email ?? "",
+                        twoFA: googleRes.data.usertoken?.user?.twoFA.status ?? false,
+                        user: {
+                            ...googleRes.data.usertoken?.user as Api_User_res
+                        }
+                    };
+                }
+
+                // user = {...user, user: {...googleRes.data.usertoken?.user}};
+
+                console.log(account)
+            }
 
             if (user) {
                 token = {

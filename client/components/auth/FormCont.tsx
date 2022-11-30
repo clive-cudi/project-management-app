@@ -8,14 +8,21 @@ interface FormContainer_Props {
         link: string
         label: string
     }
+    socials?: {
+        enabled: boolean
+        providerTriggerElms: JSX.Element[] 
+    }
 }
 
-export const FormContainer = ({ form, altLink }: FormContainer_Props): JSX.Element => {
+export const FormContainer = ({ form, altLink, socials }: FormContainer_Props): JSX.Element => {
     return (
         <div className={styles.login_form_cont}>
             {form}
             {
                 altLink && <Link href={altLink.link} >{altLink.label}</Link>
+            }
+            {
+                socials?.enabled === true ? <div className={styles.socials_auth_wrapper}><h4>Or</h4>{socials.providerTriggerElms.map((provider) => provider)}</div> : null
             }
         </div>
     )

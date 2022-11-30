@@ -322,20 +322,6 @@ const getAllProjectsDetails = (req, res, next) => {
     })
 }
 
-const createClient = (req, res, next) => {
-    const {
-        usertoken,
-        firstName,
-        secondName,
-        title,
-        email,
-        businessName,
-        mobile
-    } = req.body;
-
-    
-}
-
 module.exports = {
     createProject,
     getAllProjects,
