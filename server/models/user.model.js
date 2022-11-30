@@ -40,6 +40,15 @@ const UserSchema = new Schema({
     projects: [String],
     // clients under the user
     clients: [String],
+    socialAuth: {
+        google: {
+            status: Boolean,
+            id: String,
+            email: String,
+            name: String,
+            profilePicUrl: String
+        }
+    },
     info: {
         address: {
             country: String,

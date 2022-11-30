@@ -6,6 +6,7 @@ const { User } = require('../models/user.model');
 const speakeasy = require('speakeasy');
 const qrcode = require('qrcode');
 const { generateResponse } = require('../helpers');
+const { OAuth2Client } = require('google-auth-library');
 
 const signup = (req, res, next) => {
     // collect credentials
@@ -723,6 +724,152 @@ const me = (req, res, next) => {
     });
 }
 
+const googleAuth = async (req, res, next) => {
+    const { access_token, id_token } = req.body;
+
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+
+        const authPayload = ticket.getPayload();
+
+        const uid = authPayload['sub'];
+
+        console.log(authPayload);
+
+        // check if user exists in DB
+
+        User.findOne({email: authPayload.email}).then((user) => {
+            if (user) {
+                // user exists
+                const token = jwt.sign(
+                    {
+                        uid: user.uid,
+                        email: `${user.email}`,
+                        username: `${user.username}`,
+                        usertype: `${user.usertype}`
+                    },
+                    process.env.JWT_TOKEN_KEY ?? "hfughrvcsliidv8eiiweeopi",
+                    {
+                        expiresIn: "1h"
+                    }
+                );
+                const { twoFA, password, ...dataToInclude} = user._doc;
+                return res.status(200).json({
+                    success: true,
+                    message: "Google Auth Successfull",
+                    usertoken: {
+                        user: {...dataToInclude, twoFA: {status: twoFA.status}},
+                        token: token
+                    },
+                    error: {
+                        status: false,
+                        code: null
+                    }
+                })
+            } else {
+                // user does not exist, create new user
+                const newUserID = v4ID();
+                const newUser = new User({
+                    username: authPayload.name,
+                    email: authPayload.email,
+                    uid: newUserID,
+                    usertype: "individual",
+                    password: "",
+                    socialAuth: {
+                        google: {
+                            status: true,
+                            id: uid,
+                            email: authPayload.email,
+                            name: authPayload.name,
+                            profilePicUrl: authPayload.picture
+                        }
+                    },
+                    isVerified: false
+                });
+
+                newUser.save().then((user) => {
+                    const { twoFA, password, ...dataToInclude} = user._doc;
+
+                    // login the user
+                    const token = jwt.sign(
+                        {
+                            uid: user.uid,
+                            email: `${user.email}`,
+                            username: `${user.username}`,
+                            usertype: `${user.usertype}`
+                        },
+                        process.env.JWT_TOKEN_KEY ?? "hfughrvcsliidv8eiiweeopi",
+                        {
+                            expiresIn: "1h"
+                        }
+                    );
+                    return generateResponse({
+                        req,
+                        res,
+                        type: "success",
+                        data: {
+                            message: "Added new user Successfully",
+                            usertoken: {
+                                user: {...dataToInclude, twoFA: {status: twoFA.status}},
+                                token: token
+                            }
+                        }
+                    })
+                }).catch((error) => {
+                    return generateResponse({
+                        req,
+                        res,
+                        type: "db_error",
+                        data: {
+                            message: "Error Saving User to DB!!",
+                            error: {
+                                status: true,
+                                code: "db_error",
+                                debug: error
+                            }
+                        }
+                    })
+                })
+            }
+        }).catch((err) => {
+            return generateResponse({
+                req,
+                res,
+                type: "db_error",
+                data: {
+                    message: "Error Fetching User from DB!!",
+                    error: {
+                        status: true,
+                        code: "db_error",
+                        debug: err
+                    }
+                }
+            })
+        });
+    } catch (error) {
+        console.log(error);
+
+        return res.status(400).json({
+            success: false,
+            message: "Google Auth Failed",
+            usertoken: {
+                user: null,
+                token: null
+            },
+            error: {
+                status: true,
+                code: "google_auth_failed",
+                debug: error
+            }
+        })
+    }
+}
+
 module.exports = {
     signup,
     login,
@@ -732,5 +879,6 @@ module.exports = {
     validate2FAtoken,
     isTwoFA,
     disable2FA,
-    me
+    me,
+    googleAuth
 }
