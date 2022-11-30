@@ -10,7 +10,7 @@ const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');
 const projectRouter = require('./routes/project');
 const teamsRouter = require('./routes/teams');
-const logger = require('morgan');
+const logger = require('morgan');   
 
 app.use(cors());
 
