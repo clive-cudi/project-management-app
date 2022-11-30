@@ -6,9 +6,42 @@ const e = require('express');
 
 
 const getAllProjects = (req, res, next) => {
-    const { usertoken } = req.body;
+    const { usertoken, pid } = req.body;
 
-
+    User.findOne({uid: usertoken.uid}).then((user) => {
+        if (user) {
+            return res.status(200).json({
+                success: true,
+                message: "Fetched all project ids successfully",
+                pids: user.projects,
+                error: {
+                    status: false,
+                    code: null
+                }
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+                pids: [],
+                error: {
+                    status: true,
+                    code: "user_not_found"
+                }
+            })
+        }
+    }).catch((w) => {
+        return res.status(404).json({
+            success: false,
+            message: "Error fetching user from DB",
+            pids: [],
+            error: {
+                status: true,
+                code: "db_error",
+                debug: w
+            }
+        })
+    });
 }
 
 const createProject = (req, res, next) => {
@@ -141,14 +174,152 @@ const createProject = (req, res, next) => {
 }
 
 const getProjectById = (req, res, next) => {
-    const { usertoken } = req.body;
+    const { usertoken, pid } = req.body;
     
-
+    Project.findOne({pid: pid}).then((pjct) => {
+        if (pjct) {
+            return res.status(200).json({
+                success: true,
+                message: "Found project",
+                project: pjct,
+                error: {
+                    status: false,
+                    code: null
+                }
+            })
+        } else {
+            res.status(404).json({
+                success: false,
+                message: "Project not found in DB",
+                project: null,
+                error: {
+                    status: true,
+                    code: "not_found"
+                }
+            })
+        }
+    }).catch((db_err) => {
+        return res.status(400).json({
+            success: false,
+            message: "DB error Occurred",
+            project: null,
+            error: {
+                status: true,
+                code: "db_error",
+                debug: db_err
+            }
+        })
+    })
 }
 
 const getProjectsById_multiple = (req, res, next) => {
-    const { usertoken } = req.body;
+    const { usertoken, pids } = req.body;
     // project ids passed as string[]
+
+    Project.find({pid: {
+        $in: tids
+    }}).then((pjcts) => {
+        if (pjcts) {
+            return res.status(200).json({
+                success: true,
+                message: "Fetched projects successfully",
+                projects: pjcts,
+                error: {
+                    status: false,
+                    code: null
+                }
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "No projects found",
+                projects: [],
+                error: {
+                    status: true,
+                    code: "not_found"
+                }
+            })
+        }
+    }).catch((projects_db_err) => {
+        return res.status(400).json({
+            success: false,
+            message: "DB error occurred",
+            projects: [],
+            error: {
+                status: true,
+                code: "db_error",
+                debug: projects_db_err
+            }
+        })
+    })
+}
+
+const getAllProjectsDetails = (req, res, next) => {
+    const { usertoken } = req.body;
+
+    User.findOne({uid: usertoken.uid}).then((usr) => {
+        if (usr) {
+            // get all project id's associated with the user
+            Project.find({pid: {
+                $in: usr.projects ?? []
+            }}).then((pjcts) => {
+                if (pjcts.length > 0) {
+                    return res.status(200).json({
+                        success: true,
+                        message: "Fetched all project Details successfully",
+                        projects: pjcts,
+                        error: {
+                            status: false,
+                            code: null
+                        }
+                    })
+                } else {
+                    return res.status(404).json({
+                        success: false,
+                        message: "No Projects found",
+                        projects: [],
+                        error: {
+                            status: true,
+                            code: "not_found",
+                            debug: null
+                        }
+                    })
+                }
+            }).catch((pjct_db_err) => {
+                return res.status(400).json({
+                    success: false,
+                    message: "Projects DB error occurred",
+                    projects: [],
+                    error: {
+                        status: true,
+                        code: "db_error",
+                        debug: pjct_db_err
+                    }
+                })
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "User not found in DB",
+                projects: [],
+                error: {
+                    status: true,
+                    code: "user_not_found"
+                }
+            })
+        }
+    }).catch((usr_db_err) => {
+        return res.status(400).json({
+            sucess: false,
+            message: "DB error occurred",
+            projects: [],
+            error: {
+                status: true,
+                code: "db_error",
+                debug: usr_db_err
+            }
+        })
+    })
 }
 
 const createClient = (req, res, next) => {
@@ -166,5 +337,9 @@ const createClient = (req, res, next) => {
 }
 
 module.exports = {
-    createProject
+    createProject,
+    getAllProjects,
+    getProjectById,
+    getProjectsById_multiple,
+    getAllProjectsDetails
 };
