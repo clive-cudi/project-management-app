@@ -11,7 +11,7 @@ router.post("/project-by-id", authVerify, ProjectController.getProjectById);
 
 router.post('/projects-multiple-id', authVerify, ProjectController.getProjectsById_multiple);
 
-router.post("/projects-details", authVerify, ProjectController.getAllProjectsDetails);
+router.get("/projects-details", authVerify, ProjectController.getAllProjectsDetails);
 
 
 module.exports = router;

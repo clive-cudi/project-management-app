@@ -74,7 +74,7 @@ const createProject = (req, res, next) => {
                     },
                     budget: budget,
                     description: description,
-                    clients: [].push(client),
+                    clients: [client],
                     parent: {
                         uid: usertoken.uid
                         // include usertype of the parent
@@ -217,7 +217,7 @@ const getProjectsById_multiple = (req, res, next) => {
     // project ids passed as string[]
 
     Project.find({pid: {
-        $in: tids
+        $in: pids
     }}).then((pjcts) => {
         if (pjcts) {
             return res.status(200).json({
