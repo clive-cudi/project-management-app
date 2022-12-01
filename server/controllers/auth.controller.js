@@ -758,18 +758,56 @@ const googleAuth = async (req, res, next) => {
                     expiresIn: "1h"
                 }
             );
-            const { twoFA, password, ...dataToInclude} = user._doc;
-            return res.status(200).json({
-                success: true,
-                message: "Google Auth Successfull",
-                usertoken: {
-                    user: {...dataToInclude, twoFA: {status: twoFA.status}},
-                    token: token
-                },
-                error: {
-                    status: false,
-                    code: null
+
+            // update the social field
+
+            const googleCredentials = {
+                google: {
+                    status: true,
+                    id: uid,
+                    email: authPayload.email,
+                    name: authPayload.name,
+                    profilePicUrl: authPayload.picture
                 }
+            }
+
+            User.findOneAndUpdate(
+                {uid: user.uid},
+                {$set: {
+                    "socialAuth.google": {...googleCredentials.google}
+                }}
+            ).then((updated_user) => {
+                const { twoFA, password, ...dataToInclude} = updated_user._doc;
+
+                // console.log(dataToInclude);
+
+                return res.status(200).json({
+                    success: true,
+                    message: "Google Auth Successfull",
+                    usertoken: {
+                        user: {...dataToInclude, twoFA: {status: twoFA.status}},
+                        token: token
+                    },
+                    error: {
+                        status: false,
+                        code: null
+                    }
+                })
+            }).catch((err) => {
+                console.log(err);
+                return res.status(200).json({
+                    success: false,
+                    message: "Google Auth failed. Update of google auth user credentials failed",
+                    usertoken: {
+                        user: {...dataToInclude, twoFA: {status: twoFA.status}},
+                        token: token
+                    },
+                    error: {
+                        status: true,
+                        code: "user_google_auth_update_fail",
+                        debug: err
+                    }
+                })
             })
         } else {
             // user does not exist, create new user
