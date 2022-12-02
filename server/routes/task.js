@@ -14,4 +14,10 @@ router.get("/mytasksbyid", authVerify, TaskController.getMyTasksById);
 
 router.delete("/remove/:tid", authVerify, TaskController.removeTask);
 
+router.delete("/delete", authVerify, TaskController.deleteTask);
+
+router.post("/update-status", authVerify, TaskController.updateTaskStatus);
+
+router.delete("/delete-multiple", authVerify, TaskController.removeMultiple);
+
 module.exports = router;

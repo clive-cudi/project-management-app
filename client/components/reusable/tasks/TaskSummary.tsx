@@ -10,6 +10,7 @@ import { Spinner } from "../widgets";
 import { AiOutlineDelete } from "react-icons/ai";
 import { HiSwitchHorizontal } from "react-icons/hi";
 import { removeAtIndex } from "../../../utils";
+import { useMutation } from "react-query";
 
 interface TaskSummary_Props {
   tasks: {
@@ -52,6 +53,18 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
     } else if  (checked && !markedTasks.includes(id)) {
       setMarkedTasks([...new Set([...markedTasks, id])]);
     }
+  }
+
+  function handleMarkAs() {
+
+  }
+
+  function handleChangePriority() {
+
+  }
+
+  function handleRemove() {
+    
   }
 
   useEffect(() => {
