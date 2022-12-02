@@ -44,3 +44,7 @@ function getPosition(el: HTMLElement | null) {
       y: yPosition
     };
   }
+
+export function removeAtIndex<T>(array: T[], index: number) {
+    return array.filter((_, i) => i !== index);
+}

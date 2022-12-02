@@ -116,6 +116,66 @@
             background: #5D5FEF;
         }
     }
+    .ts_action_nav {
+        display: flex;
+        height: 50px;
+        width: 100%;
+        padding: 10px;
+        align-items: center;
+        justify-content: flex-end;
+        column-gap: 10px;
+        animation: animate-ts-action-nav 0.4s linear forwards;
+        transform-origin: bottom;
+        button {
+            display: flex;
+            height: 100%;
+            width: fit-content;
+            align-items: center;
+            background: none;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid gray;
+            transition-timing-function: ease-in-out;
+            transition-duration: 0.4s;
+            font-family: Mulish;
+            font-size: 13px;
+            font-weight: 400;
+            &.ts_action_variant_mark {
+                border: 1px solid rgb(35, 176, 35);
+                color: rgb(35, 176, 35);
+                &:hover {
+                    background: rgb(35, 176, 35);
+                    color: white;
+                }
+            }
+            &.ts_action_variant_change {
+                border: 1px solid rgb(100, 100, 249);
+                color: rgb(100, 100, 249);
+                &:hover {
+                    background: rgb(100, 100, 249);
+                    color: white;
+                }
+            }
+            &.ts_action_variant_delete {
+                border: 1px solid crimson;
+                color: crimson;
+                &:hover {
+                    background: crimson;
+                    color: white;
+                }
+            }
+            > span {
+                display: flex;
+                height: 100%;
+                width: 20px;
+                align-items: center;
+                justify-content: center;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 }
 
 .tos_wrapper {
@@ -190,5 +250,17 @@
             font-size: 16px;
             font-weight: 500;
         }
+    }
+}
+
+@keyframes animate-ts-action-nav {
+    0% {
+        transform: scaleY(0)
+    }
+    60% {
+        transform: scaleY(1.1)
+    }
+    100% {
+        transform: scaleY(1)
     }
 }

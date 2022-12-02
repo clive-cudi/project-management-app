@@ -14,6 +14,7 @@ import { TaskQueries } from "../../../utils";
 export const HomeTab = ({}): JSX.Element => {
   const [taskSummaryData, setTaskSummaryData] = useState<
     {
+      id: string;
       label: string;
       isChecked: boolean;
       badgeStatus: TaskCategory | Priority_;
@@ -27,6 +28,7 @@ export const HomeTab = ({}): JSX.Element => {
   useEffect(() => {
     setTaskSummaryData(
       tasks_Store.map((tsk) => ({
+        id: tsk.taskID,
         label: tsk.name,
         isChecked: true,
         badgeStatus: tsk.priority
