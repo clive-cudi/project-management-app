@@ -4,6 +4,7 @@ const { v4: v4ID } = require('uuid');
 const { Task } = require('../models/task.model');
 const { generateResponse } = require('../helpers/index');
 const e = require('express');
+const { Project } = require('../models/project.model');
 
 const getAllTasks = (req, res, next) => {
     const { usertoken } = req.body;
@@ -53,7 +54,9 @@ const getAllTasks = (req, res, next) => {
 
 const createTask = (req, res, next) => {
     // generate a new unique taskID and add it to the list of the chosen user
-    const { usertoken, name, description, start, finish, priority, type, project } = req.body;
+    const { usertoken, name, description, start, finish, priority, type, project: targetProject = "" } = req.body;
+
+    const project = targetProject === "" ? "me" : targetProject;
     
     User.findOne({uid: usertoken.uid}).then((user) => {
         if (user) {
@@ -84,36 +87,73 @@ const createTask = (req, res, next) => {
             // update the parent project task field with the TID
             // if project === me, then assign the task directly to the user
             newTask.save().then((taskDoc) => {
-                User.updateOne(
-                    {uid: usertoken.uid},
-                    {$push: {
-                        tasks: taskDoc.taskID ?? taskID
-                    }}
-                ).then(() => {
-                    return res.status(200).json({
-                        success: true,
-                        message: "Task Created!!",
-                        task: taskDoc,
-                        error: {
-                            status: false,
-                            code: null
-                        }
+                if (project === "me") {
+                    console.log("Me project")
+                    // assign the task directly to the user => rendered to <TaskSummary />
+                    User.updateOne(
+                        {uid: usertoken.uid},
+                        {$push: {
+                            tasks: taskDoc.taskID ?? taskID
+                        }}
+                    ).then(() => {
+                        return res.status(200).json({
+                            success: true,
+                            message: "Task Created!!",
+                            task: taskDoc,
+                            error: {
+                                status: false,
+                                code: null
+                            }
+                        })
+                    }).catch((err) => {
+                        return res.status(400).json({
+                            success: false,
+                            message: "Failed to update task list",
+                            usertoken: {
+                                user: null,
+                                token: null
+                            },
+                            error: {
+                                status: true,
+                                code: "task_list_update_fail",
+                                debug: err
+                            }
+                        })
                     })
-                }).catch((err) => {
-                    return res.status(400).json({
-                        success: false,
-                        message: "Failed to update task list",
-                        usertoken: {
-                            user: null,
-                            token: null
-                        },
-                        error: {
-                            status: true,
-                            code: "task_list_update_fail",
-                            debug: err
-                        }
+                } else {
+                    // update the task list in the project given
+                    console.log("Project task")
+                    Project.updateOne(
+                        {pid: project},
+                        {$push: {
+                            tasks: taskDoc.taskID ?? taskID
+                        }}
+                    ).then((updatedProject) => {
+                        return res.status(200).json({
+                            success: true,
+                            message: "Task Created!!",
+                            task: taskDoc,
+                            error: {
+                                status: false,
+                                code: null
+                            }
+                        })
+                    }).catch((project_task_update_error) => {
+                        return res.status(400).json({
+                            success: false,
+                            message: "Failed to update task list",
+                            usertoken: {
+                                user: null,
+                                token: null
+                            },
+                            error: {
+                                status: true,
+                                code: "task_list_update_fail",
+                                debug: project_task_update_error
+                            }
+                        })
                     })
-                })
+                }
             }).catch((error) => {
                 return res.status(400).json({
                     success: false,
@@ -340,14 +380,231 @@ const removeTask = (req, res, next) => {
     }
 }
 
-const removeMultiple = (req, res, next) => {
-    
+const deleteTask = (req, res, next) => {
+    const { usertoken, tid } = req.body;
+
+    Task.findOneAndDelete({taskID: tid}).then((delTask) => {
+        const taskParentID = delTask.parent.project.pid;
+
+        if (taskParentID === "me") {
+            // update the user schema
+            User.updateOne(
+                {uid: usertoken.uid},
+                {$pull: {
+                    tasks: tid
+                }}
+            ).then((usr) => {
+                return res.status(200).json({
+                    success: true,
+                    message: "Task Deleted!!",
+                    task: delTask,
+                    error: {
+                        status: false,
+                        code: null
+                    }
+                })
+            }).catch((usr_task_list_update_error) => {
+                return res.status(400).json({
+                    success: false,
+                    message: "Failed to update task list",
+                    usertoken: {
+                        user: null,
+                        token: null
+                    },
+                    error: {
+                        status: true,
+                        code: "task_list_update_fail",
+                        debug: usr_task_list_update_error
+                    }
+                })
+            })
+        } else {
+            // update the project schema
+            
+            Project.updateOne(
+                {pid: taskParentID},
+                {$pull: {
+                    tasks: tid
+                }}
+            ).then((pjct) => {
+                return res.status(200).json({
+                    success: true,
+                    message: "Task Deleted!!",
+                    task: delTask,
+                    error: {
+                        status: false,
+                        code: null
+                    }
+                });
+            }).catch((pjct_task_list_update_error) => {
+                return res.status(400).json({
+                    success: false,
+                    message: "Failed to update task list",
+                    usertoken: {
+                        user: null,
+                        token: null
+                    },
+                    error: {
+                        status: true,
+                        code: "task_list_update_fail",
+                        debug: pjct_task_list_update_error
+                    }
+                })
+            })
+        }
+    }).catch((task_find_error) => {
+        return res.status(404).json({
+            success: false,
+            message: "Task not found",
+            usertoken: {
+                user: null,
+                token: null,
+            },
+            error: {
+                status: true,
+                code: "task_not_found",
+                debug: task_find_error
+            }
+        })
+    })
 }
+
+const removeMultiple = (req, res, next) => {
+    const { usertoken, tids } = req.body;
+
+    Task.find({taskID: {$in: tids.length > 0 ? tids : []}}).then((selectTasks) => {
+        const personalTasks = selectTasks.filter((tsk) => tsk.parent.project.pid === "me").map((persTask) => persTask.taskID);
+        const projectBasedTasks = selectTasks.filter((tsk__) => tsk__.parent.project.pid !== "me");
+
+        // clear personal tasks
+        User.updateOne(
+            {uid: usertoken.uid},
+            {$pullAll: {
+                tasks: personalTasks
+            }}
+        ).then(() => {
+            // clear project based tasks
+            Project.updateMany(
+                {pid: {
+                    $in: projectBasedTasks.map((pbt) => pbt.parent.project.pid)
+                }},
+                {$pullAll: {
+                    tasks: projectBasedTasks.map((pbtsk) => pbtsk.taskID)
+                }}
+            ).then((pjct_updated) => {
+                Task.deleteMany({taskID: {$in: tids.length > 0 ? tids : []}}).then(() => {
+                    return res.status(200).json({
+                        success: true,
+                        message: "Tasks Deleted!!",
+                        tasks: selectTasks,
+                        error: {
+                            status: false,
+                            code: null
+                        }
+                    })
+                }).catch((tasks_delete_error) => {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Failed to delete tasks",
+                        tasks: selectTasks,
+                        error: {
+                            status: true,
+                            code: "delete_task_error",
+                            debug: tasks_delete_error
+                        }
+                    })
+                })
+            }).catch((pjct_update_err) => {
+                return res.status(400).json({
+                    success: false,
+                    message: "Failed to update task list at project level",
+                    usertoken: {
+                        user: null,
+                        token: null
+                    },
+                    error: {
+                        status: true,
+                        code: "task_list_update_fail",
+                        debug: pjct_update_err
+                    }
+                })
+            })
+        }).catch((usr_update_err) => {
+            return res.status(400).json({
+                success: false,
+                message: "Failed to update task list at user level",
+                usertoken: {
+                    user: null,
+                    token: null
+                },
+                error: {
+                    status: true,
+                    code: "task_list_update_fail",
+                    debug: usr_update_err
+                }
+            })
+        })
+    }).catch((task_find_error) => {
+        return res.status(404).json({
+            success: false,
+            message: "Task not found",
+            usertoken: {
+                user: null,
+                token: null,
+            },
+            error: {
+                status: true,
+                code: "task_not_found",
+                debug: task_find_error
+            }
+        })
+    })
+}
+//     Task.deleteMany({taskID: {$in: tids.length > 0 ? tids : []}}).then((deletedTasks) => {
+//         User.updateOne(
+//             {uid: usertoken.uid},
+//             {$pullAll: {
+//                 tasks: tids.length > 0 ? tids : []
+//             }}
+//         ).then((usr) => {
+
+//         })
+//     })
 
 const updateTaskStatus = (req, res, next) => {
     const { usertoken } = req.body;
-    const { tid } = req.params || req.body;
+    const { tid } = req.body;
     const { status } = req.body;
+
+    Task.findOneAndUpdate(
+        {taskID: tid},
+        {$set: {
+            status: status
+        }}
+    ).then((updated_task) => {
+        console.log(tid);
+        console.log(updated_task)
+        return res.status(200).json({
+            success: true,
+            message: `Task status updated to ${status}`,
+            task: updated_task,
+            error: {
+                status: false,
+                code: null
+            }
+        });
+    }).catch((status_update_error) => {
+        return res.status(400).json({
+            success: true,
+            message: "Task status update failed",
+            task: null,
+            error: {
+                status: true,
+                code: "task_status_update_fail",
+                debug: status_update_error
+            }
+        });
+    })
 }
 
 module.exports = {
@@ -356,5 +613,8 @@ module.exports = {
     getTaskById,
     getMultipleTasksById,
     getMyTasksById,
-    removeTask
+    removeTask,
+    deleteTask,
+    removeMultiple,
+    updateTaskStatus
 }
