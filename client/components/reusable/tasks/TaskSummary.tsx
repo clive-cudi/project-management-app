@@ -11,6 +11,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { HiSwitchHorizontal } from "react-icons/hi";
 import { removeAtIndex } from "../../../utils";
 import { useMutation } from "react-query";
+import { MarkAsModal, ChangePriorityModal, ErrorModal } from "../modals";
 
 interface TaskSummary_Props {
   tasks: {
@@ -56,15 +57,15 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   }
 
   function handleMarkAs() {
-
+    openModal(<MarkAsModal title={"Mark as ..."} options={[{label: "todo", value: "todo"}, {label: "pending", value: "pending"}, {label: "done", value: "done"}]} />)
   }
 
   function handleChangePriority() {
-
+    openModal(<ChangePriorityModal title={"Change Priority to ..."} options={[{label: "low", value: "low"}, {label: "medium", value: "medium"}, {label: "high", value: "high"}]} />)
   }
 
   function handleRemove() {
-    
+    openModal(<ErrorModal title={"Delete Confirmation"} message={"Are you sure you want to delete the selected items."} type={"error"} btn_label={"Delete"} btn_onclick={() => {}} />)
   }
 
   useEffect(() => {
@@ -138,9 +139,9 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
       </div>
       {markedTasks.length > 0 ? (
         <div className={styles.ts_action_nav}>
-            <button className={`${styles["ts_action_variant_mark"]}`}><span><BsBookmarkCheck /></span>Mark as</button>
-            <button className={`${styles["ts_action_variant_change"]}`}><span><HiSwitchHorizontal /></span>Change Priority</button>
-            <button className={`${styles["ts_action_variant_delete"]}`}><span><AiOutlineDelete /></span>Remove</button>
+            <button className={`${styles["ts_action_variant_mark"]}`} onClick={handleMarkAs}><span><BsBookmarkCheck /></span>Mark as</button>
+            <button className={`${styles["ts_action_variant_change"]}`} onClick={handleChangePriority}><span><HiSwitchHorizontal /></span>Change Priority</button>
+            <button className={`${styles["ts_action_variant_delete"]}`} onClick={handleRemove}><span><AiOutlineDelete /></span>Remove</button>
         </div>
       ) : null}
     </div>

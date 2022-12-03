@@ -1,0 +1,53 @@
+.masm_wrapper {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    max-width: 300px;
+    max-height: 300px;
+    padding: 10px;
+    flex-direction: column;
+    border-radius: 6px;
+    animation: animate-modal-form-wrapper 0.4s linear forwards;
+    h3 {
+        font-family: Roboto;
+        font-size: 20px;
+        font-weight: 400;
+        text-align: center;
+        height: 50px;
+    }
+    .masm_content {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+    }
+    .submit_strip {
+        display: flex;
+        height: fit-content;
+        width: 100%;
+        padding-top: 6px;
+        justify-content: flex-end;
+        column-gap: 6px;
+        button {
+            min-width: 0px;
+        }
+        :last-child {
+            border: 1px solid gray;
+            border-radius: 6px;
+            color: black;
+            &:hover {
+                color: white;
+                background: #5030E5;
+                border: 1px solid #5030E5;
+            }
+        }
+    }
+}
+
+@keyframes animate-modal-form-wrapper {
+    0%
+    {
+        margin-top: 20px;
+    }
+}
