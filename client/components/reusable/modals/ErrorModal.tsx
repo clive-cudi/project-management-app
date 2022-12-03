@@ -1,9 +1,11 @@
 import { ReactNode } from "react";
 import styles from "../../../styles/components/reusable/modals/errorModal.module.scss";
 import { useModal } from "../../../hooks";
-import { GoAlert } from 'react-icons/go';
 import { useRouter } from "next/router";
 import { RegularBtn } from "../../reusable";
+import { GoAlert } from 'react-icons/go';
+import { FcInfo, FcOk } from "react-icons/fc";
+
 
 interface ErrorModalPropTypes {
     message: string
@@ -24,10 +26,23 @@ export function ErrorModal({type = "error", message, redirectUrl, icon, title, b
         router.push(url)
     }
 
+    function renderIcon(icon_ctx: typeof type): JSX.Element {
+        switch (icon_ctx) {
+            case "error":
+                return <GoAlert fontSize={50} color={"crimson"} />;
+            case "info":
+                return <FcInfo fontSize={50} />;
+            case "success":
+                return <FcOk fontSize={50} />;
+            default:
+                return <GoAlert fontSize={50} />;
+        }
+    }
+
     return (
         <div className={styles.err_wrapper}>
             <div className={`${styles.err_icon} ${styles[`err_icon_${type}`]}`}>
-                {icon ? icon : <GoAlert  fontSize={50} color='crimson' /> }
+                {icon ? icon : renderIcon(type) }
             </div>
             <div className={styles.err_info}>
                 {/* <h2>{title ? title : `Error !`}</h2> */}
