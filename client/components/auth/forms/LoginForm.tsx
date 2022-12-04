@@ -105,7 +105,7 @@ export const LoginForm = (): JSX.Element => {
     return (
         <form onSubmit={(e)=>{e.preventDefault()}}>
             {/* eslint-disable-next-line */}
-            <InputDiv type={`text`} placeholder={`Enter UserName`} inputArgs={{name: "username"}} onChange={handleChange} icon={<img src="/auth/user_icon.png" alt="U" style={{...icon_img_styling}} />} />
+            {/* <InputDiv type={`text`} placeholder={`Enter UserName`} inputArgs={{name: "username"}} onChange={handleChange} icon={<img src="/auth/user_icon.png" alt="U" style={{...icon_img_styling}} />} /> */}
             {/* eslint-disable-next-line */}
             <InputDiv type={`text`} placeholder={`Enter Email *`} inputArgs={{name: "email"}} onChange={handleChange} icon={<img src="/auth/email_icon.png" alt="U" style={{...icon_img_styling}} />} />
             {/* eslint-disable-next-line */}
