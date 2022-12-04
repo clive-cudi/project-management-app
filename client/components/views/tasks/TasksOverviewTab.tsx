@@ -61,7 +61,7 @@ export const TasksOverviewTab = () => {
         <div className={styles.tot_content}>
             <div className={styles.tot_header}>
                 <div className={styles.tot_header_title}>
-                    <h2>Mobile App</h2>
+                    <h2>Overview</h2>
                 </div>
                 <div className={styles.tot_header_util}></div>
             </div>

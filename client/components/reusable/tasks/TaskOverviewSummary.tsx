@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import styles from "../../../styles/components/reusable/tasks/tasksummary.module.scss";
 import { TaskStatsCard } from "../cards";
+import { useTaskStore } from "../../../hooks";
 
 export const TaskOverviewSummary = (): JSX.Element => {
     const taskSummaryStatsData = useMemo(() => [
@@ -17,7 +18,8 @@ export const TaskOverviewSummary = (): JSX.Element => {
             label: "Completed",
             stats: 5
         }
-    ], [])
+    ], []);
+    const { tasks } = useTaskStore();
 
     return (
         <div className={styles.tos_wrapper}>

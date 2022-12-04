@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { TaskCategory, Priority_ } from "../../../types";
 import styles from "../../../styles/components/reusable/tasks/tasksummary.module.scss";
 import { IconBtn } from "../buttons";
 import { BsFilter, BsPlus, BsBookmarkCheck } from "react-icons/bs";
 import { TaskInfoRow } from "./TaskInfoRow";
-import { useModal, useTaskStore, useTabRenderer } from "../../../hooks";
+import { useModal, useTaskStore, useTabRenderer, useContextMenu } from "../../../hooks";
 import { CreateTaskFormWithAssignees } from "../../forms";
 import { Spinner } from "../widgets";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -29,6 +29,14 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   const { isLoading } = useTaskStore();
   const { switchTab } = useTabRenderer();
   const [markedTasks, setMarkedTasks] = useState<string[]>([]);
+  const [filterTag, setFilterTag] = useState<string>("");
+  const filterTasksOptions = useMemo(() => [
+    <button key={22} onClick={() => {setFilterTag("high")}}>High</button>,
+    <button key={24} onClick={() => {setFilterTag("medium")}}>Medium</button>,
+    <button key={26} onClick={() => {setFilterTag("low")}}>Low</button>,
+    <button key={20} onClick={() => {setFilterTag("")}}>Remove Filter</button>
+  ], []);
+  const { openAtCursor } = useContextMenu();
 
   function handleCreateTask() {
     openModal(
@@ -68,6 +76,18 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
     openModal(<ErrorModal title={"Delete Confirmation"} message={"Are you sure you want to delete the selected items."} type={"error"} btn_label={"Delete"} btn_onclick={() => {}} />)
   }
 
+  function handleRemoveRequest() {
+
+  }
+
+  function handlePriorityChangeRequest(priority: string) {
+
+  }
+
+  function handleMarkAsRequest(mark: string) {
+
+  }
+
   useEffect(() => {
     console.log(markedTasks);
   }, [markedTasks]);
@@ -87,7 +107,7 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
           >
             View All
           </span>
-          <IconBtn icon={<BsFilter />} variant={"outlined"} />
+          <IconBtn icon={<BsFilter />} variant={"outlined"} onClick={(e) => {openAtCursor(e, filterTasksOptions)}} />
         </div>
       </div>
       <div className={styles.ts_new_task_wrapper}>
@@ -109,27 +129,55 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
       <div className={styles.ts_tasks_lists}>
         {tasks.length > 0 ? (
           tasks.map((task, ix) => {
-            return (
-              <TaskInfoRow
-                key={ix}
-                badge={{ type: task.badgeStatus }}
-                label={task.label}
-                onChangeHandler={(e) => {
-                  // handleMarkAction(task.id, e.target.checked);
-                  if (e.target.checked === true) {
-                    setMarkedTasks([...new Set([...markedTasks, task.id])]);
-                  } else {
-                    if (markedTasks.includes(task.id)) {
-                      const targetIndex = markedTasks.findIndex((taskID) => taskID === task.id);
-                      setMarkedTasks(removeAtIndex(markedTasks, targetIndex));
+            if (filterTag.length > 0) {
+              if (filterTag === task.badgeStatus) {
+                return (
+                  <TaskInfoRow
+                    key={ix}
+                    badge={{ type: task.badgeStatus }}
+                    label={task.label}
+                    onChangeHandler={(e) => {
+                      // handleMarkAction(task.id, e.target.checked);
+                      if (e.target.checked === true) {
+                        setMarkedTasks([...new Set([...markedTasks, task.id])]);
+                      } else {
+                        if (markedTasks.includes(task.id)) {
+                          const targetIndex = markedTasks.findIndex((taskID) => taskID === task.id);
+                          setMarkedTasks(removeAtIndex(markedTasks, targetIndex));
+                        }
+                      }
+                      console.log(
+                        `Check ${task.label}: ${e.target.checked}\ntaskID: ${task.id}`
+                      );
+                    }}
+                  />
+                );
+              } else {
+                return null;
+              }
+            } else {
+              return (
+                <TaskInfoRow
+                  key={ix}
+                  badge={{ type: task.badgeStatus }}
+                  label={task.label}
+                  onChangeHandler={(e) => {
+                    // handleMarkAction(task.id, e.target.checked);
+                    if (e.target.checked === true) {
+                      setMarkedTasks([...new Set([...markedTasks, task.id])]);
+                    } else {
+                      if (markedTasks.includes(task.id)) {
+                        const targetIndex = markedTasks.findIndex((taskID) => taskID === task.id);
+                        setMarkedTasks(removeAtIndex(markedTasks, targetIndex));
+                      }
                     }
-                  }
-                  console.log(
-                    `Check ${task.label}: ${e.target.checked}\ntaskID: ${task.id}`
-                  );
-                }}
-              />
-            );
+                    console.log(
+                      `Check ${task.label}: ${e.target.checked}\ntaskID: ${task.id}`
+                    );
+                  }}
+                />
+              );
+            }
           })
         ) : isLoading ? (
           <Spinner />
