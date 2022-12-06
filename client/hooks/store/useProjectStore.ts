@@ -1,4 +1,4 @@
-import create from "zustand/react";
+import create from "zustand";
 import { projectRes } from "../../types";
 
 interface ProjectStoreType {
@@ -17,16 +17,18 @@ export const useProjectStore = create<ProjectStoreType>()((set) => {
         projectIds: [],
         isLoading: false,
         add(project) {
-            
+            return set((state) => {
+                return {projects: [...state.projects, project]}
+            })
         },
         addMultiple(projects) {
-            
+            return set((state) => ({projects: projects}))
         },
         setLoading(isLoading) {
-            
+            return set((state) => ({isLoading: isLoading}))
         },
         remove(pid) {
-            
+            return set((state) => ({projects: [...state.projects].filter((pjct) => pjct.pid !== pid)}))
         },
     }
 })

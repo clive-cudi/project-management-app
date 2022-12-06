@@ -1,5 +1,5 @@
 import create from "zustand";
-import { taskRes } from "../../types";
+import { taskRes, GeneralTaskStatus_ } from "../../types";
 
 interface TasksStoreType {
   tasks: taskRes[];
@@ -7,8 +7,9 @@ interface TasksStoreType {
   isLoading: boolean,
   add: (task: taskRes) => void;
   addMultiple: (tasks: taskRes[]) => void;
-  setLoading: (isLoading: boolean) => void
+  setLoading: (isLoading: boolean) => void;
   remove: (taskID: string) => void;
+  changeTaskStatus: (taskID: string, status: GeneralTaskStatus_) => void
 }
 
 function removeTaskById(arr: taskRes[], id: string): taskRes[] {
@@ -42,5 +43,13 @@ export const useTaskStore = create<TasksStoreType>()((set) => {
           tasks: [...state.tasks].filter((tsk) => tsk.taskID !== taskID),
         };
       }),
+    changeTaskStatus: (taskID, status) => set((state) => ({
+      tasks: [...state.tasks].map((tsk) => {
+        if (tsk.taskID === taskID) {
+          tsk["status"] = status;
+        }
+        return tsk;
+      })
+    }))
   };
 });

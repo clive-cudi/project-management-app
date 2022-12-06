@@ -51,6 +51,9 @@
                 line-height: 19px;
                 letter-spacing: 0.005em;
                 text-align: left;
+                &[data-elm-type = "empty-table-row"] {
+                    text-align: center;
+                }
             }
             &.tr_clickable {
                 cursor: pointer;
