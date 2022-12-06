@@ -48,3 +48,5 @@ function getPosition(el: HTMLElement | null) {
 export function removeAtIndex<T>(array: T[], index: number) {
     return array.filter((_, i) => i !== index);
 }
+
+export { CMPNT_REF_REGEX, EMAIL_REGEX } from "./regex";
