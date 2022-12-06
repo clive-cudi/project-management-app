@@ -3,13 +3,13 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
 import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn, ContextMenuWrapper } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
-import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore } from "../hooks";
+import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore, useProjectStore } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
 import { FiUsers, FiSettings } from "react-icons/fi";
-import { upperCaseFirstLetter, TaskQueries } from "../utils";
-import { useQuery } from "react-query";
+import { upperCaseFirstLetter, TaskQueries, ProjectQueries } from "../utils";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 const Home: NextPage & PageAuth = () => {
@@ -51,11 +51,15 @@ const Home: NextPage & PageAuth = () => {
   const { currentTab, switchTab } = useTabRenderer();
   const { ctxMenu, openAtCursor } = useContextMenu();
   const session = useSession();
-  const { addMultiple, tasks, setLoading } = useTaskStore();
+  const { addMultiple, setLoading } = useTaskStore();
+  const { addMultiple: addMultipleProjects, setLoading: setProjectsLoading } =  useProjectStore();
   const { getAllTasks, getMultipleTasksByID } = TaskQueries(session);
+  const { fetchAllProjects } = ProjectQueries(session);
   // fetch tasks
-  const { data: taskIDs_data} = useQuery("tasks_ids", getAllTasks);
-  const {data: fetchedTasks, isLoading, isError} = useQuery("tasks", () => getMultipleTasksByID(taskIDs_data?.tasks as string[]), {enabled: !!taskIDs_data?.tasks, onSuccess: (res) => {}});
+  const { data: taskIDs_data} = useQuery({queryKey: ["tasks_ids"], queryFn: getAllTasks});
+  const {data: fetchedTasks, isLoading, isError} = useQuery(["tasks"], () => getMultipleTasksByID(taskIDs_data?.tasks as string[]), {enabled: !!taskIDs_data?.tasks, onSuccess: (res) => {}});
+  // fetch projects
+  const { data: fetchedProjects, isLoading: isProjectsLoading, isError: projectsFetchError } = useQuery(["projects"], fetchAllProjects);
 
   useEffect(() => {
     if (fetchedTasks && !isError) {
@@ -64,8 +68,19 @@ const Home: NextPage & PageAuth = () => {
   }, [fetchedTasks, isError, addMultiple]);
 
   useEffect(() => {
+    if (fetchedProjects && !projectsFetchError) {
+      console.log(fetchedProjects);
+      addMultipleProjects(fetchedProjects.projects);
+    }
+  }, [fetchedProjects, projectsFetchError, addMultipleProjects]);
+
+  useEffect(() => {
     setLoading(isLoading);
-  }, [isLoading, setLoading])
+  }, [isLoading, setLoading]);
+
+  useEffect(() => {
+    setProjectsLoading(isProjectsLoading);
+  }, [isProjectsLoading, setProjectsLoading])
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {

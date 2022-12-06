@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { TaskQueries } from "../../utils";
 import { taskRes } from "../../types";
@@ -11,8 +11,8 @@ export function useTasks() {
     const tasks_ = useTaskStore((state) => state.tasks);
     const addTasks = useTaskStore((state) => state.addMultiple);
     const { getAllTasks, getTaskByID, getMultipleTasksByID } = TaskQueries(session);
-    const { data: taskIds } = useQuery("taskIds__", getAllTasks);
-    const {data: fetchedTasks, isLoading, isError} = useQuery("tasks__", () => getMultipleTasksByID(taskIds?.tasks as string[]), {enabled: !!taskIds?.tasks, onSuccess: (res) => {
+    const { data: taskIds } = useQuery(["taskIds__"], getAllTasks);
+    const {data: fetchedTasks, isLoading, isError} = useQuery(["tasks__"], () => getMultipleTasksByID(taskIds?.tasks as string[]), {enabled: !!taskIds?.tasks, onSuccess: (res) => {
         if (res.tasks.length ) {
             console.log(tasks_)
             setTasks(res.tasks);

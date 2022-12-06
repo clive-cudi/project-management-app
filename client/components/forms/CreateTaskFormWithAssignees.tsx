@@ -6,7 +6,7 @@ import { SearchInput, Table, RegularBtn } from "../reusable";
 import { useModal, useTasks, useTaskStore } from "../../hooks";
 import { TaskQueries, api } from "../../utils";
 import { useSession } from "next-auth/react";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { API_res_model, taskRes } from "../../types";
 
 interface CreateTaskFormWithAssignees_Props {

@@ -10,7 +10,7 @@ import { Spinner } from "../widgets";
 import { AiOutlineDelete } from "react-icons/ai";
 import { HiSwitchHorizontal } from "react-icons/hi";
 import { removeAtIndex } from "../../../utils";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { MarkAsModal, ChangePriorityModal, ErrorModal } from "../modals";
 
 interface TaskSummary_Props {

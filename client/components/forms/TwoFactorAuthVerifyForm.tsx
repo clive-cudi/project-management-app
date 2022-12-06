@@ -10,7 +10,7 @@ export const TwoFactorAuthVerifyForm = (): JSX.Element => {
     const [tokenData, setTokenData] = useState<string>("");
     const session = useSession();
     const router = useRouter();
-    const { openModal } = useModal();
+    const { openModal, closeModal } = useModal();
 
     function handleTokenVerifySubmit() {
         if (tokenData !== "") {
@@ -22,8 +22,9 @@ export const TwoFactorAuthVerifyForm = (): JSX.Element => {
                 }
             }).then((res)=>{
                 console.log(res.data);
-                openModal(<ErrorModal message={res.data.message} type={res.data.success ? "success" : "error"} />)
+                openModal(<ErrorModal message={res.data.message} type={res.data.success ? "success" : "error"} btn_label={"Dismiss"} />)
                 if (res.data.success === true) {
+                    // closeModal();
                     router.push('/');
                 }
             }).catch((err) => {

@@ -4,18 +4,19 @@ import { IconBtn, Table } from "../reusable";
 import { BsFilter, BsThreeDotsVertical } from "react-icons/bs";
 import TableData from "../../mock/tableDataProjectOverView.json";
 import { upperCaseFirstSentence } from "../../utils";
+import { useProjectStore } from "../../hooks";
 
 interface ProjectsOverview_Props {
     children?: React.ReactNode
 }
 
 export const ProjectsOverview = ({children}: ProjectsOverview_Props) => {
+    const { projects } = useProjectStore();
     const tableData = useMemo(() => {
         return [...TableData]
-    }, [])
-
-    const tableHeaders = tableData[0].headers.map((header)=> upperCaseFirstSentence(header, "_"));
-    const tableSortedData = tableData[0].data;
+    }, []);
+    const tableHeaders = useMemo(() => ["id", "project_name", "project_type", "health_status", "team", "start", "finish_date", "progress"].map((header)=> upperCaseFirstSentence(header, "_")), []);
+    const tableSortedData = projects.map((pjct, index) => [`${index+1}`, pjct.name, pjct.stage, pjct.stage, "__component@user_ribbons", pjct.info.created.time, pjct.info.expiry.time, `50%`])
 
     return (
         <div className={styles.pov_wrapper}>
