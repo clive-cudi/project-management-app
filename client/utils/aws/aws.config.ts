@@ -1,4 +1,6 @@
-export const AWS_PMT_RESOURCES_CONFIG = {
+import { S3Config } from "react-s3"
+
+export const AWS_PMT_RESOURCES_CONFIG: S3Config = {
     bucketName: "pmt-resources",
     dirName: 'users',
     region: 'us-east-1',

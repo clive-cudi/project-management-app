@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import styles from "../../../styles/components/reusable/profilepic.module.scss";
 import { FcCameraIdentification } from "react-icons/fc";
+import { uploadFile } from "react-s3";
 
 interface ProfilePic_Props {
     imageURL?: string
