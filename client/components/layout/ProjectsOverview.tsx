@@ -30,7 +30,7 @@ export const ProjectsOverview = ({children}: ProjectsOverview_Props) => {
                 </div>
             </div>
             <div className={styles.pov_table_wrapper}>
-                <Table tableConfig={{headers: tableHeaders, data: tableSortedData}} />
+                <Table tableConfig={{headers: tableHeaders, data: tableSortedData}} emptyMessage={"No Projects Found"} />
             </div>
         </div>
     )
