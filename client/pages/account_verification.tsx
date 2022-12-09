@@ -16,7 +16,7 @@ export default function AccountVerificationPage(): JSX.Element {
                 <p>
                     {count}
                 </p> */}
-            </div>
-        </div>
+           </div>
+    </div>
     )
 }

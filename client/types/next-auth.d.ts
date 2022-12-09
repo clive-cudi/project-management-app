@@ -13,6 +13,7 @@ declare module "next-auth" {
         token: string
         twoFA: boolean
         name: string
+        uid: string
     }
 }
 

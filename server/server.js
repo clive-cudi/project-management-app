@@ -11,6 +11,7 @@ const taskRouter = require('./routes/task');
 const projectRouter = require('./routes/project');
 const teamsRouter = require('./routes/teams');
 const clientRouter = require('./routes/client');
+const userRouter = require('./routes/user');
 const logger = require('morgan');   
 
 app.use(cors());
@@ -41,6 +42,7 @@ app.use("/task", taskRouter);
 app.use("/project", projectRouter);
 app.use("/teams", teamsRouter);
 app.use("/client", clientRouter);
+app.use("/user", userRouter);
 
 app.listen(PORT, () => {
     console.log(`Server up at PORT: ${PORT}`);

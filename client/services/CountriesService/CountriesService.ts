@@ -1,4 +1,5 @@
 import axios from "axios";
+import CountryData from "../../mock/countries.json";
 
 export class CountriesAPI {
     COUNTRIES_API_URL: string
@@ -12,8 +13,9 @@ export class CountriesAPI {
     }
 
     getAllCountries = async () =>{
-        const response = await axios.get(this.COUNTRIES_API_URL);
-        return response.data;
+        // const response = await axios.get(this.COUNTRIES_API_URL);
+        const response = CountryData;
+        return response;
     }
 
     getCountryTitles = async ()=>{

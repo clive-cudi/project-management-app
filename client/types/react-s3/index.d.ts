@@ -7,6 +7,9 @@ declare module "react-s3" {
         secretAccessKey: string;
     }
     
+    export interface test {
+
+    }
     export interface S3File {
         name: string;
         size: number;
