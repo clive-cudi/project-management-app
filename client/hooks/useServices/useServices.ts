@@ -31,7 +31,7 @@ export function useServices() {
     async function getTimeZoneList(): Promise<{label: string, value: string}[]> {
         const timezones = await timezoneService.getAllValidTimezones();
 
-        return timezones.data.map((zone: string) => { return {label: zone, value: zone}});
+        return timezones.map((zone: string) => { return {label: zone, value: zone}});
     }
 
     function getLanguagesData(): {label: string, value: string}[] {

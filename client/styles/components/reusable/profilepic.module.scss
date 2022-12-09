@@ -9,6 +9,22 @@
     &.profile_pic_wrapper_loading {
         animation: animate-profile-pic-border-loading 1s linear infinite;
     }
+    .profile_pic_placeholder {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px;
+        color: rgba(120, 116, 134, 1);
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
     .profile_pic_upload_btn {
         display: flex;
         height: 40px;
@@ -33,6 +49,9 @@
     }
     &:hover {
         cursor: pointer;
+    }
+    input[type = "file"] {
+        display: none;
     }
 }
 
