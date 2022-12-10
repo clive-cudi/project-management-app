@@ -48,7 +48,7 @@ export const AccountVerificationForm = ({profileImgURL}: AccountVerificationForm
         console.log("setting list")
         getTimeZoneList().then((tzList)=> {setTimezonesData(tzList as [])})
         getCountriesOptionList().then((list)=> {setCountryData(list as [])});
-    }, []);
+    }, [getCountriesOptionList, getTimeZoneList]);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
         const type = e.target.type;

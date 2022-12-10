@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import styles from "../../../styles/views/tasks/taskListTab.module.scss";
 import { SearchInput, RegularBtn, InputSelect, IconBtn, Table, TaskListDropdown } from "../../reusable";
 import { BsPlus, BsChevronDown } from "react-icons/bs";
@@ -23,8 +23,7 @@ export const TaskListTab = (): JSX.Element => {
         ]
     });
     const [taskIds, setTaskIds] = useState<string[]>([]);
-
-    function addToList(key: keyof taskListTableDataTypes, id: string, row: string[]) {
+    const addToList = useCallback((key: keyof taskListTableDataTypes, id: string, row: string[]) => {
         // check if the task exists in the list
         if (!taskListTableData[key as keyof taskListTableDataTypes].some((task) => task.id === id)) {
             if (taskIds.includes(id) === false) {
@@ -52,7 +51,37 @@ export const TaskListTab = (): JSX.Element => {
                 // })
             }
         }
-    }
+    }, [taskIds, taskListTableData]);
+
+    // function addToList(key: keyof taskListTableDataTypes, id: string, row: string[]) {
+    //     // check if the task exists in the list
+    //     if (!taskListTableData[key as keyof taskListTableDataTypes].some((task) => task.id === id)) {
+    //         if (taskIds.includes(id) === false) {
+    //             // task doesn't exist
+    //             console.log("Task doesn't exist")
+    //             setTaskListTableData((prevTaskList) => ({
+    //                 ...prevTaskList,
+    //                 [key as keyof taskListTableDataTypes]: [
+    //                     ...prevTaskList[key as keyof taskListTableDataTypes],
+    //                     {
+    //                         id: id,
+    //                         row: row
+    //                     }
+    //                 ]
+    //             }));
+    //             // setTaskListTableData({
+    //             //     ...taskListTableData,
+    //             //     [key]: [
+    //             //         ...taskListTableData[key],
+    //             //         {
+    //             //             id: id,
+    //             //             row: row
+    //             //         }
+    //             //     ]
+    //             // })
+    //         }
+    //     }
+    // }
 
     useEffect(() => {
         if (tasks.length > 0) {

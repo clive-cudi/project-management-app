@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { api, UserQueries } from "../../../utils";
 import { API_res_model } from "../../../types";
 import { useMutation } from "@tanstack/react-query";
+import Image from "next/image";
 
 interface ProfilePic_Props {
     imageURL?: string
@@ -58,7 +59,7 @@ export const ProfilePicUpload = ({imageURL, alt, upload, onFileLoad}: ProfilePic
     return (
         <div className={`${styles.profile_pic_wrapper} ${isLoading ? styles.profile_pic_wrapper_loading : "" }`}>
             {
-                currentPicURL ? <img src={currentPicURL} alt={`${session.data?.user.name}`} /> : <span className={styles.profile_pic_placeholder}><HiUser /></span>
+                currentPicURL ? <div><Image src={currentPicURL} alt={`${session.data?.user.name}`} layout={"fill"} /></div> : <span className={styles.profile_pic_placeholder}><HiUser /></span>
             }
             <button className={styles.profile_pic_upload_btn} onClick={openFilePicker}><FcCameraIdentification /></button>
             <input type={"file"} ref={inputPicRef} onChange={(e) => {
