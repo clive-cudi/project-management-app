@@ -73,6 +73,7 @@ export default NextAuth({
                 if (googleRes.data.success === true) {
                     user = {
                         id: googleRes.data.usertoken?.user?.uid ?? "",
+                        uid: googleRes.data.usertoken?.user?.uid ?? "",
                         name: googleRes.data.usertoken?.user?.username ?? "",
                         token: googleRes.data.usertoken?.token ?? "",
                         email: googleRes.data.usertoken?.user?.email ?? "",
