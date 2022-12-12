@@ -575,7 +575,21 @@ const updateTaskStatus = (req, res, next) => {
     const { usertoken } = req.body;
     const { tid } = req.body;
     const { status } = req.body;
+    const allowedStatuses = ["todo", "pending", "done"];
 
+    if (!allowedStatuses.includes(status)) {
+        return res.status(400).json({
+                success: false,
+                message: `Please provide a valid status: ${allowedStatuses.toString()}`,
+                task: null,
+                error: {
+                    status: true,
+                    code: "invalid_status",
+                    debug: null
+                }
+            });
+    };
+    
     Task.findOneAndUpdate(
         {taskID: tid},
         {$set: {
@@ -605,7 +619,54 @@ const updateTaskStatus = (req, res, next) => {
             }
         });
     })
-}
+};
+
+const updateTaskPriority = (req, res, next) => {
+    const { usertoken } = req.body;
+    const { tid, priority } = req.body;
+    const allowedPriorities = ["low", "medium", "high"];
+
+    if (!allowedPriorities.includes(priority)) {
+        return res.status(400).json({
+            success: false,
+            message: `Please provide a valid priority ${allowedPriorities.toString()}`,
+            task: null,
+            error: {
+                status: true,
+                code: "invalid_priority"
+            }
+        })
+    };
+
+    Task.findOneAndUpdate(
+        {taskID: tid},
+        {$set: {
+            priority: priority
+          }
+        }).then((updated_task) => {
+            return res.status(200).json({
+                success: true,
+                message: "Successfully updated task status",
+                task: updated_task,
+                error: {
+                    status: false,
+                    code: null
+                }
+            });
+        }).catch((task_priority_update_err) => {
+            console.log(task_priority_update_err);
+            return res.status(400).json({
+                success: false,
+                message: "Failed to update task priority",
+                task: null,
+                error: {
+                    status: true,
+                    code: "task_priority_update_fail",
+                    debug: task_priority_update_err
+                }
+            })
+        });
+};
 
 module.exports = {
     getAllTasks,
@@ -616,5 +677,6 @@ module.exports = {
     removeTask,
     deleteTask,
     removeMultiple,
-    updateTaskStatus
+    updateTaskStatus,
+    updateTaskPriority
 }

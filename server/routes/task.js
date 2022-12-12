@@ -18,6 +18,8 @@ router.delete("/delete", authVerify, TaskController.deleteTask);
 
 router.post("/update-status", authVerify, TaskController.updateTaskStatus);
 
+router.post("/update-priority", authVerify, TaskController.updateTaskPriority);
+
 router.delete("/delete-multiple", authVerify, TaskController.removeMultiple);
 
 module.exports = router;
