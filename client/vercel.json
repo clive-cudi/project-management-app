@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "https://pmtbackend-env.eba-p64t83w3.us-east-1.elasticbeanstalk.com/:match*",
+            "destination": "http://pmtbackend-env.eba-p64t83w3.us-east-1.elasticbeanstalk.com/:match*"
+        }
+    ]
+}

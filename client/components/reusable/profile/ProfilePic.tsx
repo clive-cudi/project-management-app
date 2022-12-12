@@ -95,6 +95,7 @@ export const ProfilePicUpload = ({imageURL, alt, upload, onFileLoad}: ProfilePic
                         //     console.log(err);
                         // });
                     }).catch((pic_upload_err) => {
+                        setIsLoading(false);
                         console.log(pic_upload_err)
                     })
                 }
