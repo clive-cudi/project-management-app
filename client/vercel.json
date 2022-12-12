@@ -3,8 +3,8 @@
     "name": "pmt",
     "rewrites": [
         {
-            "source": "https://pmtbackend-env.eba-p64t83w3.us-east-1.elasticbeanstalk.com/**",
-            "destination": "http://pmtbackend-env.eba-p64t83w3.us-east-1.elasticbeanstalk.com/**"
+            "source": "/pmtbackend-env.eba-p64t83w3.us-east-1.elasticbeanstalk.com/(.*)",
+            "destination": "http://pmtbackend-env.eba-p64t83w3.us-east-1.elasticbeanstalk.com"
         }
     ]
 }
