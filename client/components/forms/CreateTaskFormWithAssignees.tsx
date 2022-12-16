@@ -36,15 +36,15 @@ export const CreateTaskFormWithAssignees = ({ initialValues }: CreateTaskFormWit
     const { openModal, closeModal } = useModal();
     const [isFormLoading, setIsFormLoading] = useState<boolean>(false);
     const session = useSession();
-    // const { addTask } = TaskQueries(session);
+    const { addTask } = TaskQueries(session);
     const { tasks, setTasks } = useTasks();
-    const addTask = async (form_data: TaskFormFieldData_): Promise<API_res_model & {task: taskRes}> => {
-        return (await api.post("/task/add", form_data, {
-            headers: {
-                Authorization: session.data?.user.token ?? ""
-            }
-        })).data;
-    }
+    // const addTask = async (form_data: TaskFormFieldData_): Promise<API_res_model & {task: taskRes}> => {
+    //     return (await api.post("/task/add", form_data, {
+    //         headers: {
+    //             Authorization: session.data?.user.token ?? ""
+    //         }
+    //     })).data;
+    // }
     const [submitAction, setSubmitAction] = useState<"save_close" | "save_add">("save_close");
     const { add, tasks: storeTasks } = useTaskStore();
     const createTask = useMutation({mutationFn: addTask,
@@ -94,7 +94,7 @@ export const CreateTaskFormWithAssignees = ({ initialValues }: CreateTaskFormWit
                 }
             });
 
-            createTask.mutate(submitData);
+            createTask.mutate({form_data: submitData});
             // console.log(data);
 
             console.log(createTask.data)
