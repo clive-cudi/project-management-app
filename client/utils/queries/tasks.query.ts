@@ -1,5 +1,5 @@
 import { api } from "../axios/axios.config";
-import { API_res_model, taskRes } from "../../types";
+import { API_res_model, taskRes, GeneralTaskStatus_, Priority_ } from "../../types";
 import { TaskFormFieldData_ } from "../../components/forms/CreateTaskForm";
 
 export const TaskQueries = (session: any) => {
@@ -13,22 +13,32 @@ export const TaskQueries = (session: any) => {
         return (await api.get("/task/getalltasks", defaultReqConfig)).data;
     }
 
-    const getTaskByID = async (id: string): Promise<API_res_model & taskRes> => {
+    const getTaskByID = async ({ id }:{id: string}): Promise<API_res_model & taskRes> => {
         return (await api.get(`/task/taskbyid/${id}`, defaultReqConfig)).data;
     }
 
-    const getMultipleTasksByID = async (tids: string[]): Promise<API_res_model & {tasks: taskRes[]}> => {
+    const getMultipleTasksByID = async ( { tids } :{tids: string[]}): Promise<API_res_model & {tasks: taskRes[]}> => {
         return (await api.post(`/task/getmultipletasks`, {tids}, defaultReqConfig)).data;
     }
 
-    const addTask = async (form_data: TaskFormFieldData_): Promise<API_res_model & {task: taskRes}> => {
+    const addTask = async ({ form_data }:{form_data: TaskFormFieldData_}): Promise<API_res_model & {task: taskRes}> => {
         return (await api.post("/task/add", form_data, defaultReqConfig)).data;
+    }
+
+    const updateTaskStatus = async ({ tid, status }: {tid: string, status: GeneralTaskStatus_}): Promise<API_res_model & {task: taskRes}> => {
+        return (await api.post("/task/update-status", {tid, status}, defaultReqConfig));
+    }
+
+    const updateTaskPriority = async ({ tid, priority }:{tid: string, priority: Priority_}): Promise<API_res_model & {task: taskRes}> => {
+        return (await api.post("/task/update-priority", {tid, priority}, defaultReqConfig))
     }
 
     return {
         getAllTasks,
         getTaskByID,
         getMultipleTasksByID,
-        addTask
+        addTask,
+        updateTaskStatus,
+        updateTaskPriority
     }
 }

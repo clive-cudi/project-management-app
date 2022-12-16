@@ -12,7 +12,7 @@ export function useTasks() {
     const addTasks = useTaskStore((state) => state.addMultiple);
     const { getAllTasks, getTaskByID, getMultipleTasksByID } = TaskQueries(session);
     const { data: taskIds } = useQuery(["taskIds__"], getAllTasks);
-    const {data: fetchedTasks, isLoading, isError} = useQuery(["tasks__"], () => getMultipleTasksByID(taskIds?.tasks as string[]), {enabled: !!taskIds?.tasks, onSuccess: (res) => {
+    const {data: fetchedTasks, isLoading, isError} = useQuery(["tasks__"], () => getMultipleTasksByID({tids: taskIds?.tasks as string[]}), {enabled: !!taskIds?.tasks, onSuccess: (res) => {
         if (res.tasks.length ) {
             console.log(tasks_)
             setTasks(res.tasks);

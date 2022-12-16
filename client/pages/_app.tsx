@@ -9,6 +9,7 @@ import {
   RoutingCtxProvider,
   TabRenderCtxProvider,
   ContextMenuCtxProvider,
+  GlobalLoadingCtxProvider,
 } from "../providers";
 import { AuthGuard, Header } from "../components";
 import { NextComponentType } from "next";
@@ -38,20 +39,22 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: Props) {
             <TabRenderCtxProvider>
               <LayoutCtxProvider>
                 <ModalCtxProvider>
-                  <SettingsTabCtxProvider>
-                    {Component.requireAuth?.auth === true ? (
-                      <AuthGuard
-                        userType={Component.requireAuth.userType}
-                        multipleUserTypes={
-                          Component.requireAuth.multipleUserTypes
-                        }
-                      >
+                  <GlobalLoadingCtxProvider>
+                    <SettingsTabCtxProvider>
+                      {Component.requireAuth?.auth === true ? (
+                        <AuthGuard
+                          userType={Component.requireAuth.userType}
+                          multipleUserTypes={
+                            Component.requireAuth.multipleUserTypes
+                          }
+                        >
+                          <Component {...pageProps} />
+                        </AuthGuard>
+                      ) : (
                         <Component {...pageProps} />
-                      </AuthGuard>
-                    ) : (
-                      <Component {...pageProps} />
-                    )}
-                  </SettingsTabCtxProvider>
+                      )}
+                    </SettingsTabCtxProvider>
+                  </GlobalLoadingCtxProvider>
                 </ModalCtxProvider>
               </LayoutCtxProvider>
             </TabRenderCtxProvider>

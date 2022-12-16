@@ -57,7 +57,7 @@ const Home: NextPage & PageAuth = () => {
   const { fetchAllProjects } = ProjectQueries(session);
   // fetch tasks
   const { data: taskIDs_data} = useQuery({queryKey: ["tasks_ids"], queryFn: getAllTasks});
-  const {data: fetchedTasks, isLoading, isError} = useQuery(["tasks"], () => getMultipleTasksByID(taskIDs_data?.tasks as string[]), {enabled: !!taskIDs_data?.tasks, onSuccess: (res) => {}});
+  const {data: fetchedTasks, isLoading, isError} = useQuery(["tasks"], () => getMultipleTasksByID({tids: taskIDs_data?.tasks as string[]}), {enabled: !!taskIDs_data?.tasks, onSuccess: (res) => {}});
   // fetch projects
   const { data: fetchedProjects, isLoading: isProjectsLoading, isError: projectsFetchError } = useQuery(["projects"], fetchAllProjects);
 

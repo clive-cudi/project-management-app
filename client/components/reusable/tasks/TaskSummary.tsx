@@ -9,9 +9,10 @@ import { CreateTaskFormWithAssignees } from "../../forms";
 import { Spinner } from "../widgets";
 import { AiOutlineDelete } from "react-icons/ai";
 import { HiSwitchHorizontal } from "react-icons/hi";
-import { removeAtIndex } from "../../../utils";
+import { removeAtIndex, TaskQueries } from "../../../utils";
 import { useMutation } from "@tanstack/react-query";
 import { MarkAsModal, ChangePriorityModal, ErrorModal } from "../modals";
+import { useSession } from "next-auth/react";
 
 interface TaskSummary_Props {
   tasks: {
@@ -36,7 +37,12 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
     <button key={26} onClick={() => {setFilterTag("low")}}>Low</button>,
     <button key={20} onClick={() => {setFilterTag("")}}>Remove Filter</button>
   ], []);
+  const session = useSession();
   const { openAtCursor } = useContextMenu();
+  const { updateTaskStatus, updateTaskPriority } = TaskQueries(session);
+  const updateTaskStatusMutation = useMutation({
+    mutationFn: updateTaskStatus
+  })
 
   function handleCreateTask() {
     openModal(
