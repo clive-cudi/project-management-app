@@ -1,5 +1,4 @@
 import { AWS_PMT_RESOURCES_CONFIG } from "./aws.config";
-import { S3Config } from "react-s3";
 
 export const generateUserBucketPath = (userId: string, filename: string) => {
     return `users/${userId}/profile/${filename.replace(/[&\/\\#,+()$~%'":*?<>{}]/g, '_')}`;
