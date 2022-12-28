@@ -30,7 +30,7 @@ export const TaskQueries = (session: any) => {
     }
 
     const updateTaskPriority = async ({ tid, priority }:{tid: string, priority: Priority_}): Promise<API_res_model & {task: taskRes}> => {
-        return (await api.post("/task/update-priority", {tid, priority}, defaultReqConfig))
+        return (await api.post("/task/update-priority", {tid, priority}, defaultReqConfig));
     }
 
     return {

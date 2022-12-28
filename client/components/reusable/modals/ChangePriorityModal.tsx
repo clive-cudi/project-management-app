@@ -10,9 +10,10 @@ interface ChangePriorityModal_Props {
         value: string
     }[]
     title?: string
+    onSubmit?: (value?: {label: string, value: string}) => void
 }
 
-export const ChangePriorityModal = ({ options, title }: ChangePriorityModal_Props): JSX.Element => {
+export const ChangePriorityModal = ({ options, title, onSubmit }: ChangePriorityModal_Props): JSX.Element => {
     const [option, setOption] = useState<{label: string, value: string}>({
         label: "",
         value: ""
@@ -26,7 +27,7 @@ export const ChangePriorityModal = ({ options, title }: ChangePriorityModal_Prop
                 <RadioGroupInput name={"change_priority"} title={"Choose an option:"} options={options} onChangeHandler={(e, lbl) => {setOption({label: lbl, value: e.target.value})}} />
             </div>
             <div className={styles.submit_strip}>
-                <RegularBtn label={option.label.length > 0 ? `Change to ${option.label}` : `Change`} variant={"gradient"} />
+                <RegularBtn label={option.label.length > 0 ? `Change to ${option.label}` : `Change`} variant={"gradient"} onClick={() => {onSubmit && onSubmit(option)}} />
                 <RegularBtn label={"Cancel"} variant="outlined" onClick={() => {closeModal()}} />
             </div>
         </div>

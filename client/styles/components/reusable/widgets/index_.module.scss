@@ -764,6 +764,27 @@
     }
 }
 
+.lbw_wrapper {
+    display: flex;
+    position: absolute;
+    top: 0%;
+    height: 4px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    transform-origin: left;
+    animation: animate-loading-bar 0.6s linear forwards;
+    span {
+        height: 100%;
+        width: 100%;
+        background: radial-gradient(ellipse at center,  #1e5799 0%,#7db9e8 100%);
+        animation: animate-hue-load 1s linear infinite;
+    }
+    &:hover {
+        display: none;
+    }
+}
+
 @keyframes animate-ul-dropdown {
     0% {
         transform: scaleY(0)
@@ -779,5 +800,20 @@
 @keyframes animate-spin-load {
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes animate-hue-load {
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+@keyframes animate-loading-bar {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
     }
 }

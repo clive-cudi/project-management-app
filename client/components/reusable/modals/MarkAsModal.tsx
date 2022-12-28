@@ -10,9 +10,10 @@ interface MarkAsModal_Props {
         value: string
     }[]
     title?: string
+    onSubmit?: (value?: {label: string, value: string}) => void
 }
 
-export const MarkAsModal = ({ options, title }: MarkAsModal_Props): JSX.Element => {
+export const MarkAsModal = ({ options, title, onSubmit }: MarkAsModal_Props): JSX.Element => {
     const [option, setOption] = useState<{label: string, value: string}>({
         label: "",
         value: ""
@@ -26,7 +27,7 @@ export const MarkAsModal = ({ options, title }: MarkAsModal_Props): JSX.Element 
                 <RadioGroupInput name={"mark_as"} title={"Choose an option:"} options={options} onChangeHandler={(e, lbl) => {setOption({label: lbl, value: e.target.value})}} />
             </div>
             <div className={styles.submit_strip}>
-                <RegularBtn label={option.label.length > 0 ? `Mark as ${option.label}` : `Mark`} variant={"gradient"} />
+                <RegularBtn label={option.label.length > 0 ? `Mark as ${option.label}` : `Mark`} variant={"gradient"} onClick={() => {onSubmit && onSubmit(option)}} />
                 <RegularBtn label={"Cancel"} variant="outlined" onClick={() => {closeModal()}} />
             </div>
         </div>

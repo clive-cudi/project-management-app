@@ -4,7 +4,7 @@ import styles from "../../../styles/components/reusable/tasks/tasksummary.module
 import { IconBtn } from "../buttons";
 import { BsFilter, BsPlus, BsBookmarkCheck } from "react-icons/bs";
 import { TaskInfoRow } from "./TaskInfoRow";
-import { useModal, useTaskStore, useTabRenderer, useContextMenu } from "../../../hooks";
+import { useModal, useTaskStore, useTabRenderer, useContextMenu, useGlobalLoading } from "../../../hooks";
 import { CreateTaskFormWithAssignees } from "../../forms";
 import { Spinner } from "../widgets";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -39,10 +39,11 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   ], []);
   const session = useSession();
   const { openAtCursor } = useContextMenu();
+  const { startLoading, stopLoading } = useGlobalLoading();
   const { updateTaskStatus, updateTaskPriority } = TaskQueries(session);
   const updateTaskStatusMutation = useMutation({
     mutationFn: updateTaskStatus
-  })
+  });
 
   function handleCreateTask() {
     openModal(
@@ -71,11 +72,17 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   }
 
   function handleMarkAs() {
-    openModal(<MarkAsModal title={"Mark as ..."} options={[{label: "todo", value: "todo"}, {label: "pending", value: "pending"}, {label: "done", value: "done"}]} />)
+    startLoading();
+    openModal(<MarkAsModal title={"Mark as ..."} options={[{label: "todo", value: "todo"}, {label: "pending", value: "pending"}, {label: "done", value: "done"}]} onSubmit={(value): void => {
+      console.log(value);
+      stopLoading();
+    }} />)
   }
 
   function handleChangePriority() {
-    openModal(<ChangePriorityModal title={"Change Priority to ..."} options={[{label: "low", value: "low"}, {label: "medium", value: "medium"}, {label: "high", value: "high"}]} />)
+    openModal(<ChangePriorityModal title={"Change Priority to ..."} options={[{label: "low", value: "low"}, {label: "medium", value: "medium"}, {label: "high", value: "high"}]} onSubmit={(value) => {
+      console.log(value);
+    }} />)
   }
 
   function handleRemove() {
