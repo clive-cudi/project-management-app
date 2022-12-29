@@ -11,3 +11,4 @@ export { useContextMenu } from "./useContextMenu/useContextMenu";
 export { useTasks } from "./useTasks/useTasks";
 export { useRenderByID } from "./useRenderByID/useRenderByID";
 export { useGlobalLoading } from "./useGlobalLoading/useGlobalLoading";
+export { useNotificationPlateWidget } from "./useNotificationPlateWidget/useNotificationPlateWidget";

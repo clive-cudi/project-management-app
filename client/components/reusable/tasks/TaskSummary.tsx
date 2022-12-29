@@ -42,7 +42,16 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   const { startLoading, stopLoading } = useGlobalLoading();
   const { updateTaskStatus, updateTaskPriority } = TaskQueries(session);
   const updateTaskStatusMutation = useMutation({
-    mutationFn: updateTaskStatus
+    mutationFn: updateTaskStatus,
+    onMutate: () => {
+
+    },
+    onSuccess: () => {
+
+    },
+    onSettled: () => {
+      
+    }
   });
 
   function handleCreateTask() {

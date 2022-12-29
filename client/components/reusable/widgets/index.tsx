@@ -13,3 +13,4 @@ export { ContractStatsWidget } from "./ContractStatsWidget";
 export type { ContractStatsWidgetData } from "./ContractStatsWidget";
 export { Spinner } from "./Spinner";
 export { LoadingBarWidget } from "./LoadingBarWidget";
+export { NotificationPlateWidget } from "./NotificationPlateWidget";

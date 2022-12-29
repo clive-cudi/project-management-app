@@ -5,3 +5,4 @@ export { RoutingCtxProvider } from "./RoutingCtxProvider/RoutingCtxProvider";
 export { TabRenderCtxProvider } from "./TabRenderCtxProvider/TabRenderCtxProvider";
 export { ContextMenuCtxProvider } from "./ContextMenuCtxProvider/ContextMenuCtxProvider";
 export { GlobalLoadingCtxProvider } from "./GlobalLoadingCtxProvider/GlobalLoadingCtxProvider";
+export { NotificationPlateCtxProvider } from "./NotificationPlateCtxProvider/NotificationPlateCtxProvider";
