@@ -8,7 +8,7 @@ import taskSummary_mock from "../../../mock/taskSummaryData.json";
 import { Callendar } from "../../reusable";
 import { ProjectsOverview } from "../../layout";
 import { useSession } from "next-auth/react";
-import { useTime, useTaskStore } from "../../../hooks";
+import { useTime, useTaskStore, useNotificationPlateWidget } from "../../../hooks";
 import { TaskQueries } from "../../../utils";
 
 export const HomeTab = ({}): JSX.Element => {
@@ -23,6 +23,7 @@ export const HomeTab = ({}): JSX.Element => {
   const session = useSession();
   const { getDayGreeting } = useTime();
   const { tasks: tasks_Store } = useTaskStore();
+  const { enqueueNotification, dequeueNotification, disableAutoRemove } = useNotificationPlateWidget();
 
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export const HomeTab = ({}): JSX.Element => {
       <div className={styles.hb_greetings_wrapper}>
         <div className={styles.hb_banner_wrapper}>
           <div className={styles.hb_banner_info}>
-            <h2>
+            <h2 onClick={() => {dequeueNotification()}}>
               {getDayGreeting("Good")} {session.data?.user.name}
             </h2>
             <RegularBtn
@@ -51,6 +52,9 @@ export const HomeTab = ({}): JSX.Element => {
                 status: true,
                 icon: <BsPlay />,
                 orientation: "start",
+              }}
+              onClick={() => {
+                enqueueNotification(<h1>Notification {Math.random() * 100}</h1>)
               }}
             />
           </div>

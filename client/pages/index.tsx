@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect } from "react";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
-import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn, ContextMenuWrapper, LoadingBarWidget } from "../components";
+import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn, ContextMenuWrapper, LoadingBarWidget, NotificationPlateWidget } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
-import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore, useProjectStore, useGlobalLoading } from "../hooks";
+import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore, useProjectStore, useGlobalLoading, useNotificationPlateWidget } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
@@ -61,6 +61,7 @@ const Home: NextPage & PageAuth = () => {
   // fetch projects
   const { data: fetchedProjects, isLoading: isProjectsLoading, isError: projectsFetchError } = useQuery(["projects"], fetchAllProjects);
   const { globalLoading } = useGlobalLoading();
+  const { isEmpty: isNotificationPlateEmpty } = useNotificationPlateWidget();
 
   useEffect(() => {
     if (fetchedTasks && !isError) {
@@ -139,6 +140,7 @@ const Home: NextPage & PageAuth = () => {
       {modal.open == true && <Modal data={modal.data} />}
       {ctxMenu.open === true && <ContextMenuWrapper elmList={ctxMenu.elements} />}
       {globalLoading.isLoading === true && <LoadingBarWidget />}
+      {isNotificationPlateEmpty() ? null : <NotificationPlateWidget />}
     </div>
   );
 };
