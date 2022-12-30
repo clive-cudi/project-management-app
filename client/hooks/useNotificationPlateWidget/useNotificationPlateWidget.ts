@@ -5,19 +5,19 @@ export function useNotificationPlateWidget() {
     // const [componentsToRender, setComponentsToRender] = useState<{id: string, component: JSX.Element}[]>([]);
     const { notificationPlate, setNotificationPlate } = useContext(NotificationPlateCtx) as NotificationPlateCtx_Props;
 
-    useEffect(() => {
-        // interval for removing notifications
-        // check if the notification list is empty
+    // useEffect(() => {
+    //     // interval for removing notifications
+    //     // check if the notification list is empty
 
-        if (!isEmpty() && notificationPlate.autoRemove !== false) {
-            const notificationInterval = setInterval(() => {
-                dequeueNotification();
-                console.log("Interval")
-            }, notificationPlate.timeoutMod);
+    //     if (!isEmpty() && notificationPlate.autoRemove !== false) {
+    //         const notificationInterval = setInterval(() => {
+    //             dequeueNotification();
+    //             console.log("Interval")
+    //         }, notificationPlate.timeoutMod);
 
-            return () => clearInterval(notificationInterval);
-        }
-    }, [])
+    //         return () => clearInterval(notificationInterval);
+    //     }
+    // }, [])
 
     function enqueueNotification(cmpnt: JSX.Element, id?: string) {
         setNotificationPlate((prev) => ({
@@ -30,7 +30,12 @@ export function useNotificationPlateWidget() {
     function removeFromNotificationStack(id: string) {
         const { id: targetNotificationId, component } = [...notificationPlate.componentList].find((notification) => notification.id === id) || {id: null, component: null};
 
-        if (targetNotificationId === null) {
+        console.log(`Removing Notification: \nid => ${id}\ntarget: ${targetNotificationId}`)
+
+        console.log(notificationPlate.componentList)
+        
+
+        if (targetNotificationId !== null) {
             const filteredNotificationList = [...notificationPlate.componentList].filter((notif) => notif.id !== targetNotificationId);
 
             setNotificationPlate((prevNotifications) => ({

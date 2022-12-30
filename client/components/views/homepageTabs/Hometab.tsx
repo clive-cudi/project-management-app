@@ -10,6 +10,7 @@ import { ProjectsOverview } from "../../layout";
 import { useSession } from "next-auth/react";
 import { useTime, useTaskStore, useNotificationPlateWidget } from "../../../hooks";
 import { TaskQueries } from "../../../utils";
+import { NotificationBadge } from "../../reusable";
 
 export const HomeTab = ({}): JSX.Element => {
   const [taskSummaryData, setTaskSummaryData] = useState<
@@ -54,7 +55,8 @@ export const HomeTab = ({}): JSX.Element => {
                 orientation: "start",
               }}
               onClick={() => {
-                enqueueNotification(<h1>Notification {Math.random() * 100}</h1>)
+                const id = `ntfn_${Math.random() * 10}`
+                enqueueNotification(<NotificationBadge type={"info"} text={`Notification ${id ?? Math.random() * 100}`} isDismissable={{status: true, id: id}} />, id);
               }}
             />
           </div>
