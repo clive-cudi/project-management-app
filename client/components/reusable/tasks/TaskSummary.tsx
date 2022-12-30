@@ -44,7 +44,6 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   const updateTaskStatusMutation = useMutation({
     mutationFn: updateTaskStatus,
     onMutate: () => {
-
     },
     onSuccess: () => {
 
@@ -53,6 +52,18 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
       
     }
   });
+  const updateTaskPriorityMutation = useMutation({
+    mutationFn: updateTaskPriority,
+    onMutate: () => {
+
+    },
+    onSuccess: () => {
+
+    },
+    onSettled: () => {
+      
+    }
+  })
 
   function handleCreateTask() {
     openModal(
