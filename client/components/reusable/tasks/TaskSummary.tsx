@@ -44,24 +44,25 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   const updateTaskStatusMutation = useMutation({
     mutationFn: updateTaskStatus,
     onMutate: () => {
+      startLoading()
     },
     onSuccess: () => {
 
     },
     onSettled: () => {
-      
+      stopLoading()
     }
   });
   const updateTaskPriorityMutation = useMutation({
     mutationFn: updateTaskPriority,
     onMutate: () => {
-
+      startLoading()
     },
     onSuccess: () => {
 
     },
     onSettled: () => {
-      
+      stopLoading()
     }
   })
 
@@ -95,7 +96,6 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
     startLoading();
     openModal(<MarkAsModal title={"Mark as ..."} options={[{label: "todo", value: "todo"}, {label: "pending", value: "pending"}, {label: "done", value: "done"}]} onSubmit={(value): void => {
       console.log(value);
-      stopLoading();
     }} />)
   }
 

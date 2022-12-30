@@ -6,9 +6,9 @@ export function useGlobalLoading() {
     // to keep track of the number of times startLoading() is called and sync it with stopLoading()
     const [loadingInstances, setLoadingInstances] = useState<string[]>([]);
 
-    function startLoading() {
+    function startLoading(instance_id?: string) {
         // create a loading id for this loading instance
-        const loading_instance_id = crypto.randomUUID();
+        const loading_instance_id = instance_id ?? crypto.randomUUID();
         setLoadingInstances((prevInstanceIDs) => [...prevInstanceIDs, loading_instance_id]);
         setGlobalLoading((prev) => ({
             ...prev,
