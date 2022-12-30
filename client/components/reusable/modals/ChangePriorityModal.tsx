@@ -11,9 +11,10 @@ interface ChangePriorityModal_Props {
     }[]
     title?: string
     onSubmit?: (value?: {label: string, value: string}) => void
+    isLoading?: boolean
 }
 
-export const ChangePriorityModal = ({ options, title, onSubmit }: ChangePriorityModal_Props): JSX.Element => {
+export const ChangePriorityModal = ({ options, title, onSubmit, isLoading }: ChangePriorityModal_Props): JSX.Element => {
     const [option, setOption] = useState<{label: string, value: string}>({
         label: "",
         value: ""
@@ -27,8 +28,8 @@ export const ChangePriorityModal = ({ options, title, onSubmit }: ChangePriority
                 <RadioGroupInput name={"change_priority"} title={"Choose an option:"} options={options} onChangeHandler={(e, lbl) => {setOption({label: lbl, value: e.target.value})}} />
             </div>
             <div className={styles.submit_strip}>
-                <RegularBtn label={option.label.length > 0 ? `Change to ${option.label}` : `Change`} variant={"gradient"} onClick={() => {onSubmit && onSubmit(option)}} />
-                <RegularBtn label={"Cancel"} variant="outlined" onClick={() => {closeModal()}} />
+                <RegularBtn label={option.label.length > 0 ? `Change to ${option.label}` : `Change`} variant={"gradient"} isLoading={{status: isLoading ?? false }} onClick={() => {onSubmit && onSubmit(option)}} />
+                <RegularBtn label={"Cancel"} variant="outlined" isLoading={{status: isLoading ?? false }} onClick={() => {closeModal()}} />
             </div>
         </div>
     )

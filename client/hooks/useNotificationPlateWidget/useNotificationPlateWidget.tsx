@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { NotificationPlateCtx, NotificationPlateCtx_Props } from "../../context";
+import { NotificationBadge_Props, NotificationBadge } from "../../components";
 
 export function useNotificationPlateWidget() {
     // const [componentsToRender, setComponentsToRender] = useState<{id: string, component: JSX.Element}[]>([]);
@@ -96,6 +97,18 @@ export function useNotificationPlateWidget() {
         return notificationPlate.autoRemove;
     }
 
+    interface addNotificationWithBadge_Props extends NotificationBadge_Props {
+        notification_id?: string
+    }
+
+    function addNotificationWithBadge({notification_id, ...badgeProps}: addNotificationWithBadge_Props): string {
+        const nfID = notification_id ?? crypto.randomUUID();
+
+        enqueueNotification(<NotificationBadge {...badgeProps} />, nfID)
+
+        return nfID;
+    }
+
     return {
         notificationPlate,
         enqueueNotification,
@@ -104,6 +117,7 @@ export function useNotificationPlateWidget() {
         changeDefaultTimeout,
         disableAutoRemove,
         enableAutoRemove,
-        isEmpty
+        isEmpty,
+        addNotificationWithBadge
     }
 }

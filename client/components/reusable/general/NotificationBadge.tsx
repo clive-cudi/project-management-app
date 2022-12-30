@@ -1,9 +1,10 @@
 import styles from "../../../styles/components/reusable/general/notificationBadge.module.scss";
 import { useNotificationPlateWidget } from "../../../hooks";
 import { FcCancel } from "react-icons/fc";
+import { OperationResultType_ } from "../../../types";
 
-interface NotificationBadge {
-    type: "success" | "error" | "info"
+export interface NotificationBadge_Props {
+    type: OperationResultType_
     text?: string
     isDismissable?: {
         status:boolean
@@ -13,7 +14,7 @@ interface NotificationBadge {
     content?: JSX.Element
 }
 
-export const NotificationBadge = ({ type, text, isDismissable, onClick, content }: NotificationBadge): JSX.Element => {
+export const NotificationBadge = ({ type, text, isDismissable, onClick, content }: NotificationBadge_Props): JSX.Element => {
     const { removeFromNotificationStack } = useNotificationPlateWidget();
 
     return (

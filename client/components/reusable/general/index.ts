@@ -7,3 +7,4 @@ export { NotificationBadge } from "./NotificationBadge";
 
 export type { DeadLineTimer_Props } from "./DeadLineTimer";
 export type { ContextMenu_Props } from "./ContextMenu";
+export type { NotificationBadge_Props } from "./NotificationBadge";

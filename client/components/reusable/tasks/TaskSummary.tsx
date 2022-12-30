@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
-import type { TaskCategory, Priority_ } from "../../../types";
+import type { TaskCategory, Priority_, OperationResultType_ } from "../../../types";
 import styles from "../../../styles/components/reusable/tasks/tasksummary.module.scss";
 import { IconBtn } from "../buttons";
 import { BsFilter, BsPlus, BsBookmarkCheck } from "react-icons/bs";
 import { TaskInfoRow } from "./TaskInfoRow";
-import { useModal, useTaskStore, useTabRenderer, useContextMenu, useGlobalLoading } from "../../../hooks";
+import { useModal, useTaskStore, useTabRenderer, useContextMenu, useGlobalLoading, useNotificationPlateWidget } from "../../../hooks";
 import { CreateTaskFormWithAssignees } from "../../forms";
 import { Spinner } from "../widgets";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -26,8 +26,8 @@ interface TaskSummary_Props {
 
 export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   const [newTaskName, setNewTaskName] = useState<string>("");
-  const { openModal } = useModal();
-  const { isLoading } = useTaskStore();
+  const { openModal, closeModal } = useModal();
+  const { isLoading, changeTaskStatusMultiple, changeTaskPriorityMultiple } = useTaskStore();
   const { switchTab } = useTabRenderer();
   const [markedTasks, setMarkedTasks] = useState<string[]>([]);
   const [filterTag, setFilterTag] = useState<string>("");
@@ -40,31 +40,56 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   const session = useSession();
   const { openAtCursor } = useContextMenu();
   const { startLoading, stopLoading } = useGlobalLoading();
-  const { updateTaskStatus, updateTaskPriority } = TaskQueries(session);
+  const { updateMultipleTaskStatuses, updateMultipleTaskPriorities } = TaskQueries(session);
   const updateTaskStatusMutation = useMutation({
-    mutationFn: updateTaskStatus,
+    mutationFn: updateMultipleTaskStatuses,
     onMutate: () => {
       startLoading()
     },
-    onSuccess: () => {
-
+    onSuccess: (data) => {
+      console.log(data.success)
+      if (data.success === true) {
+        generateNotification("success", data.message);
+        closeModal();
+        // update in global state
+        changeTaskStatusMultiple(markedTasks, data.taskStatus);
+        setMarkedTasks([]);
+      } else {
+        generateNotification("error", "Couldn't update task status")
+      }
     },
     onSettled: () => {
       stopLoading()
+    },
+    onError: (err_status_update) => {
+      generateNotification("error", String(err_status_update))
     }
   });
   const updateTaskPriorityMutation = useMutation({
-    mutationFn: updateTaskPriority,
+    mutationFn: updateMultipleTaskPriorities,
     onMutate: () => {
       startLoading()
     },
-    onSuccess: () => {
-
+    onSuccess: (data) => {
+      console.log(data)
+      if (data.success === true) {
+        generateNotification("success", data.message);
+        closeModal();
+        // update in global state
+        changeTaskPriorityMultiple(markedTasks, data.taskPriority);
+        setMarkedTasks([]);
+      } else {
+        generateNotification("error", "Couldn't update task priority")
+      }
     },
     onSettled: () => {
       stopLoading()
+    },
+    onError: (err_priority_update) => {
+      generateNotification("error", String(err_priority_update))
     }
-  })
+  });
+  const { addNotificationWithBadge } = useNotificationPlateWidget();
 
   function handleCreateTask() {
     openModal(
@@ -92,16 +117,38 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
     }
   }
 
+  function generateNextStatus() {
+
+  }
+
+  function generateNotification(type: OperationResultType_, text?: string) {
+    const defaultText = () => {
+      switch (type) {
+        case "success":
+          return "Success";
+        case "info":
+          return "";
+        case "error":
+          return "Error"
+      }
+    }
+
+    addNotificationWithBadge({text: text ? text : defaultText(), type: type})
+  }
+
   function handleMarkAs() {
-    startLoading();
     openModal(<MarkAsModal title={"Mark as ..."} options={[{label: "todo", value: "todo"}, {label: "pending", value: "pending"}, {label: "done", value: "done"}]} onSubmit={(value): void => {
       console.log(value);
+      // updateMultipleTaskStatuses({tids: markedTasks, status: value?.value ?? "pending"})
+      updateTaskStatusMutation.mutate({tids: markedTasks, status: value?.value ?? "pending"})
     }} />)
   }
 
   function handleChangePriority() {
     openModal(<ChangePriorityModal title={"Change Priority to ..."} options={[{label: "low", value: "low"}, {label: "medium", value: "medium"}, {label: "high", value: "high"}]} onSubmit={(value) => {
       console.log(value);
+      // updateMultipleTaskPriorities({tids: markedTasks, priority: value?.value ?? "medium"})
+      updateTaskPriorityMutation.mutate({tids: markedTasks, priority: value?.value ?? "medium"})
     }} />)
   }
 
