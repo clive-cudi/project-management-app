@@ -5,19 +5,18 @@ export function useNotificationPlateWidget() {
     // const [componentsToRender, setComponentsToRender] = useState<{id: string, component: JSX.Element}[]>([]);
     const { notificationPlate, setNotificationPlate } = useContext(NotificationPlateCtx) as NotificationPlateCtx_Props;
 
-    // useEffect(() => {
-    //     // interval for removing notifications
-    //     // check if the notification list is empty
+    useEffect(() => {
+        // interval for removing notifications
+        // check if the notification list is empty
+        const notificationInterval = setInterval(() => {
+            if (!isEmpty() && notificationPlate.autoRemove !== false){
+                dequeueNotification();
+                console.log("Interval");
+            }
+        }, notificationPlate.timeoutMod);
 
-    //     if (!isEmpty() && notificationPlate.autoRemove !== false) {
-    //         const notificationInterval = setInterval(() => {
-    //             dequeueNotification();
-    //             console.log("Interval")
-    //         }, notificationPlate.timeoutMod);
-
-    //         return () => clearInterval(notificationInterval);
-    //     }
-    // }, [])
+        return () => clearInterval(notificationInterval);
+    }, [notificationPlate.componentList])
 
     function enqueueNotification(cmpnt: JSX.Element, id?: string) {
         setNotificationPlate((prev) => ({
@@ -61,7 +60,7 @@ export function useNotificationPlateWidget() {
     function dequeueNotification() {
         console.log(`Dequeue notification`)
         if (!isEmpty()) {
-            const updatedNotificationStack = [...notificationPlate.componentList].slice(0, -1);
+            const updatedNotificationStack = [...notificationPlate.componentList].slice(1, notificationPlate.componentList.length);
 
             setNotificationPlate((prev) => ({
                 ...prev,

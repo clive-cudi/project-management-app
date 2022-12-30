@@ -14,6 +14,7 @@ export default function Login() {
         // if (session.status === "unauthenticated") {
             signIn("google").then((res) => {
                 console.log(res)
+                // localStorage.setItem("google_", JSON.stringify(res))
             }).catch((err) => {
                 console.log(err);
             })
