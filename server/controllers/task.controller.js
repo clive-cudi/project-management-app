@@ -602,6 +602,7 @@ const updateTaskStatus = (req, res, next) => {
             success: true,
             message: `Task status updated to ${status}`,
             task: updated_task,
+            taskStatus: status,
             error: {
                 status: false,
                 code: null
@@ -612,6 +613,7 @@ const updateTaskStatus = (req, res, next) => {
             success: false,
             message: "Task status update failed",
             task: null,
+            taskStatus: status,
             error: {
                 status: true,
                 code: "task_status_update_fail",
@@ -649,6 +651,7 @@ const updateMultipleTaskStatuses = (req, res, next) => {
             success: true,
             message: `Task status updated to ${status}`,
             tasks: tids,
+            taskStatus: status,
             error: {
                 status: false,
                 code: null
@@ -659,6 +662,7 @@ const updateMultipleTaskStatuses = (req, res, next) => {
             success: false,
             message: "Task status update failed",
             tasks: tids,
+            taskStatus: status,
             error: {
                 status: true,
                 code: "task_status_update_fail",
@@ -695,6 +699,7 @@ const updateTaskPriority = (req, res, next) => {
                 success: true,
                 message: "Successfully updated task priority to " + priority,
                 task: updated_task,
+                taskPriority: priority,
                 error: {
                     status: false,
                     code: null
@@ -741,6 +746,7 @@ const updateMultipleTaskPriorities = (req, res, next) => {
             success: true,
             message: "Successfully updated task priority to " + priority,
             tasks: tids,
+            taskPriority: priority,
             error: {
                 status: false,
                 code: null
@@ -752,6 +758,7 @@ const updateMultipleTaskPriorities = (req, res, next) => {
             success: false,
             message: "Failed to update task priority",
             tasks: tids,
+            taskPriority: priority,
             error: {
                 status: true,
                 code: "task_priority_update_fail",
