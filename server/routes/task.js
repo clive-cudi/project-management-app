@@ -18,7 +18,11 @@ router.delete("/delete", authVerify, TaskController.deleteTask);
 
 router.post("/update-status", authVerify, TaskController.updateTaskStatus);
 
+router.post("/update-status-multiple", authVerify, TaskController.updateMultipleTaskStatuses);
+
 router.post("/update-priority", authVerify, TaskController.updateTaskPriority);
+
+router.post("/update-priority-multiple", authVerify, TaskController.updateMultipleTaskPriorities);
 
 router.delete("/delete-multiple", authVerify, TaskController.removeMultiple);
 

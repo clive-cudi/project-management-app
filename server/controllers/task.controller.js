@@ -609,7 +609,7 @@ const updateTaskStatus = (req, res, next) => {
         });
     }).catch((status_update_error) => {
         return res.status(400).json({
-            success: true,
+            success: false,
             message: "Task status update failed",
             task: null,
             error: {
@@ -620,6 +620,53 @@ const updateTaskStatus = (req, res, next) => {
         });
     })
 };
+
+const updateMultipleTaskStatuses = (req, res, next) => {
+    const { tids, status } = req.body;
+    const allowedStatuses = ["todo", "pending", "done"];
+
+    if (!allowedStatuses.includes(status)) {
+        return res.status(400).json({
+                success: false,
+                message: `Please provide a valid status: ${allowedStatuses.toString()}`,
+                task: null,
+                error: {
+                    status: true,
+                    code: "invalid_status",
+                    debug: null
+                }
+            });
+    };
+
+    Task.updateMany(
+        {taskID: {$in: tids}},
+        {$set: {
+            status: status
+        }}
+    ).then(() => {
+        console.log(tids);
+        return res.status(200).json({
+            success: true,
+            message: `Task status updated to ${status}`,
+            tasks: tids,
+            error: {
+                status: false,
+                code: null
+            }
+        });
+    }).catch((tasks_status_update_err) => {
+        return res.status(400).json({
+            success: false,
+            message: "Task status update failed",
+            tasks: tids,
+            error: {
+                status: true,
+                code: "task_status_update_fail",
+                debug: tasks_status_update_err
+            }
+        });
+    })
+}
 
 const updateTaskPriority = (req, res, next) => {
     const { usertoken } = req.body;
@@ -646,7 +693,7 @@ const updateTaskPriority = (req, res, next) => {
         }).then((updated_task) => {
             return res.status(200).json({
                 success: true,
-                message: "Successfully updated task status",
+                message: "Successfully updated task priority to " + priority,
                 task: updated_task,
                 error: {
                     status: false,
@@ -668,6 +715,52 @@ const updateTaskPriority = (req, res, next) => {
         });
 };
 
+const updateMultipleTaskPriorities = (req, res, next) => {
+    const { tids, priority } = req.body;
+    const allowedPriorities = ["low", "medium", "high"];
+
+    if (!allowedPriorities.includes(priority)) {
+        return res.status(400).json({
+            success: false,
+            message: `Please provide a valid priority ${allowedPriorities.toString()}`,
+            task: null,
+            error: {
+                status: true,
+                code: "invalid_priority"
+            }
+        })
+    };
+
+    Task.updateMany(
+        {taskID: {$in: tids}},
+        {$set: {
+            priority: priority
+        }}
+    ).then(() => {
+        return res.status(200).json({
+            success: true,
+            message: "Successfully updated task priority to " + priority,
+            tasks: tids,
+            error: {
+                status: false,
+                code: null
+            }
+        });
+    }).catch((update_task_priority_err) => {
+        console.log(update_task_priority_err);
+        return res.status(400).json({
+            success: false,
+            message: "Failed to update task priority",
+            tasks: tids,
+            error: {
+                status: true,
+                code: "task_priority_update_fail",
+                debug: update_task_priority_err
+            }
+        })
+    })
+}
+
 module.exports = {
     getAllTasks,
     createTask,
@@ -678,5 +771,7 @@ module.exports = {
     deleteTask,
     removeMultiple,
     updateTaskStatus,
-    updateTaskPriority
+    updateTaskPriority,
+    updateMultipleTaskStatuses,
+    updateMultipleTaskPriorities
 }
