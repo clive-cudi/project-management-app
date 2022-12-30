@@ -26,11 +26,19 @@ export const TaskQueries = (session: any) => {
     }
 
     const updateTaskStatus = async ({ tid, status }: {tid: string, status: GeneralTaskStatus_}): Promise<API_res_model & {task: taskRes}> => {
-        return (await api.post("/task/update-status", {tid, status}, defaultReqConfig));
+        return (await api.post("/task/update-status", {tid, status}, defaultReqConfig)).data;
+    }
+
+    const updateMultipleTaskStatuses = async ({tids, status }: {tids: string[], status: string}): Promise<API_res_model & {tasks: string[], taskStatus: GeneralTaskStatus_}> => {
+        return (await api.post("/task/update-status-multiple", {tids, status}, defaultReqConfig)).data;
     }
 
     const updateTaskPriority = async ({ tid, priority }:{tid: string, priority: Priority_}): Promise<API_res_model & {task: taskRes}> => {
-        return (await api.post("/task/update-priority", {tid, priority}, defaultReqConfig));
+        return (await api.post("/task/update-priority", {tid, priority}, defaultReqConfig)).data;
+    }
+
+    const updateMultipleTaskPriorities = async ({tids, priority}: {tids: string[], priority: string}): Promise<API_res_model & {tasks: string[], taskPriority: Priority_}> => {
+        return (await api.post("/task/update-priority-multiple", {tids, priority}, defaultReqConfig)).data;
     }
 
     return {
@@ -39,6 +47,8 @@ export const TaskQueries = (session: any) => {
         getMultipleTasksByID,
         addTask,
         updateTaskStatus,
-        updateTaskPriority
+        updateTaskPriority,
+        updateMultipleTaskStatuses,
+        updateMultipleTaskPriorities
     }
 }

@@ -1,5 +1,5 @@
 import create from "zustand";
-import { taskRes, GeneralTaskStatus_ } from "../../types";
+import { taskRes, GeneralTaskStatus_, Priority_ } from "../../types";
 
 interface TasksStoreType {
   tasks: taskRes[];
@@ -10,6 +10,9 @@ interface TasksStoreType {
   setLoading: (isLoading: boolean) => void;
   remove: (taskID: string) => void;
   changeTaskStatus: (taskID: string, status: GeneralTaskStatus_) => void
+  changeTaskStatusMultiple: (tids: string[], status: GeneralTaskStatus_) => void
+  changeTaskPriority: (taskID: string, priority: Priority_) => void
+  changeTaskPriorityMultiple: (tids: string[], priority: Priority_) => void
 }
 
 function removeTaskById(arr: taskRes[], id: string): taskRes[] {
@@ -48,6 +51,33 @@ export const useTaskStore = create<TasksStoreType>()((set) => {
         if (tsk.taskID === taskID) {
           tsk["status"] = status;
         }
+        return tsk;
+      })
+    })),
+    changeTaskStatusMultiple: (tids, status) => set((state) => ({
+      tasks: [...state.tasks].map((tsk) => {
+        if (tids.includes(tsk.taskID)) {
+          tsk["status"] = status;
+        }
+
+        return tsk;
+      })
+    })),
+    changeTaskPriority: (taskID, priority) => set((state) => ({
+      tasks: [...state.tasks].map((tsk) => {
+        if (tsk.taskID === taskID) {
+          tsk["priority"] = priority;
+        }
+
+        return tsk;
+      })
+    })),
+    changeTaskPriorityMultiple: (tids, priority) => set((state) => ({
+      tasks: [...state.tasks].map((tsk) => {
+        if (tids.includes(tsk.taskID)) {
+          tsk["priority"] = priority;
+        }
+
         return tsk;
       })
     }))
