@@ -82,7 +82,7 @@ const Home: NextPage & PageAuth = () => {
 
   useEffect(() => {
     setProjectsLoading(isProjectsLoading);
-  }, [isProjectsLoading, setProjectsLoading])
+  }, [isProjectsLoading, setProjectsLoading]);
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {
