@@ -213,8 +213,79 @@ const removeFromProject = (req, res, next) => {
     }
 }
 
+const getClientInfo = (req, res, next) => {
+    const { cid } = req.body;
+
+    Client.findOne({cid: cid}).then((client) => {
+        if (client) {
+            return res.status(200).json({
+                success: true,
+                message: "Fetched client details successfully",
+                client: client,
+                error: {
+                    status: false,
+                    code: null
+                }
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Client not found in DB!!",
+                client: null,
+                error: {
+                    status: true,
+                    code: "client_not_found"
+                }
+            })
+        }
+    }).catch((client_info_err) => {
+        console.log(client_info_err);
+        return res.status(400).json({
+            success: false,
+            message: "Failed to fetch client details",
+            client: null,
+            error: {
+                status: false,
+                code: "client_detail_fetch_error",
+                debug: client_info_err
+            }
+        })
+    })
+}
+
+const getMultipleClientsInfo = (req, res, next) => {
+    const { cids } = req.body;
+
+    Client.find(
+        {cid: {$in: cids}}
+    ).then((clients) => {
+        return res.status(200).json({
+            success: true,
+            message: "Fetched clients details successfully!!",
+            clients: clients,
+            error: {
+                status: false,
+                code: null
+            }
+        })
+    }).catch((multiple_client_info_fetch_err) => {
+        return res.status(400).json({
+            success: false,
+            message: "An error occured while fetching clients info",
+            clients: null,
+            error: {
+                status: true,
+                code: "db_error",
+                debug: multiple_client_info_fetch_err
+            }
+        })
+    })
+}
+
 module.exports = {
     createClient,
     addToProject,
-    removeFromProject
+    removeFromProject,
+    getClientInfo,
+    getMultipleClientsInfo
 }

@@ -4,4 +4,6 @@ const UserController = require('../controllers/user.controller');
 
 router.post("/update-profile-picture", authVerify, UserController.updateProfilePicture);
 
+router.post("/get-clients", authVerify, UserController.getClients);
+
 module.exports = router;
