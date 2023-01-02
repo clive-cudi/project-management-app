@@ -50,7 +50,7 @@ const createProject = (req, res, next) => {
         name,
         stage,
         // client ID
-        client,
+        clients,
         budget,
         start,
         finish,
@@ -74,7 +74,7 @@ const createProject = (req, res, next) => {
                     },
                     budget: budget,
                     description: description,
-                    clients: [client],
+                    clients: [...clients],
                     parent: {
                         uid: usertoken.uid
                         // include usertype of the parent
