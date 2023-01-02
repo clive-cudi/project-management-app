@@ -3,3 +3,4 @@ export type { PageAuth } from "./auth";
 export * from "./general";
 export * from "./tasks";
 export * from "./projects";
+export * from "./clientRes";

@@ -4,3 +4,5 @@ export { SearchInput } from "./SearchInput";
 export { InputCheck } from "./InputCheck";
 export { RadioGroupInput } from "./RadioGroupInput";
 export { RadioInput } from "./RadioInput";
+export { DropdownInput } from "./DropdownInput";
+export { DropdownMultiOptionChoosenWidget } from "./DropdownMultiOptionChoosenWidget";
