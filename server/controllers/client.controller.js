@@ -20,7 +20,7 @@ const createClient = (req, res, next) => {
         cid: newClientID,
         parentID: usertoken.uid,
         firstName: firstName,
-        secondName: secondName,
+        lastName: secondName,
         title: title,
         email: email,
         businessName: businessName,

@@ -7,6 +7,8 @@ const ClientSchema = new Schema({
         type: String,
         required: true
     },
+    // id of the user that created the client
+    // can be organization or individual in this case
     parentID: String,
     firstName: {
         type: String,
