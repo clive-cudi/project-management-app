@@ -19,7 +19,7 @@ export const CreateProjectForm = (): JSX.Element => {
     });
     const { openAtCursor } = useContextMenu();
     const addClientOptions = useMemo<JSX.Element[]>(() => [
-        <button>Add a new Client</button>
+        <button key={1}>Add a new Client</button>
     ], [])
     // Initialize tippy.js
 
