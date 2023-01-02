@@ -256,6 +256,8 @@ const getClientInfo = (req, res, next) => {
 const getMultipleClientsInfo = (req, res, next) => {
     const { cids } = req.body;
 
+    console.log(cids);
+
     Client.find(
         {cid: {$in: cids}}
     ).then((clients) => {

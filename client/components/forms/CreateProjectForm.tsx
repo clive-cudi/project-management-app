@@ -4,6 +4,7 @@ import styles from "../../styles/components/forms/createProjectForm.module.scss"
 import { InputDiv, InputSelect, RegularBtn, IconBtn } from "../reusable";
 import Tippy from "@tippyjs/react";
 import 'tippy.js/dist/tippy.css'; 
+import { useContextMenu } from "../../hooks";
 
 export const CreateProjectForm = (): JSX.Element => {
     const projectStageData = useMemo(() => [{label: "New Project", value: "new"}, {label: "Development", value: "development"}, {label: "Launch", value: "launch"}], []);
@@ -16,6 +17,10 @@ export const CreateProjectForm = (): JSX.Element => {
         finish: "",
         description: ""
     });
+    const { openAtCursor } = useContextMenu();
+    const addClientOptions = useMemo<JSX.Element[]>(() => [
+        <button key={1}>Add a new Client</button>
+    ], [])
     // Initialize tippy.js
 
     function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
@@ -66,7 +71,7 @@ export const CreateProjectForm = (): JSX.Element => {
                     {/* fetch clients related to the user for choosing */}
                     {/* if the client doesn't exist in list, the user has to create a new client */}
                     <Tippy content={"Add Client"}>
-                        <IconBtn id={"add_client_btn"} icon={<BsPlus />} variant={"util"} data-elm-type={"icon-btn-add"} />
+                        <IconBtn id={"add_client_btn"} icon={<BsPlus />} variant={"util"} data-elm-type={"icon-btn-add"} onClick={(e) => {openAtCursor(e, addClientOptions)}} />
                     </Tippy>
                 </div>
             </div>
