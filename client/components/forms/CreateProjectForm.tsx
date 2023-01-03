@@ -10,11 +10,12 @@ import {
 } from "../reusable";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { useContextMenu, useGlobalLoading } from "../../hooks";
+import { useContextMenu, useGlobalLoading, useNotificationPlateWidget, useModal } from "../../hooks";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { UserQueries, ProjectQueries } from "../../utils";
 import { useSession } from "next-auth/react";
 import { clientRes, API_res_model } from "../../types";
+import { useProjectStore } from "../../hooks";
 
 interface newProjectFormDataTypes {
   name: string;
@@ -68,7 +69,10 @@ export const CreateProjectForm = (): JSX.Element => {
   );
   const { createProject } = ProjectQueries(session);
   const [createProjectLoading, setCreateProjectLoading] = useState<boolean>(false);
-  const { startLoading, stopLoading } = useGlobalLoading();
+  const { startLoading, stopLoading, globalLoading } = useGlobalLoading();
+  const { addNotificationWithBadge } = useNotificationPlateWidget();
+  const { closeModal } = useModal();
+  const { addifUnique: addProjectToStore } = useProjectStore();
   const createProjectMutation = useMutation({
     mutationKey: ["create_project"],
     mutationFn: createProject,
@@ -78,9 +82,17 @@ export const CreateProjectForm = (): JSX.Element => {
     },
     onSuccess(data, variables, context) {
       console.log(data);
+      addNotificationWithBadge({type: data.success ? "success" : "error", text: data.message})
+      if (data.success === true) {
+        // add project to the store if it doesn't exist
+        addProjectToStore(data.project);
+        // close the modal
+        closeModal();
+      }
     },
     onError(error, variables, context) {
       console.log(error);
+      addNotificationWithBadge({type: "error", text: String(error) as string})
     },
     onSettled(data, error, variables, context) {
       stopLoading();
@@ -210,8 +222,9 @@ export const CreateProjectForm = (): JSX.Element => {
           {/* fetch clients related to the user for choosing */}
           {/* if the client doesn't exist in list, the user has to create a new client */}
           <div className={styles.cpf_multi_option_input}>
-            {choosenClients.map((choosen_client) => (
+            {choosenClients.map((choosen_client, index) => (
               <DropdownMultiOptionChoosenWidget
+                key={index}
                 label={choosen_client.name}
                 value={choosen_client.clientID}
                 onCancel={(e, val) => {removeFromChoiceList({clientID: val.value, name: val.label})}}
@@ -226,8 +239,9 @@ export const CreateProjectForm = (): JSX.Element => {
             onClick={(e) => {
               openAtCursor(
                 e,
-                (availableClients?.map((available_client) => (
+                (availableClients?.map((available_client, ix) => (
                   <button
+                    key={ix}
                     onClick={() => {
                       addClientToChoiceList(available_client);
                     }}
@@ -287,7 +301,7 @@ export const CreateProjectForm = (): JSX.Element => {
       <div
         className={`${styles.cpf_form_strip} ${styles.cpf_form_submit_exception}`}
       >
-        <RegularBtn type={"submit"} label={`Save`} onClick={() => {submitNewProject()}} />
+        <RegularBtn type={"submit"} label={`Save`} isLoading={{status: globalLoading.isLoading ?? false}} onClick={() => {submitNewProject()}} />
       </div>
     </form>
   );

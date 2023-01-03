@@ -99,7 +99,7 @@ const createProject = (req, res, next) => {
                     return generateResponse({
                         req,
                         res,
-                        type: "success",
+                        type: "Successfully created project " + projectDoc.name ?? name,
                         data: {
                             project: projectDoc
                         }

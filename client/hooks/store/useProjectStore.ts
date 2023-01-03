@@ -9,6 +9,7 @@ interface ProjectStoreType {
     addMultiple: (projects: projectRes[]) => void
     setLoading: (isLoading: boolean) => void
     remove: (pid: string) => void
+    addifUnique: (project: projectRes) => void
 }
 
 export const useProjectStore = create<ProjectStoreType>()((set) => {
@@ -29,6 +30,16 @@ export const useProjectStore = create<ProjectStoreType>()((set) => {
         },
         remove(pid) {
             return set((state) => ({projects: [...state.projects].filter((pjct) => pjct.pid !== pid)}))
+        },
+        addifUnique(project) {
+            // check if the project is available in the projects list
+            return set((state) => {
+                if (state.projects.some((pjct) => pjct.pid === project.pid) === false) {
+                    return {projects: [...state.projects, project]};
+                } else {
+                    return {projects: [...state.projects]};
+                }
+            })
         },
     }
 })
