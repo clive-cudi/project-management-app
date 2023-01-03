@@ -805,6 +805,23 @@
     }
 }
 
+.health_status_widget {
+    display: flex;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);
+    &.health_status_active {
+        background: #0EB83DFA;
+    }
+    &.health_status_dormant {
+        background: #2563EB;
+    }
+    &.health_status_inactive {
+        background: #DC2626;
+    }
+}
+
 @keyframes animate-ul-dropdown {
     0% {
         transform: scaleY(0)

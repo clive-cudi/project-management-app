@@ -84,7 +84,8 @@ const createProject = (req, res, next) => {
                         uid: usertoken.uid
                         // include usertype of the parent
                     },
-                    progress: 0
+                    progress: 0,
+                    status: "active"
                 },
                 tasks: []
             });

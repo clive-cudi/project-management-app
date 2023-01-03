@@ -14,6 +14,6 @@ interface HealthStatusWidget_Props {
 
 export const HealthStatusWidget = ({ status, onClick, custom, className }: HealthStatusWidget_Props): JSX.Element => {
     return (
-        <span className={`${styles.health_status_widget} ${styles[`health_status_custom_${custom?.status}`]} ${className ?? ""}`} data-elm-type={"health-status-indicator"}></span>
+        <span className={`${styles.health_status_widget} ${styles[`health_status_${status}`]} ${styles[`health_status_custom_${custom?.status}`]} ${className ?? ""}`} data-elm-type={"health-status-indicator"}></span>
     )
 }
