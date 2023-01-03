@@ -12,7 +12,22 @@ export const ProjectQueries = (session: any) => {
         return (await api.get("/project/projects-details", defaultReqConfig)).data;
     }
 
+    interface createProjectRequest_Props {
+        name: string;
+        stage: string;
+        clients: string[];
+        bugdet: string;
+        start: string;
+        finish: string;
+        description: string;
+      }
+
+    const createProject = async ({ name, stage, clients, bugdet, start, finish, description }: createProjectRequest_Props): Promise<API_res_model & projectRes> => {
+        return (await api.post("/project/create", { name, stage, clients, bugdet, start, finish, description }, defaultReqConfig)).data;
+    }
+
     return {
-        fetchAllProjects
+        fetchAllProjects,
+        createProject
     }
 }

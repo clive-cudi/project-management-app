@@ -10,11 +10,21 @@ import {
 } from "../reusable";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { useContextMenu } from "../../hooks";
-import { useQuery } from "@tanstack/react-query";
-import { UserQueries } from "../../utils";
+import { useContextMenu, useGlobalLoading } from "../../hooks";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { UserQueries, ProjectQueries } from "../../utils";
 import { useSession } from "next-auth/react";
 import { clientRes, API_res_model } from "../../types";
+
+interface newProjectFormDataTypes {
+  name: string;
+  stage: string;
+  clients: string[];
+  bugdet: string;
+  start: string;
+  finish: string;
+  description: string;
+}
 
 export const CreateProjectForm = (): JSX.Element => {
   const projectStageData = useMemo(
@@ -25,10 +35,10 @@ export const CreateProjectForm = (): JSX.Element => {
     ],
     []
   );
-  const [newProjectData, setNewProjectData] = useState({
+  const [newProjectData, setNewProjectData] = useState<newProjectFormDataTypes>({
     name: "",
     stage: "",
-    client: "",
+    clients: [],
     bugdet: "",
     start: "",
     finish: "",
@@ -56,6 +66,26 @@ export const CreateProjectForm = (): JSX.Element => {
     () => [<button key={1}>Add a new Client</button>],
     []
   );
+  const { createProject } = ProjectQueries(session);
+  const [createProjectLoading, setCreateProjectLoading] = useState<boolean>(false);
+  const { startLoading, stopLoading } = useGlobalLoading();
+  const createProjectMutation = useMutation({
+    mutationKey: ["create_project"],
+    mutationFn: createProject,
+    onMutate(variables) {
+      console.log(variables)
+      startLoading();
+    },
+    onSuccess(data, variables, context) {
+      console.log(data);
+    },
+    onError(error, variables, context) {
+      console.log(error);
+    },
+    onSettled(data, error, variables, context) {
+      stopLoading();
+    },
+  });
 
   useEffect(() => {
     setAvailableClients((prev) =>
@@ -73,6 +103,9 @@ export const CreateProjectForm = (): JSX.Element => {
   ) {
     const name = e.target.name;
     const type = e.target.type;
+    
+    // console.log(name);
+    // console.log(typeof e.target.value)
 
     const value = () => {
       switch (type) {
@@ -90,10 +123,27 @@ export const CreateProjectForm = (): JSX.Element => {
   }
 
   function submitNewProject() {
-    const { client, description, ...requiredData } = newProjectData;
+    const { clients, description, bugdet, stage, ...requiredData } = newProjectData;
 
+    console.log(newProjectData);
     if ([...Object.values(requiredData)].every(Boolean)) {
       console.log("submitting project create");
+
+      // handle defaults 
+      Object.keys(newProjectData).forEach((key_entry) => {
+        if (newProjectData[key_entry as keyof newProjectFormDataTypes] === "") {
+          switch (key_entry) {
+            case "stage":
+              newProjectData[key_entry] = "new"
+              return;
+          }
+        }
+      });
+
+
+
+      console.log(newProjectData);
+      createProjectMutation.mutate(newProjectData);
     }
   }
 
@@ -115,6 +165,16 @@ export const CreateProjectForm = (): JSX.Element => {
       [...prevChosen].filter((val) => val.clientID !== client.clientID)
     );
   }
+
+  useEffect(() => {
+    // add client to form
+    setNewProjectData((prevData) => ({
+      ...prevData,
+      clients: choosenClients.map((client) => client.clientID)
+    }))
+  }, [choosenClients]);
+
+
 
   return (
     <form
@@ -227,7 +287,7 @@ export const CreateProjectForm = (): JSX.Element => {
       <div
         className={`${styles.cpf_form_strip} ${styles.cpf_form_submit_exception}`}
       >
-        <RegularBtn type={"submit"} label={`Save`} onClick={() => {}} />
+        <RegularBtn type={"submit"} label={`Save`} onClick={() => {submitNewProject()}} />
       </div>
     </form>
   );
