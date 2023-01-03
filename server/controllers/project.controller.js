@@ -61,6 +61,11 @@ const createProject = (req, res, next) => {
         if (user) {
             const projectID = `project_${v4ID()}`;
 
+            console.log(typeof clients);
+            console.log(`clients:
+                ${clients}
+            `)
+
             const newProject = new Project({
                 pid: projectID,
                 name: name,
@@ -122,6 +127,7 @@ const createProject = (req, res, next) => {
                     })
                 })
             }).catch((error) => {
+                console.log(error);
                 return generateResponse({
                     req,
                     res,
@@ -129,14 +135,14 @@ const createProject = (req, res, next) => {
                     status: 400,
                     data: {
                         success: false,
-                        message: "Task Creation Error",
+                        message: "Project Creation Error",
                         usertoken: {
                             user: null,
                             token: null
                         },
                         error: {
                             status: true,
-                            code: "task_creation_fail",
+                            code: "project_creation_fail",
                             debug: error
                         }
                     }
@@ -157,6 +163,7 @@ const createProject = (req, res, next) => {
             });
         }
     }).catch((e) => {
+        console.log(e);
         return res.status(400).json({
             success: false,
             message: "Error Fetching user from DB!!",

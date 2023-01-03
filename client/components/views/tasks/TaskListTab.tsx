@@ -85,7 +85,8 @@ export const TaskListTab = (): JSX.Element => {
 
     useEffect(() => {
         if (tasks.length > 0) {
-            console.log(tasks)
+            // console.log(tasks)
+            // [bug-fix]
             tasks.forEach((tsk) => {
                 setTaskIds([...new Set([...taskIds, tsk.taskID])]);
                 let taskRow = ["#", tsk.name, tsk.createdAt, "", tsk.priority, "0"]
@@ -102,7 +103,8 @@ export const TaskListTab = (): JSX.Element => {
                 }
             })
         }
-    }, [tasks, addToList, taskIds]);
+        // eslint-disable-next-line
+    }, [tasks, taskIds]);
 
     return (
         <div className={styles.tlst_content}>
