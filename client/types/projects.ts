@@ -1,3 +1,5 @@
+import { ProjectHealthStatus } from "./general"
+
 export interface projectRes {
     pid: string,
     name: string,
@@ -14,7 +16,8 @@ export interface projectRes {
             uid: string
         },
         description: string,
-        clients: string[]
+        clients: string[],
+        status: ProjectHealthStatus
     },
     contributors: {
         teams: string[]

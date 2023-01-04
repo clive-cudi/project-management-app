@@ -17,3 +17,5 @@ export type ContractPageLabelsType = "my_contracts" | "add_contract" | "search_c
 export type GeneralTaskStatus_ = "todo" | "pending" | "done";
 
 export type OperationResultType_ = "success" | "error" | "info";
+
+export type ProjectHealthStatus = "active" | "dormant" | "inactive";

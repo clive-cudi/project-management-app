@@ -34,7 +34,8 @@ const ProjectSchema = new Schema({
         clients: [String],
         parent: {
             uid: String
-        }
+        },
+        progress: Number
     },
     stage: {
         type: String,

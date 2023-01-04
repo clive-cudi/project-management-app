@@ -1,10 +1,9 @@
 export { Header } from "./Header";
-export { ProfilePicUpload } from "./profile/ProfilePic";
+export * from "./profile";
 export * from "./inputs";
 export * from "./buttons";
 export * from "./modals";
 export * from "./navbars";
-export { ProfileWidget} from "./profile/ProfileWidget";
 export * from "./tasks";
 export * from "./general";
 export * from "./Table";
