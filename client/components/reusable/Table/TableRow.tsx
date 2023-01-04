@@ -1,4 +1,4 @@
-import { MouseEvent, CSSProperties, ReactNode } from "react";
+import { MouseEvent, CSSProperties, ReactNode, useEffect } from "react";
 import styles from "../../../styles/components/reusable/table/table.module.scss";
 import { useRenderByID } from "../../../hooks";
 import { CMPNT_REF_REGEX } from "../../../utils";
@@ -43,7 +43,8 @@ export const TableRow = ({
             if (regexCmpntRef.test(cell)) {
                 // extract the component ID
                 console.log(`Found Component Ref ${cell}`)
-                console.log(`Rendering componentID: ${(cell.match(/[^__component\s@](.)*/) ?? [])[0]}`);
+                // console.log(`Rendering componentID: ${(cell.match(/[^__component\s@](.)*/) ?? [])[0]}`);
+                console.log(`Rendering componentID: ${cell.substring((cell.indexOf("@") + 1))} `)
                 // return <td>{renderByID((cell.match(/[^__component](.*)/) ?? ["", ""])[1])}</td>
                 return <td key={i}>{renderByID(cell.substring((cell.indexOf("@") + 1)))}</td>
             } else {
