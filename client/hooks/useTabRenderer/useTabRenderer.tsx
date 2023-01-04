@@ -10,10 +10,13 @@ import { TasksOverviewTab, TasksBoard, TaskListTab, GanttChartTab } from "../../
 import { CreateTaskFormWithAssignees, ContextMenu, ContextMenuWrapper } from "../../components";
 import { MyContractsTab, AddContractTab, SearchContractsTab, ContractsBoardTab } from "../../components/views/contracts";
 import { useRouter } from "next/router";
+import { useRenderByID } from "../useRenderByID/useRenderByID";
+import { TestTab } from "../../components/views/homepageTabs/TestTab";
 
 export function useTabRenderer() {
     const { tabRender, setTabRender } = useContext(TabRenderCtx) as TabRenderCtx_Props;
     const router = useRouter();
+    const { renderByID } = useRenderByID();
     const Tabs: TabRenderCtxTypes[] = [
         {
             label: "home",
@@ -85,7 +88,7 @@ export function useTabRenderer() {
         },
         {
             label: "test",
-            component: <ContextMenuWrapper elmList={[<button>Hey</button>, <button>Close</button>, <button>Hey</button>, <button>Close</button>]} />
+            component: <TestTab />
         }
     ];
     const homePageTabs = useMemo<TabRenderCtxTypes[]>(()=> [...new Set<TabRenderCtxTypes>([...Tabs])], [router]);

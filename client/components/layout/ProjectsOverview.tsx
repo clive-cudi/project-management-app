@@ -17,7 +17,7 @@ export const ProjectsOverview = ({children}: ProjectsOverview_Props) => {
         return [...TableData]
     }, []);
     const tableHeaders = useMemo(() => ["id", "project_name", "project_type", "health_status", "team", "start", "finish_date", "progress"].map((header)=> upperCaseFirstSentence(header, "_")), []);
-    const tableSortedData = projects.map((pjct, index) => [`${index+1}`, pjct.name, pjct.stage, `__component@health_status_${pjct.info.status ?? "active"}`, "__component@user_ribbons", pjct.info.created.time, pjct.info.expiry.time, `50%`]);
+    const tableSortedData = projects.map((pjct, index) => [`${index+1}`, pjct.name, pjct.stage, `__component@health_status_${pjct.info.status ?? "active"}`, "__component@profile_icon", pjct.info.created.time, pjct.info.expiry.time, `50%`]);
 
     return (
         <div className={styles.pov_wrapper}>
