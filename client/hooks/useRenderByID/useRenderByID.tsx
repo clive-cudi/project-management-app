@@ -1,52 +1,24 @@
-import React, { useMemo, cloneElement, isValidElement, ReactNode, useState } from "react";
+import React, { useMemo, cloneElement, isValidElement, ReactNode, useState, useEffect } from "react";
 import { HealthStatusWidget, ProfileIcon } from "../../components";
+import { useComponentRepoStore } from "../store";
 
-interface componentRepoInstance {compID: string, component: JSX.Element | React.ReactNode, fullID: string}
+export interface componentRepoInstance {compID: string, component: JSX.Element | React.ReactNode, fullID: string}
 
 export function useRenderByID() {
-    const staticComponentsRepo = useMemo<componentRepoInstance[]>(() => [
-        {
-            compID: "test_component",
-            component: <h3>Test Component from useRenderID()</h3>,
-            fullID: "__component@text_component",
-        },
-        {
-            compID: "user_ribbons",
-            component: <h3>User Ribbons</h3>,
-            fullID: "__component@user_ribbons"
-        },
-        {
-            compID: "health_status_active",
-            component: <HealthStatusWidget status={"active"} />,
-            fullID: "__component@health_status_active"
-        },
-        {
-            compID: "health_status_dormant",
-            component: <HealthStatusWidget status={"active"} />,
-            fullID: "__component@health_status_dormant"
-        },
-        {
-            compID: "health_status_inactive",
-            component: <HealthStatusWidget status={"inactive"} />,
-            fullID: "__component@health_status_inactive"
-        },
-        {
-            compID: "profile_icon",
-            component: <ProfileIcon user={{uid: "cnuvebufr383j_", profilePicURL: "https://source.unsplash.com/random"}}  />,
-            fullID: "__component@profile_icon"
-        }
-    ], []);
+    // [todo: move the repo to zustand state to prevent state reset everytime useRenderByID() is called => being causing "component not found error"]
+    const { components: componentsRepo, addToComponentStore, resetComponentsStore } = useComponentRepoStore();
 
-    const [componentsRepo, setComponentsRepo] = useState<componentRepoInstance[]>([
-        ...staticComponentsRepo
-    ])
+    useEffect(() => {console.log(componentsRepo)}, [componentsRepo])
 
-    function renderByID(id: string): JSX.Element | React.ReactNode {
+    function renderByID(compID: string): JSX.Element | React.ReactNode {
         // find the component in componentsRepo
-        if (componentsRepo.some((compnt) => compnt.compID === id)) {
-            return componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === id)].component;
+        // console.log(compID);
+        console.log("Exists :=> " + componentsRepo.find((cp) => cp.compID == compID)?.compID);
+        if (componentsRepo.find((compnt) => compnt.compID === compID)) {
+            console.log(componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component)
+            return componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component;
         } else {
-            console.log("can't find the component")
+            // console.log("can't find the component ID: " + compID );
             return <></>
         }
     }
@@ -62,9 +34,8 @@ export function useRenderByID() {
                     fullID: "__component@" + String(compID)
                 }
 
-                setComponentsRepo((prevRepo) => {
-                    return [...prevRepo, newComponentObj]
-                })
+                addToComponentStore(newComponentObj);
+                
             }
         }
 
@@ -92,7 +63,7 @@ export function useRenderByID() {
             } 
         }) as componentRepoInstance[];
 
-        setComponentsRepo(() => newRepo);
+        resetComponentsStore(newRepo);
 
         return newRepo;
     }
