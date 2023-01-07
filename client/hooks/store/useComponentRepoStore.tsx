@@ -1,53 +1,40 @@
 import create  from "zustand";
 import { componentRepoInstance } from "../useRenderByID/useRenderByID";
-import { HealthStatusWidget, ProfileIcon } from "../../components";
+import { staticComponents as static_components } from "./StaticComponents";
+import { useEffect, useState } from "react";
 
 interface ComponentsRepoStoreType {
     staticComponents: componentRepoInstance[],
     components: componentRepoInstance[],
     addToComponentStore: (component: componentRepoInstance) => void
+    addToStaticComponentStore: (component: componentRepoInstance) => void
+    addMultipleStaticComponentsToStore: (components: componentRepoInstance[]) => void
     resetComponentsStore: (newRepo: componentRepoInstance[]) => void
 }
 
 export const useComponentRepoStore = create<ComponentsRepoStoreType>()((set) => {
-    const staticComponents: componentRepoInstance[] = [
-        {
-            compID: "test_component",
-            component: <h3>Test Component from useRenderID()</h3>,
-            fullID: "__component@text_component",
-        },
-        {
-            compID: "user_ribbons",
-            component: <h3>User Ribbons</h3>,
-            fullID: "__component@user_ribbons"
-        },
-        {
-            compID: "health_status_active",
-            component: <HealthStatusWidget status={"active"} />,
-            fullID: "__component@health_status_active"
-        },
-        {
-            compID: "health_status_dormant",
-            component: <HealthStatusWidget status={"active"} />,
-            fullID: "__component@health_status_dormant"
-        },
-        {
-            compID: "health_status_inactive",
-            component: <HealthStatusWidget status={"inactive"} />,
-            fullID: "__component@health_status_inactive"
-        },
-        {
-            compID: "profile_icon",
-            component: <ProfileIcon user={{uid: "cnuvebufr383j_", profilePicURL: "https://source.unsplash.com/random"}}  />,
-            fullID: "__component@profile_icon"
-        }
-    ]
+    const [staticComponents, setStaticComponents] = useState<componentRepoInstance[]>([]);
+
+    useEffect(() => {setStaticComponents(static_components)}, [])
+
     return {
         staticComponents: staticComponents,
         components: [...staticComponents],
         addToComponentStore(component) {
             return set((state) => {
                 return {components: [...state.components, component]}
+            })
+        },
+        // adds to both static and component store
+        // [todo: find a way to persist the static component store]
+        addToStaticComponentStore(component) {
+            return set((state) => {
+                return {staticComponents: [...state.staticComponents, component], components: [...state.components, component]}
+            })
+        },
+        addMultipleStaticComponentsToStore(components) {
+            return set((state) => {
+                return {staticComponents: [...state.staticComponents.filter((scmpnt) => components.some((cp) => cp.compID === scmpnt.compID) === false)], components: [...state.components.filter((cmpnt) => components.some((cp) => cp.compID === cmpnt.compID) === false)]}
             })
         },
         removeFromComponentStore(compID: string) {

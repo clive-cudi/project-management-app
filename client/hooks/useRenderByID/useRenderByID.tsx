@@ -6,7 +6,7 @@ export interface componentRepoInstance {compID: string, component: JSX.Element |
 
 export function useRenderByID() {
     // [todo: move the repo to zustand state to prevent state reset everytime useRenderByID() is called => being causing "component not found error"]
-    const { components: componentsRepo, addToComponentStore, resetComponentsStore } = useComponentRepoStore();
+    const { components: componentsRepo, addToComponentStore, resetComponentsStore, staticComponents, addToStaticComponentStore } = useComponentRepoStore();
 
     useEffect(() => {console.log(componentsRepo)}, [componentsRepo])
 
@@ -66,6 +66,31 @@ export function useRenderByID() {
         resetComponentsStore(newRepo);
 
         return newRepo;
+    }
+
+    function addStaticComponent(compID: string, component: JSX.Element | ReactNode): componentRepoInstance {
+        if (staticComponents.some((cmpntObj) => cmpntObj.compID === compID ) === false) {
+            if (isValidElement(component)) {
+                const newComponentObj: componentRepoInstance = {
+                    compID: compID,
+                    component: component,
+                    fullID: "__component@" + String(compID)
+                }
+
+                addToStaticComponentStore(newComponentObj);
+                
+            }
+        }
+
+        return {
+            compID: compID,
+            component: component,
+            fullID: "__component@" + String(compID)
+        }
+    }
+
+    function addStaticComponents(components: Omit<componentRepoInstance[], "fullID">) {
+        
     }
 
     return {
