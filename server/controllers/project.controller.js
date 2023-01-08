@@ -70,6 +70,10 @@ const createProject = (req, res, next) => {
                 pid: projectID,
                 name: name,
                 stage: stage,
+                contributors: {
+                    teams: [],
+                    individuals: [usertoken.uid]
+                },
                 info: {
                     created: {
                         time: start

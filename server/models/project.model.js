@@ -11,7 +11,7 @@ const ProjectSchema = new Schema({
     },
     contributors: {
         teams: [TeamSchema],
-        individuals: [UserSchema]
+        individuals: [String]
     },
     name: {
         type: String,
