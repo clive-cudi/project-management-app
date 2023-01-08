@@ -1,7 +1,7 @@
 .profile_icon_wrapper {
     display: flex;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -53,6 +53,53 @@
       }
     }
   }
+
+.profile_icon_ribbon_wrapper {
+  display: flex;
+  height: fit-content;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  > div[data-elm-type = "profile-icon"] {
+    position: absolute;
+    min-height: 40px;
+    min-width: 40px;
+    border: 1px solid white;
+    &:nth-child(1) {
+      left: 0px;
+    }
+    &:nth-child(2) {
+      left: 20px;
+    }
+    &:nth-child(3) {
+      left: 40px;
+    }
+    &:nth-child(4) {
+      left: 60px;
+    }
+    &:nth-child(5) {
+      left: 80px;
+    }
+  }
+  .profile_extra_placeholder {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
+    background: #F4D7DA;
+    color: #D25B68;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    left: 60px;
+  }
+}
   
   @keyframes animate-profile-details-slide-in {
     0% {

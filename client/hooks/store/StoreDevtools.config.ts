@@ -3,13 +3,13 @@ import { useComponentRepoStore, useCountStore, useDemoStore, useProjectStore, us
 
 export function MountStoreDevTools() {
     if (process.env.NODE_ENV === "development") {
-        mountStoreDevtool("useComponentRepoStore", useComponentRepoStore);
+        // mountStoreDevtool("useComponentRepoStore", useComponentRepoStore);
 
         // mountStoreDevtool("useCountStore", useCountStore);
 
         // mountStoreDevtool("useDemoStore", useDemoStore);
 
-        // mountStoreDevtool("useProjectStore", useProjectStore);
+        mountStoreDevtool("useProjectStore", useProjectStore);
 
         // mountStoreDevtool("useTaskStore", useTaskStore);
     }
