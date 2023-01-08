@@ -15,7 +15,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^7.4.0",
-    "simple-zustand-devtools": "^1.1.0"
+    "concurrently": "^7.4.0"
   }
 }

@@ -1903,14 +1903,14 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@18.0.6":
+"@types/react-dom@>=18.0.0", "@types/react-dom@18.0.6":
   "integrity" "sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA=="
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.6.tgz"
   "version" "18.0.6"
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@18.0.21":
+"@types/react@*", "@types/react@>=18.0.0", "@types/react@18.0.21":
   "integrity" "sha512-7QUCOxvFgnD5Jk8ZKlUAhVcRj7GuJRjnjjiY/IUBWKgOlnvDvTMLD4RTF7NPyVmbRhNrbomZiOepg7M/2Kj1mA=="
   "resolved" "https://registry.npmjs.org/@types/react/-/react-18.0.21.tgz"
   "version" "18.0.21"
@@ -4282,7 +4282,7 @@
     "merge-class-names" "^1.1.1"
     "prop-types" "^15.6.0"
 
-"react-dom@^16.3.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@>=16", "react-dom@>=16.8", "react-dom@18.2.0":
+"react-dom@^16.3.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@>=16", "react-dom@>=16.8", "react-dom@>=18.0.0", "react-dom@18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -4307,7 +4307,7 @@
   dependencies:
     "crypto-js" "^3.1.9-1"
 
-"react@*", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18", "react@^17.0.2 || ^18.0.0-0", "react@^18.0.0", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16", "react@>=16.8", "react@18.2.0":
+"react@*", "react@^16.3.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18", "react@^17.0.2 || ^18.0.0-0", "react@^18.0.0", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16", "react@>=16.8", "react@>=18.0.0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -4520,6 +4520,11 @@
     "call-bind" "^1.0.0"
     "get-intrinsic" "^1.0.2"
     "object-inspect" "^1.9.0"
+
+"simple-zustand-devtools@^1.1.0":
+  "integrity" "sha512-Axfcfr9L3YL3kto7aschCQLY2VUlXXMnIVtaTe9Y0qWbNmPsX/y7KsNprmxBZoB0pww5ZGs1u/ohcrvQ3tE6jA=="
+  "resolved" "https://registry.npmjs.org/simple-zustand-devtools/-/simple-zustand-devtools-1.1.0.tgz"
+  "version" "1.1.0"
 
 "slash@^3.0.0":
   "integrity" "sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q=="
@@ -4996,7 +5001,7 @@
   "resolved" "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   "version" "0.1.0"
 
-"zustand@^4.1.4":
+"zustand@^4.1.4", "zustand@>=1.0.2":
   "integrity" "sha512-k2jVOlWo8p4R83mQ+/uyB8ILPO2PCJOf+QVjcL+1PbMCk1w5OoPYpAIxy9zd93FSfmJqoH6lGdwzzjwqJIRU5A=="
   "resolved" "https://registry.npmjs.org/zustand/-/zustand-4.1.4.tgz"
   "version" "4.1.4"
