@@ -24,14 +24,16 @@ export const TestTab = (): JSX.Element => {
 
     function handleAddColorProp() {
         console.log(registerProps(targetID, {
-            color: "green",
+            style: {
+                color: "green"
+            },
         }))
     }
 
     return (
         <div style={wrapperStyles}>
             {
-                targetID && renderByID(targetID)
+                targetID && renderByID(targetID).call({})
             }
             <button onClick={() => {handleAddComponent()}}>Add Component to repo</button>
             <button onClick={() => {handleAddColorProp()}}>Add Color Prop</button>
