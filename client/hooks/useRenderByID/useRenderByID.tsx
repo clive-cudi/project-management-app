@@ -13,7 +13,7 @@ export function useRenderByID() {
     function renderByID(compID: string): () => JSX.Element | React.ReactNode {
         // find the component in componentsRepo
         // console.log(compID);
-        console.log("Exists :=> " + componentsRepo.find((cp) => cp.compID == compID)?.compID);
+        console.log("Exists :=> " + componentsRepo.find((cp) => cp.compID == compID));
         if (componentsRepo.find((compnt) => compnt.compID === compID)) {
             console.log(componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component)
             return componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component;
@@ -51,16 +51,19 @@ export function useRenderByID() {
 
         const newRepo = componentsRepo.map((componentObj) => {
             if (componentObj.compID === componentID) {
-                if (isValidElement(componentObj.component)) {
-                    const updatedComponent = cloneElement(componentObj.component, {
+                console.log("Found component for prop registration")
+                if (isValidElement(componentObj.component()) && componentObj.component()) {
+                    console.log("Adding")
+                    const initialComponent = componentObj.component;
+                    const updatedComponent = cloneElement(initialComponent() as any, {
                         ...props
                     });
 
                     componentObj["component"] = () => updatedComponent;
-
-                    return componentObj;
                 }
-            } 
+            }
+
+            return componentObj;
         }) as componentRepoInstance[];
 
         resetComponentsStore(newRepo);

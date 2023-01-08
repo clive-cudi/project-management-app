@@ -87,7 +87,7 @@ const Home: NextPage & PageAuth = () => {
   }, [isProjectsLoading, setProjectsLoading]);
   
 
-  // useEffect(() => {
+  // useEffect(() => {  
   //   addMultipleStaticComponentsToStore(staticComponents.map((sc) => {s}));
   // }, [])
 
