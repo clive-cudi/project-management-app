@@ -1,7 +1,7 @@
 import create  from "zustand";
 import { componentRepoInstance } from "../useRenderByID/useRenderByID";
-import { staticComponents as static_components } from "./StaticComponents";
-import { useEffect, useState } from "react";
+import { HealthStatusWidget, ProfileIcon } from "../../components";
+import { staticComponents } from "../../utils";
 
 interface ComponentsRepoStoreType {
     staticComponents: componentRepoInstance[],
@@ -13,12 +13,8 @@ interface ComponentsRepoStoreType {
 }
 
 export const useComponentRepoStore = create<ComponentsRepoStoreType>()((set) => {
-    const [staticComponents, setStaticComponents] = useState<componentRepoInstance[]>([]);
-
-    useEffect(() => {setStaticComponents(static_components)}, [])
-
     return {
-        staticComponents: staticComponents,
+        staticComponents: [...staticComponents],
         components: [...staticComponents],
         addToComponentStore(component) {
             return set((state) => {

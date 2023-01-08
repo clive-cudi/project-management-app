@@ -2,15 +2,15 @@ import React, { useMemo, cloneElement, isValidElement, ReactNode, useState, useE
 import { HealthStatusWidget, ProfileIcon } from "../../components";
 import { useComponentRepoStore } from "../store";
 
-export interface componentRepoInstance {compID: string, component: JSX.Element | React.ReactNode, fullID: string}
+export interface componentRepoInstance {compID: string, component: () => JSX.Element | React.ReactNode, fullID: string}
 
 export function useRenderByID() {
     // [todo: move the repo to zustand state to prevent state reset everytime useRenderByID() is called => being causing "component not found error"]
-    const { components: componentsRepo, addToComponentStore, resetComponentsStore, staticComponents, addToStaticComponentStore } = useComponentRepoStore();
+    const { components: componentsRepo, addToComponentStore, resetComponentsStore, staticComponents, addToStaticComponentStore, addMultipleStaticComponentsToStore } = useComponentRepoStore();
 
     useEffect(() => {console.log(componentsRepo)}, [componentsRepo])
 
-    function renderByID(compID: string): JSX.Element | React.ReactNode {
+    function renderByID(compID: string): () => JSX.Element | React.ReactNode {
         // find the component in componentsRepo
         // console.log(compID);
         console.log("Exists :=> " + componentsRepo.find((cp) => cp.compID == compID)?.compID);
@@ -19,7 +19,7 @@ export function useRenderByID() {
             return componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component;
         } else {
             // console.log("can't find the component ID: " + compID );
-            return <></>
+            return () => <></>
         }
     }
 
@@ -30,7 +30,7 @@ export function useRenderByID() {
             if (isValidElement(component)) {
                 const newComponentObj: componentRepoInstance = {
                     compID: compID,
-                    component: component,
+                    component: () => component,
                     fullID: "__component@" + String(compID)
                 }
 
@@ -41,7 +41,7 @@ export function useRenderByID() {
 
         return {
             compID: compID,
-            component: component,
+            component: () => component,
             fullID: "__component@" + String(compID)
         }
     } 
@@ -56,7 +56,7 @@ export function useRenderByID() {
                         ...props
                     });
 
-                    componentObj["component"] = updatedComponent;
+                    componentObj["component"] = () => updatedComponent;
 
                     return componentObj;
                 }
@@ -73,7 +73,7 @@ export function useRenderByID() {
             if (isValidElement(component)) {
                 const newComponentObj: componentRepoInstance = {
                     compID: compID,
-                    component: component,
+                    component: () => component,
                     fullID: "__component@" + String(compID)
                 }
 
@@ -84,18 +84,22 @@ export function useRenderByID() {
 
         return {
             compID: compID,
-            component: component,
+            component: () => component,
             fullID: "__component@" + String(compID)
         }
     }
 
     function addStaticComponents(components: Omit<componentRepoInstance[], "fullID">) {
+        addMultipleStaticComponentsToStore(components);
         
+        return components;
     }
 
     return {
         renderByID,
         addComponent,
-        registerProps
+        registerProps,
+        addStaticComponent,
+        addStaticComponents
     }
 }
