@@ -1,0 +1,1 @@
+export { staticComponents } from "./StaticComponents";

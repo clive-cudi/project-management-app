@@ -6,6 +6,8 @@ import TableData from "../../mock/tableDataProjectOverView.json";
 import { upperCaseFirstSentence } from "../../utils";
 import { useProjectStore, useRenderByID } from "../../hooks";
 import { ProjectHealthStatus, projectRes } from "../../types";
+import { ColumnHelper } from "@tanstack/react-table";
+
 
 interface ProjectsOverview_Props {
     children?: React.ReactNode
@@ -21,7 +23,7 @@ export const ProjectsOverview = ({children}: ProjectsOverview_Props) => {
     const tableSortedData = projects.map((pjct, index) => {
         // add components to the component repo for rendering by ID
         const pjctID = pjct.pid;
-        const { compID, fullID } = addComponent(pjctID, <ProfileIcon user={{uid: pjct.pid, profilePicURL: "https://source.unsplash.com/random"}} />);
+        const { compID, fullID } = addComponent(pjctID, <ProfileIcon user={{uid: pjct.pid, profilePicURL: "https://source.unsplash.com/radom"}} />);
 
         return Object.create({...pjct, fullID: fullID}) as projectRes & {fullID: string};
     }).map((pjct: projectRes & {fullID: string}, index) => [`${index+1}`, pjct.name, pjct.stage, `__component@health_status_${pjct.info.status ?? "active"}`, pjct.fullID, pjct.info.created.time, pjct.info.expiry.time, `50%`]);

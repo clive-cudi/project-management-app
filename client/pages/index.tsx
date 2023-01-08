@@ -3,14 +3,15 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
 import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn, ContextMenuWrapper, LoadingBarWidget, NotificationPlateWidget } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
-import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore, useProjectStore, useGlobalLoading, useNotificationPlateWidget } from "../hooks";
+import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore, useProjectStore, useGlobalLoading, useNotificationPlateWidget, useComponentRepoStore } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
 import { FiUsers, FiSettings } from "react-icons/fi";
-import { upperCaseFirstLetter, TaskQueries, ProjectQueries } from "../utils";
+import { upperCaseFirstLetter, TaskQueries, ProjectQueries, staticComponents } from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { MountStoreDevTools } from "../hooks";
 
 const Home: NextPage & PageAuth = () => {
   // const { currentTab, switchHomeTab } = useLayout();
@@ -62,6 +63,7 @@ const Home: NextPage & PageAuth = () => {
   const { data: fetchedProjects, isLoading: isProjectsLoading, isError: projectsFetchError } = useQuery(["projects"], fetchAllProjects);
   const { globalLoading } = useGlobalLoading();
   const { isEmpty: isNotificationPlateEmpty } = useNotificationPlateWidget();
+  const { addMultipleStaticComponentsToStore } = useComponentRepoStore();
 
   useEffect(() => {
     if (fetchedTasks && !isError) {
@@ -83,6 +85,18 @@ const Home: NextPage & PageAuth = () => {
   useEffect(() => {
     setProjectsLoading(isProjectsLoading);
   }, [isProjectsLoading, setProjectsLoading]);
+  
+
+  // useEffect(() => {
+  //   addMultipleStaticComponentsToStore(staticComponents.map((sc) => {s}));
+  // }, [])
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      console.log("Mounting zustand devtools");
+      MountStoreDevTools();
+    }
+  }, [])
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {
