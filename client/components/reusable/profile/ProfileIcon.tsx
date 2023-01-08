@@ -133,6 +133,7 @@ export const ProfileIcon = ({
           imageHoverRef.current?.setAttribute("data-elm-isActive", "false");
         }
       }}
+      data-elm-type={"profile-icon"}
     >
       <span>
         <img src={user.profilePicURL ?? ""} alt="@" />

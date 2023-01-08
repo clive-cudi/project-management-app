@@ -15,7 +15,7 @@ export function useRenderByID() {
         // console.log(compID);
         console.log("Exists :=> " + componentsRepo.find((cp) => cp.compID == compID));
         if (componentsRepo.find((compnt) => compnt.compID === compID)) {
-            console.log(componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component)
+            // console.log(componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component)
             return componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component;
         } else {
             // console.log("can't find the component ID: " + compID );
