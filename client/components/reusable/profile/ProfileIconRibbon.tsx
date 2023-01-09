@@ -15,7 +15,7 @@ export const ProfileIconRibbon = ({ users, maxNumber = 4 }: ProfileIconRibbon_Pr
             {
                 users.slice(0, maxNumber ?? 4).map((user, ix) => {
                     return <ProfileIcon key={ix} user={user} />;
-                }).concat(users.length > maxNumber ? [<div data-elm-type = "profile-icon" className={styles.profile_extra_placeholder} onClick={() => {}}>{`+${users.length - maxNumber}`}</div>] : [<></>])
+                }).concat(users.length > maxNumber ? [<div key={users.length} data-elm-type={"profile-icon"} className={styles.profile_extra_placeholder} onClick={() => {}}>{`+${users.length - maxNumber}`}</div>] : [<></>])
             }
         </div>
     )
