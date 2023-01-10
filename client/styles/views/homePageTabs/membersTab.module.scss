@@ -15,7 +15,7 @@
            height: fit-content;
            width: 100%;
            flex-direction: column;
-           border-bottom: 1px solid rgba(225, 227, 230, 1);
+        //    border-bottom: 1px solid rgba(225, 227, 230, 1);
            .mtb_row_header_title {
                display: flex;
                height: 50px;
@@ -43,6 +43,174 @@
                 }
            }
        }
-       .mtb_row_content {}
+       .mtb_row_content {
+        display: flex;
+        border: 1px solid rgba(225, 227, 230, 1);
+        width: 100%;
+        height: fit-content;
+        min-height: 60px;
+        border-radius: 6px;
+        ul {
+            display: flex;
+            height: fit-content;
+            width: 100%;
+            flex-direction: column;
+            list-style-type: none;
+            li {
+                display: flex;
+                height: fit-content;
+                width: 100%;
+                flex-direction: column;
+                border-bottom: 1px solid rgba(225, 227, 230, 1);
+                position: relative;
+                &:last-child{
+                    border-bottom: none;
+                }
+                .mtb_available_orgs_basic_info {
+                    display: flex;
+                    height: 60px;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: space-between;
+                    .mtb_aob_col {
+                        display: flex;
+                        height: 100%;
+                        width: fit-content;
+                        align-items: center;
+                        .mtb_aob_info_number {
+                            display: flex;
+                            height: 100%;
+                            width: 40px;
+                            align-items: center;
+                            justify-content: center;
+                            font-family: Mulish;
+                            font-size: 16px;
+                            font-weight: 400;
+                        }
+                        .mtb_aob_info_title {
+                            display: flex;
+                            height: 100%;
+                            width: fit-content;
+                            padding: 10px;
+                            align-items: center;
+                            justify-content: center;
+                            h4 {
+                                font-family: Poppins;
+                                font-size: 16px;
+                                font-weight: 400;
+                            }
+                        }
+                        span {
+                            display: flex;
+                            height: 100%;
+                            width: fit-content;
+                            align-items: center;
+                            justify-content: center;
+                            .view_org_btn {
+                                display: flex;
+                                width: fit-content;
+                                align-items: center;
+                                justify-content: center;
+                                padding: 10px;
+                                border: none;
+                                // background: #5030E5;
+                                background: #3C64F4;
+                                color: white;
+                                border-radius: 6px;
+                                transition-timing-function: ease-in-out;
+                                transition-duration: 0.4s;
+                                &:hover {
+                                    cursor: pointer;
+                                    background: #5030E5;
+                                }
+                            }
+                            .more_info_org_btn {
+                                display: flex;
+                                height: 100%;
+                                width: 60px;
+                                align-items: center;
+                                justify-content: center;
+                                background: none;
+                                border: none;
+                                color: black;
+                                &:hover {
+                                    cursor: pointer;
+                                    background: rgba(80, 48, 229, 0.08);
+                                    color: #3C64F4;
+                                }
+                            }
+                        }
+                        &:last-child {
+                            column-gap: 6px;
+                        }
+                    }
+                }
+                .mtb_available_orgs_expand_wrapper {
+                    display: flex;
+                    height: fit-content;
+                    width: 100%;
+                    position: absolute;
+                    background: white;
+                    z-index: 2;
+                    // box-shadow: 0px 30px 60px rgba(32, 56, 85, 0.15);
+                    box-shadow: 0px 30px 60px rgba(32, 56, 85, 0.15);
+                    top: 70px;
+                    animation: animate-expand-orgs-wrapper 0.4s linear;
+                    .mtb_available_orgs_expand_content {
+                        display: flex;
+                        height: fit-content;
+                        width: 100%;
+                        .mtb_aoe_col {
+                            display: flex;
+                            height: fit-content;
+                            width: 50%;
+                            padding: 10px;
+                            .mtb_aoe_profile_wrapper {
+                                display: flex;
+                                height: 200px;
+                                width: 100%;
+                                align-items: center;
+                                justify-content: center;
+                                .mtb_aoe_profile {
+                                    display: flex;
+                                    height: 160px;
+                                    width: 160px;
+                                    align-items: center;
+                                    justify-content: center;
+                                    position: relative;
+                                    border-radius: 50%;
+                                    border: 1px solid #757D8A;
+                                    img {
+                                        border-radius: 50%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &[data-elm-type = "li-no-organizations"] {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 60px;
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #404D61;
+                }
+            }
+        }
+       }
    }
+}
+
+
+@keyframes animate-expand-orgs-wrapper {
+    0% {
+        margin-top: -20px;
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
 }
