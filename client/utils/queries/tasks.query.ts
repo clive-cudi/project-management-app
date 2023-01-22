@@ -41,6 +41,14 @@ export const TaskQueries = (session: any) => {
         return (await api.post("/task/update-priority-multiple", {tids, priority}, defaultReqConfig)).data;
     }
 
+    const deleteTask = async ({tid}: {tid: string}): Promise<API_res_model & {task: taskRes}> => {
+        return (await api.delete("/task/delete", {...defaultReqConfig, data: tid})).data;
+    }
+
+    const deleteMultipleTasks = async ({tids}: {tids: string[]}): Promise<API_res_model & {tasks: taskRes[]}> => {
+        return (await api.delete("/task/delete-multiple", {data: {tids}, ...defaultReqConfig})).data;
+    }
+
     return {
         getAllTasks,
         getTaskByID,
@@ -49,6 +57,8 @@ export const TaskQueries = (session: any) => {
         updateTaskStatus,
         updateTaskPriority,
         updateMultipleTaskStatuses,
-        updateMultipleTaskPriorities
+        updateMultipleTaskPriorities,
+        deleteTask,
+        deleteMultipleTasks
     }
 }
