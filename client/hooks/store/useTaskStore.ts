@@ -9,10 +9,11 @@ interface TasksStoreType {
   addMultiple: (tasks: taskRes[]) => void;
   setLoading: (isLoading: boolean) => void;
   remove: (taskID: string) => void;
-  changeTaskStatus: (taskID: string, status: GeneralTaskStatus_) => void
-  changeTaskStatusMultiple: (tids: string[], status: GeneralTaskStatus_) => void
-  changeTaskPriority: (taskID: string, priority: Priority_) => void
-  changeTaskPriorityMultiple: (tids: string[], priority: Priority_) => void
+  removeMultiple: (tids: string[]) => void;
+  changeTaskStatus: (taskID: string, status: GeneralTaskStatus_) => void;
+  changeTaskStatusMultiple: (tids: string[], status: GeneralTaskStatus_) => void;
+  changeTaskPriority: (taskID: string, priority: Priority_) => void;
+  changeTaskPriorityMultiple: (tids: string[], priority: Priority_) => void;
 }
 
 function removeTaskById(arr: taskRes[], id: string): taskRes[] {
@@ -46,6 +47,11 @@ export const useTaskStore = create<TasksStoreType>()((set) => {
           tasks: [...state.tasks].filter((tsk) => tsk.taskID !== taskID),
         };
       }),
+    removeMultiple: (tids) => set((state) => {
+      return {
+        tasks: [...state.tasks].filter((tsk) => !tids.includes(tsk.taskID))
+      }
+    }),
     changeTaskStatus: (taskID, status) => set((state) => ({
       tasks: [...state.tasks].map((tsk) => {
         if (tsk.taskID === taskID) {

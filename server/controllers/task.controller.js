@@ -407,6 +407,7 @@ const deleteTask = (req, res, next) => {
                 return res.status(400).json({
                     success: false,
                     message: "Failed to update task list",
+                    task: null,
                     usertoken: {
                         user: null,
                         token: null
@@ -440,6 +441,7 @@ const deleteTask = (req, res, next) => {
                 return res.status(400).json({
                     success: false,
                     message: "Failed to update task list",
+                    task: null,
                     usertoken: {
                         user: null,
                         token: null
@@ -456,6 +458,7 @@ const deleteTask = (req, res, next) => {
         return res.status(404).json({
             success: false,
             message: "Task not found",
+            task: null,
             usertoken: {
                 user: null,
                 token: null,
@@ -518,6 +521,7 @@ const removeMultiple = (req, res, next) => {
                 return res.status(400).json({
                     success: false,
                     message: "Failed to update task list at project level",
+                    tasks: null,
                     usertoken: {
                         user: null,
                         token: null
@@ -533,6 +537,7 @@ const removeMultiple = (req, res, next) => {
             return res.status(400).json({
                 success: false,
                 message: "Failed to update task list at user level",
+                tasks: null,
                 usertoken: {
                     user: null,
                     token: null
@@ -548,6 +553,7 @@ const removeMultiple = (req, res, next) => {
         return res.status(404).json({
             success: false,
             message: "Task not found",
+            tasks: null,
             usertoken: {
                 user: null,
                 token: null,

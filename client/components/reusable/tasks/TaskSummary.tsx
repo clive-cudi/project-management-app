@@ -27,7 +27,7 @@ interface TaskSummary_Props {
 export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   const [newTaskName, setNewTaskName] = useState<string>("");
   const { openModal, closeModal } = useModal();
-  const { isLoading, changeTaskStatusMultiple, changeTaskPriorityMultiple } = useTaskStore();
+  const { isLoading, changeTaskStatusMultiple, changeTaskPriorityMultiple, removeMultiple } = useTaskStore();
   const { switchTab } = useTabRenderer();
   const [markedTasks, setMarkedTasks] = useState<string[]>([]);
   const [filterTag, setFilterTag] = useState<string>("");
@@ -40,14 +40,14 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   const session = useSession();
   const { openAtCursor } = useContextMenu();
   const { startLoading, stopLoading } = useGlobalLoading();
-  const { updateMultipleTaskStatuses, updateMultipleTaskPriorities } = TaskQueries(session);
+  const { updateMultipleTaskStatuses, updateMultipleTaskPriorities, deleteMultipleTasks } = TaskQueries(session);
   const updateTaskStatusMutation = useMutation({
     mutationFn: updateMultipleTaskStatuses,
     onMutate: () => {
       startLoading()
     },
     onSuccess: (data) => {
-      console.log(data.success)
+      console.log(data.success);
       if (data.success === true) {
         generateNotification("success", data.message);
         closeModal();
@@ -71,7 +71,7 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
       startLoading()
     },
     onSuccess: (data) => {
-      console.log(data)
+      console.log(data);
       if (data.success === true) {
         generateNotification("success", data.message);
         closeModal();
@@ -79,16 +79,40 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
         changeTaskPriorityMultiple(markedTasks, data.taskPriority);
         setMarkedTasks([]);
       } else {
-        generateNotification("error", "Couldn't update task priority")
+        generateNotification("error", "Couldn't update task priority");
       }
     },
     onSettled: () => {
       stopLoading()
     },
     onError: (err_priority_update) => {
-      generateNotification("error", String(err_priority_update))
+      generateNotification("error", String(err_priority_update));
     }
   });
+  const deleteTaskMultipleTasksMutation = useMutation({
+    mutationFn: deleteMultipleTasks,
+    onMutate: () => {
+      startLoading();
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (data.success === true) {
+        generateNotification("success", data.message);
+        closeModal();
+        // update task list in global state
+        removeMultiple(data.tasks.map((tsk) => tsk.taskID));
+        setMarkedTasks([]);
+      } else {
+        generateNotification("error", "Failed to delete task")
+      }
+    },
+    onSettled: () => {
+      stopLoading();
+    },
+    onError: (err_delete_multiple_tasks) => {
+      generateNotification("error", String(err_delete_multiple_tasks))
+    }
+  })
   const { addNotificationWithBadge } = useNotificationPlateWidget();
 
   function handleCreateTask() {
@@ -153,7 +177,9 @@ export const TaskSummary = ({ tasks, period = "today" }: TaskSummary_Props) => {
   }
 
   function handleRemove() {
-    openModal(<ErrorModal title={"Delete Confirmation"} message={"Are you sure you want to delete the selected items."} type={"error"} btn_label={"Delete"} btn_onclick={() => {}} />)
+    openModal(<ErrorModal title={"Delete Confirmation"} message={"Are you sure you want to delete the selected items."} type={"error"} btn_label={"Delete"} btn_onclick={() => {
+      deleteTaskMultipleTasksMutation.mutate({tids: markedTasks});
+    }} />)
   }
 
   function handleRemoveRequest() {

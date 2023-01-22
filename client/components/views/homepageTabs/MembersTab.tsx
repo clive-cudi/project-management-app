@@ -76,7 +76,7 @@ export const MembersTab = ({}) => {
                       </div>
                       <div className={styles.mtb_aob_col}>
                         <span>
-                          <button className={styles.view_org_btn}>View Organization</button>
+                          <button className={styles.view_org_btn} onClick={(e) => {e.stopPropagation()}}>View Organization</button>
                         </span>
                         <span>
                           <button
@@ -100,6 +100,7 @@ export const MembersTab = ({}) => {
                     {showInfoStates.includes(org.orgID) ? (
                       <div
                         className={styles.mtb_available_orgs_expand_wrapper}
+                        onClick={(e) => {e.stopPropagation()}}
                       >
                         <div className={styles.mtb_available_orgs_expand_content}>
                             <div className={styles.mtb_aoe_col}>
