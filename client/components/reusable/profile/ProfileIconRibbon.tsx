@@ -14,7 +14,7 @@ export const ProfileIconRibbon = ({ users, maxNumber = 4 }: ProfileIconRibbon_Pr
             <div className={styles.profile_icon_ribbon_wrapper}>
             {
                 users.slice(0, maxNumber ?? 4).map((user, ix) => {
-                    return <ProfileIcon key={ix} user={user} />;
+                    return <ProfileIcon key={ix} user={{...user, profilePicURL: ix == 2 ? "" : user.profilePicURL}} />;
                 }).concat(users.length > maxNumber ? [<div key={users.length} data-elm-type={"profile-icon"} className={styles.profile_extra_placeholder} onClick={() => {}}>{`+${users.length - maxNumber}`}</div>] : [<></>])
             }
         </div>

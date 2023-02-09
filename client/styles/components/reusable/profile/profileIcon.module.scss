@@ -20,6 +20,16 @@
         object-fit: cover;
         border-radius: 50%;
       }
+      span[data-elm-type = "user-profile-img-placeholder"] {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        color: rgba(120, 116, 134, 1);
+        background: rgb(175, 175, 175);
+        // background: gray;
+      }
     }
     .profile_details_wrapper {
       &[data-elm-isActive = "true"] {

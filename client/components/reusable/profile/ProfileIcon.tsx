@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../../../styles/components/reusable/profile/profileIcon.module.scss";
+import { HiUser } from "react-icons/hi";
+
 
 export interface ProfileIcon_Props {
   user: {
@@ -137,7 +139,12 @@ export const ProfileIcon = ({
     >
       <span>
         {/* eslint-disable-next-line */}
-        <img src={user.profilePicURL ?? ""} alt="@" />
+        {
+          user.profilePicURL ? 
+            <img src={user.profilePicURL ?? ""} alt="@" />
+          :
+            <span data-elm-type={"user-profile-img-placeholder"}><HiUser /></span>
+        }
       </span>
       {showDetailsOnHover ? (
         <div
