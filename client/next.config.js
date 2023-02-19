@@ -17,4 +17,6 @@ const nextConfig = {
   }
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;
+
+// BACKEND_API_URL = http://pmt-backend-env.eba-p64t83w3.us-east-1.elasticbeanstalk.com
