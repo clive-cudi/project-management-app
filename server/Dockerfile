@@ -13,7 +13,6 @@ COPY ./routes ./
 COPY ./rename-ebextensions.sh ./
 COPY ./server.js ./
 
-
 RUN npm install
 
 CMD [ "node", "server.js" ]
