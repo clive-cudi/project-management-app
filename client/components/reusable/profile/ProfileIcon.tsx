@@ -3,7 +3,7 @@ import styles from "../../../styles/components/reusable/profile/profileIcon.modu
 import { HiUser } from "react-icons/hi";
 
 
-export interface ProfileIcon_Props {
+export interface ProfileIcon_Props extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   user: {
     uid: string;
     profilePicURL: string;
@@ -19,7 +19,8 @@ type details_widget_orientations_type =
 
 export const ProfileIcon = ({
   user,
-  showDetailsOnHover
+  showDetailsOnHover,
+  ...utilProps
 }: ProfileIcon_Props): JSX.Element => {
   const imageHoverRef = useRef<HTMLDivElement>(null);
   const [currentOrientation, setCurrentOrientation] = useState<
@@ -136,6 +137,7 @@ export const ProfileIcon = ({
         }
       }}
       data-elm-type={"profile-icon"}
+      {...utilProps}
     >
       <span>
         {/* eslint-disable-next-line */}

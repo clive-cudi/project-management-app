@@ -1,0 +1,38 @@
+[
+    {
+        "uid": "user_one",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    },
+    {
+        "uid": "user_two",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    },
+    {
+        "uid": "user_three",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    },
+    {
+        "uid": "user_four",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    },
+    {
+        "uid": "user_five",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    },
+    {
+        "uid": "user_six",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    },
+    {
+        "uid": "user_seven",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    },
+    {
+        "uid": "user_ate",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    },
+    {
+        "uid": "user_nine",
+        "profilePicURL": "https://source.unsplash.com/random/"
+    }
+]
