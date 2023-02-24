@@ -67,7 +67,8 @@ const UserSchema = new Schema({
     twoFA: {
         status: Boolean,
         secret: String
-    }
+    },
+    isActive: Boolean
 }, {
     timestamps: true
 });

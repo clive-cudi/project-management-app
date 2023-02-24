@@ -1,6 +1,6 @@
 .mtb_content {
     display: flex;
-    height: 100%;
+    height: fit-content;
     width: 100%;
     padding: 20px;
     flex-direction: column;
@@ -145,43 +145,115 @@
                         }
                     }
                 }
-                .mtb_available_orgs_expand_wrapper {
+                &.mtb_available_orgs_expand_wrapper {
                     display: flex;
                     height: fit-content;
                     width: 100%;
-                    position: absolute;
-                    background: white;
-                    z-index: 2;
+                    // position: absolute;
+                    // background: white;
+                    // z-index: 2;
+                    // // box-shadow: 0px 30px 60px rgba(32, 56, 85, 0.15);
                     // box-shadow: 0px 30px 60px rgba(32, 56, 85, 0.15);
-                    box-shadow: 0px 30px 60px rgba(32, 56, 85, 0.15);
-                    top: 70px;
+                    // top: 70px;
                     animation: animate-expand-orgs-wrapper 0.4s linear;
                     .mtb_available_orgs_expand_content {
                         display: flex;
                         height: fit-content;
                         width: 100%;
+                        padding: 10px;
                         .mtb_aoe_col {
                             display: flex;
                             height: fit-content;
                             width: 50%;
-                            padding: 10px;
+                            flex-direction: column;
+                            &:first-child {
+                                border-right: 1px solid rgba(225, 227, 230, 1);
+                            }
                             .mtb_aoe_profile_wrapper {
                                 display: flex;
-                                height: 200px;
+                                height: fit-content;
                                 width: 100%;
                                 align-items: center;
                                 justify-content: center;
+                                padding: 10px;
                                 .mtb_aoe_profile {
                                     display: flex;
-                                    height: 160px;
-                                    width: 160px;
+                                    height: 140px;
+                                    width: 140px;
                                     align-items: center;
                                     justify-content: center;
                                     position: relative;
                                     border-radius: 50%;
-                                    border: 1px solid #757D8A;
+                                    border: 1px solid rgba(225, 227, 230, 1);
                                     img {
                                         border-radius: 50%;
+                                    }
+                                }
+                            }
+                            .mtb_aoe_org_description {
+                                display: flex;
+                                height: fit-content;
+                                width: 100%;
+                                align-items: flex-start;
+                                justify-content: center;
+                                flex-direction: column;
+                                .mtb_aoe_org_desc_strip {
+                                    display: flex;
+                                    height: fit-content;
+                                    width: 100%;
+                                    padding: 6px;
+                                    flex-direction: column;
+                                    row-gap: 10px;
+                                    align-items: center;
+                                    h4 {
+                                        font-size: 15px;
+                                        color: #757D8A;
+                                        font-family: DM Sans;
+                                        font-weight: 500;
+                                    }
+                                    h3 {
+                                        font-family: DM Sans;
+                                        font-weight: 700;
+                                        font-size: 16px;
+                                        text-decoration: underline;
+                                        margin: 4px;
+                                    }
+                                    p {
+                                        font-family: DM Sans;
+                                        font-weight: 400;
+                                        font-size: 16px;
+                                        margin: 4px;
+                                    }
+                                }
+                            }
+                            .mtb_aoe_info_strip {
+                                display: flex;
+                                height: fit-content;
+                                min-height: 60px;
+                                width: 100%;
+                                padding: 10px;
+                                flex-direction: column;
+                                h4 {
+                                    font-size: 15px;
+                                    color: #757D8A;
+                                    font-family: DM Sans;
+                                    font-weight: 500;
+                                }
+                                .mtb_aoe_members {
+                                    display: flex;
+                                    height: fit-content;
+                                    width: 100%;
+                                    overflow-x: scroll;
+                                    padding: 10px 0px 10px 0px;
+                                    &::-webkit-scrollbar {
+                                        background: rgba(245, 245, 245, 1);
+                                        height: 4px;
+                                    }
+                                    &::-webkit-scrollbar-button {
+                                        display: none;
+                                    }
+                                    &::-webkit-scrollbar-thumb {
+                                        background: #5D5FEF;
                                     }
                                 }
                             }

@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import styles from "../../styles/components/layout/projectsOverview.module.scss";
 import { IconBtn, Table, HealthStatusWidget, ProfileIcon, ProfileIconRibbon } from "../reusable";
 import { BsFilter, BsThreeDotsVertical } from "react-icons/bs";
-import TableData from "../../mock/tableDataProjectOverView.json";
+import MockTableData from "../../mock/tableDataProjectOverView.json";
+import MockUsers from "../../mock/users.json";
 import { upperCaseFirstSentence } from "../../utils";
 import { useProjectStore, useRenderByID } from "../../hooks";
 import { ProjectHealthStatus, projectRes } from "../../types";
@@ -16,38 +17,14 @@ interface ProjectsOverview_Props {
 export const ProjectsOverview = ({children}: ProjectsOverview_Props) => {
     const { projects } = useProjectStore();
     const tableData = useMemo(() => {
-        return [...TableData]
+        return [...MockTableData]
     }, []);
+    const userMockData = useMemo(() => [...MockUsers], []);
     const { addComponent } = useRenderByID();
     const [sampleUsers, setSampleUsers] = useState<{
         uid: string,
         profilePicURL: string
-    }[]>([
-        {
-            uid: "user_one",
-            profilePicURL: "https://source.unsplash.com/random/"
-        },
-        {
-            uid: "user_two",
-            profilePicURL: "https://source.unsplash.com/random/"
-        },
-        {
-            uid: "user_three",
-            profilePicURL: "https://source.unsplash.com/random/"
-        },
-        {
-            uid: "user_four",
-            profilePicURL: "https://source.unsplash.com/random/"
-        },
-        {
-            uid: "user_five",
-            profilePicURL: "https://source.unsplash.com/random/"
-        },
-        {
-            uid: "user_six",
-            profilePicURL: "https://source.unsplash.com/random/"
-        }
-    ]);
+    }[]>(userMockData);
     const tableHeaders = useMemo(() => ["id", "project_name", "project_type", "health_status", "team", "start", "finish_date", "progress"].map((header)=> upperCaseFirstSentence(header, "_")), []);
     const tableSortedData = projects.map((pjct, index) => {
         // add components to the component repo for rendering by ID
