@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, CSSProperties } from "react";
 import styles from "../../styles/components/layout/projectsOverview.module.scss";
 import { IconBtn, Table, HealthStatusWidget, ProfileIcon, ProfileIconRibbon } from "../reusable";
 import { BsFilter, BsThreeDotsVertical } from "react-icons/bs";
@@ -12,6 +12,10 @@ import { ColumnHelper } from "@tanstack/react-table";
 
 interface ProjectsOverview_Props {
     children?: React.ReactNode
+}
+
+const staticStyles: CSSProperties =  {
+    width: "100px"
 }
 
 export const ProjectsOverview = ({children}: ProjectsOverview_Props) => {
@@ -29,15 +33,10 @@ export const ProjectsOverview = ({children}: ProjectsOverview_Props) => {
     const tableSortedData = projects.map((pjct, index) => {
         // add components to the component repo for rendering by ID
         const pjctID = pjct.pid;
-        console.log(pjct.contributors.individuals);
-        const { compID, fullID } = addComponent(pjctID, <ProfileIconRibbon users={sampleUsers} />);
+        const { compID, fullID } = addComponent(pjctID, <ProfileIconRibbon users={sampleUsers} wrapperDivProps={{style: staticStyles}} />);
 
         return Object.create({...pjct, fullID: fullID}) as projectRes & {fullID: string};
     }).map((pjct: projectRes & {fullID: string}, index) => [`${index+1}`, pjct.name, pjct.stage, `__component@health_status_${pjct.info.status ?? "active"}`, pjct.fullID, pjct.info.created.time, pjct.info.expiry.time, `50%`]);
-
-    useEffect(() => {
-        console.log("Projects Overview");
-    }, [])
 
     return (
         <div className={styles.pov_wrapper}>

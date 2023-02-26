@@ -8,12 +8,12 @@ export function useRenderByID() {
     // [todo: move the repo to zustand state to prevent state reset everytime useRenderByID() is called => being causing "component not found error"]
     const { components: componentsRepo, addToComponentStore, resetComponentsStore, staticComponents, addToStaticComponentStore, addMultipleStaticComponentsToStore } = useComponentRepoStore();
 
-    useEffect(() => {console.log(componentsRepo)}, [componentsRepo])
+    // useEffect(() => {console.log(componentsRepo)}, [componentsRepo])
 
     function renderByID(compID: string): () => JSX.Element | React.ReactNode {
         // find the component in componentsRepo
         // console.log(compID);
-        console.log("Exists :=> " + componentsRepo.find((cp) => cp.compID == compID));
+        // console.log("Exists :=> " + componentsRepo.find((cp) => cp.compID == compID));
         if (componentsRepo.find((compnt) => compnt.compID === compID)) {
             // console.log(componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component)
             return componentsRepo[componentsRepo.findIndex((compnt_obj) => compnt_obj.compID === compID)].component;
@@ -51,9 +51,9 @@ export function useRenderByID() {
 
         const newRepo = componentsRepo.map((componentObj) => {
             if (componentObj.compID === componentID) {
-                console.log("Found component for prop registration")
+                // console.log("Found component for prop registration")
                 if (isValidElement(componentObj.component()) && componentObj.component()) {
-                    console.log("Adding")
+                    // console.log("Adding")
                     const initialComponent = componentObj.component;
                     const updatedComponent = cloneElement(initialComponent() as any, {
                         ...props
