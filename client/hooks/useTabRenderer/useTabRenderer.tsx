@@ -66,7 +66,7 @@ export function useTabRenderer() {
     // implement some tab history logic i.e: using a stack
 
     // function for switching tabs
-    function switchTab(tab: {label: string, component?: () => JSX.Element | React.ReactNode}): TabRenderCtxTypes {
+    function switchTab(tab: {label: string, component?: (() => JSX.Element | React.ReactNode) | null}): TabRenderCtxTypes {
         if (tabRender.label !== tab.label) {
             // check if the tab exists in the tab list, if not, add it to the list if there is a component provided
 

@@ -2,7 +2,7 @@ import React from "react";
 
 export interface TabRenderCtxTypes {
     label: string,
-    component?: () => JSX.Element | React.ReactNode | null
+    component?: (() => JSX.Element | React.ReactNode ) | null
     parentRoute?: string
 }
 
