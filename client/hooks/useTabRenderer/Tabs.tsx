@@ -11,58 +11,58 @@ import { TabRenderCtxTypes } from "../../context";
 export const Tabs: TabRenderCtxTypes[] = [
     {
         label: "home",
-        component: <HomeTab />
+        component: () => <HomeTab />
     },
     {
         label: "messages",
-        component: <MessagesTab />
+        component: () => <MessagesTab />
     },
     {
         label: "workspace",
-        component: <WorkSpaceTab />
+        component: () => <WorkSpaceTab />
     },
     {
         label: "members",
-        component: <MembersTab />
+        component: () => <MembersTab />
     },
     {
         label: "settings",
-        component: <SettingsTab />
+        component: () => <SettingsTab />
     },
     {
         label: "project_board",
-        component: <ProjectsBoard />
+        component: () => <ProjectsBoard />
     },
     {
         label: "project_dashboard",
-        component: <ProjectDashBoardTab />
+        component: () => <ProjectDashBoardTab />
     },
     {
         label: "project_details",
-        component: <ProjectDetailsTab />
+        component: () => <ProjectDetailsTab />
     },
     {
         label: "project_summary",
-        component: <ProjectSummaryTab />
+        component: () => <ProjectSummaryTab />
     },
     {
         label: "overview",
-        component: <TasksOverviewTab />
+        component: () => <TasksOverviewTab />
     },
     {
         label: "tasks_board",
-        component: <TasksBoard />
+        component: () => <TasksBoard />
     },
     {
         label: "task_list",
-        component: <TaskListTab />
+        component: () => <TaskListTab />
     },
     {
         label: "gantt_chart",
-        component: <GanttChartTab />
+        component: () => <GanttChartTab />
     },
     {
         label: "test",
-        component: <CreateTaskFormWithAssignees/>
+        component: () => <CreateTaskFormWithAssignees/>
     }
 ];
