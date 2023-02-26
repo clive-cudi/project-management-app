@@ -30,7 +30,7 @@ export const staticComponents = [
     },
     {
         compID: "profile_icon",
-        component: () => <ProfileIcon user={{uid: "cnuvebufr383j_", profilePicURL: "https://source.unsplash.com/andom"}}  /> ?? null,
+        component: () => <ProfileIcon user={{uid: "cnuvebufr383j_", profilePicURL: "https://source.unsplash.com/random"}}  /> ?? null,
         fullID: "__component@profile_icon"
     }
 ];
