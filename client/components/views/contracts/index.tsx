@@ -24,7 +24,7 @@ export const ContractPageCurrentTab = ({}): JSX.Element => {
 
     return (
         <div className={styles.homepage_tab_wrapper}>
-            {showCurrentTab()}
+            {showCurrentTab().call({})}
         </div>
     )
 }
