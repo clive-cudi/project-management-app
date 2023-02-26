@@ -12,7 +12,7 @@ export function useNotificationPlateWidget() {
         const notificationInterval = setInterval(() => {
             if (!isEmpty() && notificationPlate.autoRemove !== false){
                 dequeueNotification();
-                console.log("Interval");
+                // console.log("Interval");
             }
         }, notificationPlate.timeoutMod);
 
@@ -30,9 +30,9 @@ export function useNotificationPlateWidget() {
     function removeFromNotificationStack(id: string) {
         const { id: targetNotificationId, component } = [...notificationPlate.componentList].find((notification) => notification.id === id) || {id: null, component: null};
 
-        console.log(`Removing Notification: \nid => ${id}\ntarget: ${targetNotificationId}`)
+        // console.log(`Removing Notification: \nid => ${id}\ntarget: ${targetNotificationId}`)
 
-        console.log(notificationPlate.componentList)
+        // console.log(notificationPlate.componentList)
         
 
         if (targetNotificationId !== null) {
@@ -59,7 +59,7 @@ export function useNotificationPlateWidget() {
     }
 
     function dequeueNotification() {
-        console.log(`Dequeue notification`)
+        // console.log(`Dequeue notification`)
         if (!isEmpty()) {
             const updatedNotificationStack = [...notificationPlate.componentList].slice(1, notificationPlate.componentList.length);
 

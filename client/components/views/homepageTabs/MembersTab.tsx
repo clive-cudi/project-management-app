@@ -112,7 +112,7 @@ export const MembersTab = ({}) => {
                                 {/* show the profile icon of the organization */}
                                 <div className={styles.mtb_aoe_profile_wrapper}>
                                     <div className={styles.mtb_aoe_profile}>
-                                        <Image src={org.profilePicUrl} layout={"fill"} />
+                                        <Image src={org.profilePicUrl} alt={`@${org.name}`} layout={"fill"} />
                                     </div>
                                 </div>
                                 <div className={styles.mtb_aoe_org_description}>

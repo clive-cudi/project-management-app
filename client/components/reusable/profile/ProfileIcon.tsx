@@ -143,6 +143,7 @@ export const ProfileIcon = ({
         {/* eslint-disable-next-line */}
         {
           user.profilePicURL ? 
+          // eslint-disable-next-line
             <img src={user.profilePicURL ?? ""} alt="@" />
           :
             <span data-elm-type={"user-profile-img-placeholder"}><HiUser /></span>

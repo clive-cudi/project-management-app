@@ -1,10 +1,12 @@
 import create  from "zustand";
 import { componentRepoInstance } from "../useRenderByID/useRenderByID";
 import { HealthStatusWidget, ProfileIcon } from "../../components";
-import { staticComponents } from "../../utils";
+import { staticComponents, MainTabs } from "../../utils";
+import { TabRenderCtxTypes } from "../../context";
 
 interface ComponentsRepoStoreType {
     staticComponents: componentRepoInstance[],
+    mainTabComponents: TabRenderCtxTypes[],
     components: componentRepoInstance[],
     addToComponentStore: (component: componentRepoInstance) => void
     addToStaticComponentStore: (component: componentRepoInstance) => void
@@ -15,6 +17,7 @@ interface ComponentsRepoStoreType {
 export const useComponentRepoStore = create<ComponentsRepoStoreType>()((set) => {
     return {
         staticComponents: [...staticComponents],
+        mainTabComponents: [...MainTabs],
         components: [...staticComponents],
         addToComponentStore(component) {
             return set((state) => {

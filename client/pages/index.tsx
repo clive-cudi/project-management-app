@@ -109,7 +109,7 @@ const Home: NextPage & PageAuth = () => {
                 // switchHomeTab(btn.label);
                 switchTab({
                   label: btn.label,
-                  component: btn.label == "test" ? <h1>Test worked</h1> : null
+                  component: btn.label == "test" ? () => <h1>Test worked</h1> : null
                 });
                 console.log(btn.label)
               }}

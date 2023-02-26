@@ -24,7 +24,14 @@ export const HomePageCurrentTab = ({}): JSX.Element => {
 
     return (
         <div className={styles.homepage_tab_wrapper}>
-            {showCurrentTab()}
+            {showCurrentTab().call({})}
         </div>
     )
 }
+
+export { HomeTab } from "./Hometab";
+export { MembersTab } from "./MembersTab";
+export { MessagesTab } from "./MessagesTab";
+export { SettingsTab } from "./SettingsTab";
+export { TestTab } from "./TestTab";
+export { WorkSpaceTab } from "./WorkSpaceTab";
