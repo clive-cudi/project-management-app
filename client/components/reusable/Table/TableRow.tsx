@@ -42,9 +42,9 @@ export const TableRow = ({
         if (typeof cell === "string") {
             if (regexCmpntRef.test(cell)) {
                 // extract the component ID
-                console.log(`Found Component Ref ${cell}`)
+                // console.log(`Found Component Ref ${cell}`)
                 // console.log(`Rendering componentID: ${(cell.match(/[^__component\s@](.)*/) ?? [])[0]}`);
-                console.log(`Rendering componentID: ${cell.substring((cell.indexOf("@") + 1))} `)
+                // console.log(`Rendering componentID: ${cell.substring((cell.indexOf("@") + 1))} `)
                 // return <td>{renderByID((cell.match(/[^__component](.*)/) ?? ["", ""])[1])}</td>
                 return <td key={i}>{renderByID(cell.substring((cell.indexOf("@") + 1))).call({})}</td>
             } else {
