@@ -51,7 +51,7 @@ export const ProjectsOverview = ({ children }: ProjectsOverview_Props) => {
     []
   );
   const tableSortedData = projects
-    .map((pjct: projectRes, index) => {
+    .map((pjct: projectRes) => {
       // add components to the component repo for rendering by ID
       const pjctID = pjct.pid;
       const { compID, fullID } = addComponent(
