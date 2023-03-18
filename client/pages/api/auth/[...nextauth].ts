@@ -3,6 +3,7 @@ import GoogleAuth from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import axios, { AxiosResponse } from "axios";
 import { Api_User_res, API_res_model } from "../../../types";
+import { User } from "next-auth";
 
 export default NextAuth({
     // Configure one or more authentication providers
@@ -35,6 +36,9 @@ export default NextAuth({
             async authorize(credentials, req) {
                 // console.log(credentials);
 
+    // Type 'Promise<{ user?: Api_User_res | null | undefined; token?: string | null | undefined; } | null>' is not assignable to type 'Awaitable<User | null>'.
+    // Type 'Promise<{ user?: Api_User_res | null | undefined; token?: string | null | undefined; } | null>' is missing the following properties from type 'User': user, token, twoFA, name, and 2 more.
+
                 console.log("AUTH");
 
                 console.log(process.env.BACKEND_API_URL);
@@ -44,7 +48,15 @@ export default NextAuth({
                 console.log(loginRes.data);
 
                 if (loginRes.data.success === true) {
-                    return {...loginRes.data.usertoken};
+                    const returnData: User = {
+                        user: loginRes.data.usertoken?.user as Api_User_res,
+                        token: loginRes.data.usertoken?.token ?? "",
+                        twoFA: loginRes.data.usertoken?.user?.twoFA.status ?? false,
+                        name: loginRes.data.usertoken?.user?.username ?? "",
+                        uid: loginRes.data.usertoken?.user?.uid ?? "",
+                        id: this.id ?? ""
+                    }
+                    return {...returnData};
                 }
 
                 if (loginRes.data.success === false) {
