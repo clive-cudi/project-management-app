@@ -66,7 +66,7 @@ export const ProjectsOverview = ({ children }: ProjectsOverview_Props) => {
         fullID: string;
       };
     })
-    .map((pjct: projectRes & { fullID: string }, index) => [
+    .map((pjct: projectRes & { fullID: string }, index: number) => [
       `${index + 1}`,
       pjct.name,
       pjct.stage,

@@ -14,6 +14,8 @@ declare module "next-auth" {
         twoFA: boolean
         name: string
         uid: string
+        id: string
+        [key: string]: any
     }
 }
 
