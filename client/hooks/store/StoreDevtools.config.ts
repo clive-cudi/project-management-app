@@ -1,4 +1,3 @@
-import { mountStoreDevtool } from "simple-zustand-devtools";
 import { useComponentRepoStore, useCountStore, useDemoStore, useProjectStore, useTaskStore } from ".";
 
 export function MountStoreDevTools() {
@@ -8,8 +7,6 @@ export function MountStoreDevTools() {
         // mountStoreDevtool("useCountStore", useCountStore);
 
         // mountStoreDevtool("useDemoStore", useDemoStore);
-
-        mountStoreDevtool("useProjectStore", useProjectStore);
 
         // mountStoreDevtool("useTaskStore", useTaskStore);
     }
