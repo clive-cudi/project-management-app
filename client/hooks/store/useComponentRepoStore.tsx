@@ -1,4 +1,4 @@
-import create  from "zustand";
+import { create }  from "zustand";
 import { componentRepoInstance } from "../useRenderByID/useRenderByID";
 import { HealthStatusWidget, ProfileIcon } from "../../components";
 import { staticComponents, MainTabs } from "../../utils";

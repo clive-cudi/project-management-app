@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { taskRes, GeneralTaskStatus_, Priority_ } from "../../types";
 
 interface TasksStoreType {
