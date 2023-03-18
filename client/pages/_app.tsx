@@ -12,7 +12,7 @@ import {
   GlobalLoadingCtxProvider,
   NotificationPlateCtxProvider,
 } from "../providers";
-import { AuthGuard, Header } from "../components";
+import { AuthGuard } from "../components";
 import { NextComponentType } from "next";
 import type { PageAuth } from "../types";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
