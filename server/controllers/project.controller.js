@@ -263,7 +263,7 @@ const getProjectsById_multiple = (req, res, next) => {
                 code: "db_error",
                 debug: projects_db_err
             }
-        })
+        });
     })
 }
 
