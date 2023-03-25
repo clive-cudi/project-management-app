@@ -10,5 +10,8 @@ router.post("/add-members", authVerify, orgAuthVerify, TeamsController.addTeamMe
 
 router.post("/remove-members", authVerify, orgAuthVerify, TeamsController.removeTeamMembers);
 
+router.post("/team-by-id", authVerify, TeamsController.getTeam);
+
+router.post("/member-teams", authVerify, TeamsController.getMemberTeams);
 
 module.exports = router;

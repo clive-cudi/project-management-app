@@ -25,8 +25,6 @@ const verifyToken = (req, res, next) => {
 
         req.body = {...req.body, usertoken: decoded_token};
 
-        console.log({decoded_token});
-
 
     } catch {
         return res.status(401).json({
