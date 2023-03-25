@@ -50,3 +50,7 @@ export function removeAtIndex<T>(array: T[], index: number) {
 }
 
 export { CMPNT_REF_REGEX, EMAIL_REGEX } from "./regex";
+
+export function getUniqueListBy<T, K extends keyof T>(arr: T[], key: K): T[] {
+  return [...new Map(arr.map(item => [item[key], item])).values()];
+}

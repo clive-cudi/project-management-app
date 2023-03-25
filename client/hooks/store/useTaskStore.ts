@@ -33,7 +33,6 @@ export const useTaskStore = create<TasksStoreType>()((set) => {
     isLoading: false,
     add: (task) =>
       set((state) => {
-        console.log(`Initial tasks length ${state.tasks.length}`)
         return { tasks: [...state.tasks, task] };
       }),
     addMultiple: (tasks) =>

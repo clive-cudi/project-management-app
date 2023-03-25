@@ -96,6 +96,7 @@ const Home: NextPage & PageAuth = () => {
       console.log("Mounting zustand devtools");
       MountStoreDevTools();
     }
+    console.log(session);
   }, [])
 
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =

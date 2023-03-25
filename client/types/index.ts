@@ -4,3 +4,4 @@ export * from "./general";
 export * from "./tasks";
 export * from "./projects";
 export * from "./clientRes";
+export * from "./teams";
