@@ -10,7 +10,7 @@ export const TeamQueries = (session: SessionContextValue) => {
     };
 
     const getMemberTeams = async (): Promise<API_res_model & {teams: teamsRes[]}> => {
-        return (await api.post("/teams/member-teams", {uid: session.data?.user.uid})).data;
+        return (await api.post("/teams/member-teams", {uid: session.data?.user.uid}, defaultReqConfig)).data;
     }
 
     return {
