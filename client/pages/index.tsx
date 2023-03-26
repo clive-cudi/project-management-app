@@ -3,12 +3,12 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
 import { Header, SideNav, TopNav, HomePageCurrentTab, Modal, SideNavBtn, ContextMenuWrapper, LoadingBarWidget, NotificationPlateWidget } from "../components";
 import type { PageAuth, HomeTabLabels_Type } from "../types";
-import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore, useProjectStore, useGlobalLoading, useNotificationPlateWidget, useComponentRepoStore } from "../hooks";
+import { useLayout, useModal, useTabRenderer, useContextMenu, useTaskStore, useProjectStore, useGlobalLoading, useNotificationPlateWidget, useComponentRepoStore, useTeamsStore } from "../hooks";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TbMessageDots } from "react-icons/tb";
 import { BsCardChecklist } from "react-icons/bs";
 import { FiUsers, FiSettings } from "react-icons/fi";
-import { upperCaseFirstLetter, TaskQueries, ProjectQueries, staticComponents } from "../utils";
+import { upperCaseFirstLetter, TaskQueries, ProjectQueries, TeamQueries} from "../utils";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { MountStoreDevTools } from "../hooks";
@@ -64,6 +64,10 @@ const Home: NextPage & PageAuth = () => {
   const { globalLoading } = useGlobalLoading();
   const { isEmpty: isNotificationPlateEmpty } = useNotificationPlateWidget();
   const { addMultipleStaticComponentsToStore } = useComponentRepoStore();
+  // fetch teams
+  const { getMemberTeams } = TeamQueries(session);
+  const { data: fetchedMemberTeams, isLoading: isMemberTeamsloading, isError: memberTeamsFetchError } = useQuery({queryKey: ["member_teams"], queryFn: getMemberTeams});
+  const { addMultiple: addMultipleTeamsToStore } = useTeamsStore();
 
   useEffect(() => {
     if (fetchedTasks && !isError) {
@@ -73,10 +77,17 @@ const Home: NextPage & PageAuth = () => {
 
   useEffect(() => {
     if (fetchedProjects && !projectsFetchError) {
-      console.log(fetchedProjects);
+      // console.log(fetchedProjects);
       addMultipleProjects(fetchedProjects.projects);
     }
   }, [fetchedProjects, projectsFetchError, addMultipleProjects]);
+  
+  useEffect(() => {
+    if (fetchedMemberTeams && !isMemberTeamsloading) {
+      console.log(fetchedMemberTeams);
+      addMultipleTeamsToStore(fetchedMemberTeams.teams);
+    }
+  }, [fetchedMemberTeams, isMemberTeamsloading])
 
   useEffect(() => {
     setLoading(isLoading);
