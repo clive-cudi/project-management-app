@@ -84,7 +84,6 @@ const Home: NextPage & PageAuth = () => {
   
   useEffect(() => {
     if (fetchedMemberTeams && !isMemberTeamsloading) {
-      console.log(fetchedMemberTeams);
       addMultipleTeamsToStore(fetchedMemberTeams.teams);
     }
   }, [fetchedMemberTeams, isMemberTeamsloading])
@@ -96,11 +95,6 @@ const Home: NextPage & PageAuth = () => {
   useEffect(() => {
     setProjectsLoading(isProjectsLoading);
   }, [isProjectsLoading, setProjectsLoading]);
-  
-
-  // useEffect(() => {  
-  //   addMultipleStaticComponentsToStore(staticComponents.map((sc) => {s}));
-  // }, [])
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {

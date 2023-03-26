@@ -85,6 +85,20 @@ const signup = (req, res, next) => {
       // encrypt password
       const encrypted_password = await bcrypt.hash(password, 10);
 
+      const initialIndividual = {
+        uid: uid
+      };
+
+      const initialOrganization = {
+        uid: uid,
+        details: {
+          country: ""
+        },
+        projects: [],
+        users: [],
+        teams: []
+      }
+
       const user = new User({
         username,
         email,
@@ -97,6 +111,7 @@ const signup = (req, res, next) => {
             ? usertype.toLowerCase()
             : "individual",
         isVerified: false,
+        [usertype.toLowerCase() === "organization" ? "organization" : "individual"]: usertype.toLowerCase() === "organization" ? initialOrganization : initialIndividual,
       });
 
       user
