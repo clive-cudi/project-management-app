@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// organization specific
 const OrgSchema = new Schema({
     uid: {
         type: String,

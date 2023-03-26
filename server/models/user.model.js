@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { OrgSchema } = require("./organization.model");
+const { IndividualSchema } = require("./individual.model");
 
 const UserSchema = new Schema({
     username: {
@@ -33,8 +35,10 @@ const UserSchema = new Schema({
         required: true
     },
     // teams that the user is part of
+    // in the case of an organization => teams that are part of the organization
     teams: [String],
     // orgs that the user is part of
+    // applies to an individual user
     orgs: [String],
     tasks: [String],
     projects: [String],
@@ -68,7 +72,11 @@ const UserSchema = new Schema({
         status: Boolean,
         secret: String
     },
-    isActive: Boolean
+    isActive: Boolean,
+    // if userType is organization
+    organization: OrgSchema,
+    // if userType is individual
+    individual: IndividualSchema
 }, {
     timestamps: true
 });

@@ -337,6 +337,28 @@ const getMemberTeams = (req, res) => {
       },
     });
   }
+};
+
+/** [TODO]: an individual user can set up a team with no real parent organization [peer team].
+ * in this case the parentOrganization field of the team will point to the uid of the user that created it
+*/
+const createPeerTeam = (req, res, next) => {
+  const { usertoken } = req.body;
+}
+
+// returns a single team based on the given tid
+const getTeamByTID = (req, res) => {
+  const { tid } = req.body;
+};
+
+// returns multipleTeams[] based on given tids[]
+const getMultipleTeamsByTID = (req, res) => {
+
+};
+
+// returns the teams that are part of an organization
+const getOrgTeams = (req, res) => {
+
 }
 
 module.exports = {
