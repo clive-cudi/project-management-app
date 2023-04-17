@@ -5,8 +5,8 @@ export interface PageAuth {
         auth: boolean
         userType: userType_
         multipleUserTypes?: {
-        status: boolean
-        supported: string[]
+            status: boolean
+            supported: string[]
         }
     }
 }

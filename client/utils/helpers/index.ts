@@ -8,6 +8,10 @@ export const upperCaseFirstSentence = (sentence: string, separator?: string, inc
     }).join(includeSeparator === true ? separator : " ");
 }
 
+export const myCos = () => {
+	return null;
+}
+
 export const getCountDownReturnValues = (countDown: number) => {
     const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
     const hours = Math.floor(

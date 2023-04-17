@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useRenderByID } from "../../../hooks";
-import { useEffect } from "react";
 
 export const TestTab = (): JSX.Element => {
     const wrapperStyles: React.CSSProperties = {
