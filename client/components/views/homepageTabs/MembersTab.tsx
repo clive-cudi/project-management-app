@@ -1,10 +1,12 @@
-import { useRef, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import styles from "../../../styles/views/homePageTabs/membersTab.module.scss";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { FcOrganization } from "react-icons/fc";
 import Image from "next/image";
 import MockUsers from "../../../mock/users.json";
 import { ProfileIconRibbon } from "../../reusable";
+import { useTeamsStore, useTeams } from "../../../hooks";
+import { AiOutlineTeam } from "react-icons/ai";
 
 export const MembersTab = ({}) => {
   const [availableOrganizations, setAvailableOrganizations] = useState([
@@ -23,15 +25,11 @@ export const MembersTab = ({}) => {
       profilePicUrl: "https://source.unsplash.com/random"
     },
   ]);
+  const [ sampleTeams, setSampleTeams ] = useState([])
   const [showInfoStates, setShowInfoStates] = useState<string[]>([]);
   const userMockData = useMemo(() => [...MockUsers], []);
-//   const expandBtnRef = useRef<HTMLButtonElement>(null);
-
-//   function clickBtnRef() {
-//     if (expandBtnRef) {
-//         expandBtnRef.current?.click();
-//     }
-//   }
+  // teams that the user is a member of
+  const { getMemberTeamsByOrganization, teams } = useTeams();
 
   function toggleShowInfo(currentStateID: string) {
     if (showInfoStates?.includes(currentStateID)) {
@@ -128,14 +126,20 @@ export const MembersTab = ({}) => {
                             </div>
                             <div className={styles.mtb_aoe_col}>
                               <div className={styles.mtb_aoe_info_strip}>
-                                <h4>Members:</h4>
+                                <div className={styles.mtb_aoe_info_strip_header}>
+                                  <h4>Members:</h4>
+                                  <span data-elm-type={"aoe-view-all-span"}>View all members</span>
+                                </div>
                                 <div className={styles.mtb_aoe_members}>
                                   {/* Have an option to view all members [i.e: in a modal list] */}
                                   <ProfileIconRibbon key={29} users={MockUsers} maxNumber={6} />
                                 </div>
                               </div>
                               <div className={styles.mtb_aoe_info_strip}>
-                                <h4>Teams:</h4>
+                                <div className={styles.mtb_aoe_info_strip_header}>
+                                  <h4>Teams:</h4>
+                                  <span data-elm-type={"aoe-view-all-span"}>View all teams</span>
+                                </div>
                               </div>
                             </div>
                         </div>
@@ -159,7 +163,51 @@ export const MembersTab = ({}) => {
             <h4>View Teams that you are working with:</h4>
           </span>
         </div>
-        <div className={styles.mtb_row_content}></div>
+        <div className={styles.mtb_row_content}>
+          <ul>
+            {teams.length > 0 ? (
+              teams.map((tm, ix) => {
+
+                return (
+                  <>
+                    <li key={ix} data-team-id={tm.tid ?? "_"}>
+                      <div className={styles.mtb_available_orgs_basic_info}>
+                        <div className={styles.mtb_aob_col}>
+                          <span className={styles.mtb_aob_info_number}>
+                            <AiOutlineTeam />
+                          </span>
+                          <span className={styles.mtb_aob_info_title}>
+                            <h4>{tm.name}</h4>
+                          </span>
+                        </div>
+                        <div className={styles.mtb_aob_col}>
+                          <span>
+                            <button className={styles.view_org_btn}>View team</button>
+                          </span>
+                          <span>
+                            <button className={styles.more_info_org_btn} onClick={(e) => {
+                              e.stopPropagation();
+                              toggleShowInfo(tm.tid);
+                            }}>
+                              {showInfoStates.includes(tm.tid) ? (
+                                <BsChevronUp />
+                              ): (
+                                <BsChevronDown />
+                              )}
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    {showInfoStates.includes(tm.tid) ? (
+                      <li className={styles.mtb_available_orgs_expand_wrapper} onClick={(e) => {e.stopPropagation()}}></li>
+                    ) : (null)}
+                  </>
+                )
+              })
+            ) : (null)}
+          </ul>
+        </div>
       </div>
     </div>
   );
