@@ -263,7 +263,7 @@ const getTeam = (req, res) => {
   });
 };
 
-// returns the teams that the given user is part of and sorts by organization
+// returns the teams that the given user is part of
 const getMemberTeams = (req, res) => {
   const { uid } = req.body;
 
