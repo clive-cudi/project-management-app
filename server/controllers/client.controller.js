@@ -32,7 +32,7 @@ const createClient = (req, res, next) => {
         // update the parent user document client list
         User.updateOne(
             {uid: usertoken.uid},
-            {$push: {
+            {$addToSet: {
                 clients: client.cid ?? newClientID
             }}
         ).then(() => {
@@ -83,20 +83,20 @@ const addToProject = (req, res, next) => {
     try {
         Project.updateOne(
             {pid: pid},
-            {$push: {
+            {$addToSet: {
                 "info.clients": cid
             }}
         ).then((pjct) => {
             Client.updateOne(
                 {cid: cid},
-                {$push: {
+                {$addToSet: {
                     projects: pid
                 }}
             ).then((client) => {
                 if (client) {
                     User.updateOne(
                         {uid: usertoken.uid},
-                        {$push: {
+                        {$addToSet: {
                             clients: cid
                         }}
                     ).then((usr) => {

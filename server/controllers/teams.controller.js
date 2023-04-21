@@ -25,7 +25,7 @@ const createTeam = (req, res, next) => {
             User.updateOne(
               { uid: parentOrgID },
               {
-                $push: {
+                $addToSet: {
                   teams: teamDoc.tid ?? newTeamID,
                 },
               }
@@ -127,7 +127,7 @@ const addTeamMembers = (req, res, next) => {
           },
           usertype: "individual",
         },
-        { $push: { teams: tid } }
+        { $addToSet: { teams: tid } }
       )
         .then(() => {
           return res.status(200).json({

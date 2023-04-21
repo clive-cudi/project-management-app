@@ -92,7 +92,7 @@ const createTask = (req, res, next) => {
                     // assign the task directly to the user => rendered to <TaskSummary />
                     User.updateOne(
                         {uid: usertoken.uid},
-                        {$push: {
+                        {$addToSet: {
                             tasks: taskDoc.taskID ?? taskID
                         }}
                     ).then(() => {
@@ -125,7 +125,7 @@ const createTask = (req, res, next) => {
                     console.log("Project task")
                     Project.updateOne(
                         {pid: project},
-                        {$push: {
+                        {$addToSet: {
                             tasks: taskDoc.taskID ?? taskID
                         }}
                     ).then((updatedProject) => {

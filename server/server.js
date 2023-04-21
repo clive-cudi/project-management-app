@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, "./.env.local")});
 const PORT = process.env.SERVER_PORT;
-const MONGO_URI = process.env.SERVER_ENV === "development" ? process.env.MONGO_URI_DEV : process.env.MONGO_URI;
+const MONGO_URI = process.env.SERVER_ENV !== "development" ? process.env.MONGO_URI_DEV : process.env.MONGO_URI;
 const mongoose = require("mongoose");
 const authRouter = require('./routes/auth');
 const taskRouter = require('./routes/task');

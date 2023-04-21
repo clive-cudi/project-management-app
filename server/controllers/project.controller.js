@@ -57,6 +57,23 @@ const createProject = (req, res, next) => {
         description
     } = req.body;
 
+    if (!name || !start || !finish) {
+        return res.status(403).json({
+            success: false,
+            message: "Missing details",
+            usertoken: {
+                user: null,
+                token: null
+            },
+            project: null,
+            error: {
+                status: true,
+                code: "missing_details",
+                debug: null
+            }
+        })
+    }
+
     User.findOne({uid: usertoken.uid}).then((user) => {
         if (user) {
             const projectID = `project_${v4ID()}`;
@@ -98,7 +115,7 @@ const createProject = (req, res, next) => {
                 // update the user field with the project id
                 User.updateOne(
                     {uid: usertoken.uid},
-                    {$push: {
+                    {$addToSet: {
                         projects: projectDoc.pid ?? projectID
                     }}
                 ).then(() => {
@@ -204,7 +221,7 @@ const getProjectById = (req, res, next) => {
                 }
             })
         } else {
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 message: "Project not found in DB",
                 project: null,
@@ -336,6 +353,127 @@ const getAllProjectsDetails = (req, res, next) => {
             }
         })
     })
+};
+
+// adding a contributor(user) to a project
+const addIndividualContributor = async (req, res) => {
+    const { usertoken, pid, uid } = req.body;
+    let userExists = false;
+
+    // check if user exists
+    await User.findOne({uid: uid, usertype: "individual"}).then((usr) => {
+        if (usr) {
+            userExists = true;
+            return
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "User couldn't be found in DB!!",
+                clients: null,
+                error: {
+                  status: true,
+                  code: "user_not_found",
+                },
+            });
+        }
+    }).catch((user_find_err) => {
+        console.log(user_find_err);
+        return res.status(400).json({
+            success: false,
+            message: "Error Fetching user from DB!!",
+            usertoken: {
+                user: null,
+                token: null
+            },
+            error: {
+                status: true,
+                code: "db_error",
+                debug: user_find_err
+            }
+        });
+    });
+
+    if (!userExists) {
+        return;
+    }
+
+    // prerequisite
+    // the user must be an individual
+    // future support for organization
+    Project.findOneAndUpdate({pid: pid}, {$addToSet: {
+        "contributors.individuals": uid
+    }}).then((updated_project) => {
+        if (updated_project) {
+            // update user project fields
+            User.findOneAndUpdate({uid: uid, usertype: "individual"}, {
+                $addToSet: {
+                    "projects": updated_project.pid ?? pid
+                }
+            }).then((updated_user) => {
+                if (updated_user) {
+                    return res.status(200).json({
+                        success: true,
+                        message: `Successfully added as contributor to pid: ${pid}`,
+                        project: updated_project,
+                        contributors: updated_project.contributors,
+                        error: {
+                            status: false,
+                            code: null
+                        }
+                    })
+                } else {
+                    // just incase yk...edge case stuff
+                    return res.status(404).json({
+                        success: false,
+                        message: "User couldn't be found in DB!!",
+                        clients: null,
+                        error: {
+                          status: true,
+                          code: "user_not_found",
+                        },
+                    });
+                }
+            }).catch((update_user_pjct_list_err) => {
+                console.log(update_user_pjct_list_err);
+                return res.status(400).json({
+                    success: false,
+                    message: "Failed to update the project list at user",
+                    usertoken: {
+                        user: null,
+                        token: null
+                    },
+                    project: null,
+                    error: {
+                        status: true,
+                        code: "project_list_update_failed",
+                        debug: update_user_pjct_list_err
+                    }
+                });
+            });
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Project not found in DB",
+                project: null,
+                error: {
+                    status: true,
+                    code: "not_found"
+                }
+            })
+        }
+    }).catch((project_find_update_err) => {
+        console.log(project_find_update_err);
+        return res.status(400).json({
+            success: false,
+            message: "DB error Occurred",
+            project: null,
+            error: {
+                status: true,
+                code: "db_error",
+                debug: project_find_update_err
+            }
+        })
+    })
 }
 
 module.exports = {
@@ -343,5 +481,6 @@ module.exports = {
     getAllProjects,
     getProjectById,
     getProjectsById_multiple,
-    getAllProjectsDetails
+    getAllProjectsDetails,
+    addIndividualContributor
 };
