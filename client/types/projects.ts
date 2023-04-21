@@ -24,3 +24,6 @@ export interface projectRes {
         individuals: string[]
     }
 }
+
+// a team should not create/own a project since its generic i.e not specific/ hooked to an actual thing
+// a team can only be based off an individual or organization i.e an actual asset/ object

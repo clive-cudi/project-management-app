@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/pages/auth/twofactorsetup.module.scss";
 import { TwoFactorAuthVerifyForm, Modal, ErrorModal, Header } from "../../components";
 import { useModal } from "../../hooks";

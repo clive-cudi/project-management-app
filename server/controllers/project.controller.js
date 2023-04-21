@@ -6,7 +6,7 @@ const e = require('express');
 
 
 const getAllProjects = (req, res, next) => {
-    const { usertoken, pid } = req.body;
+    const { usertoken } = req.body;
 
     User.findOne({uid: usertoken.uid}).then((user) => {
         if (user) {
@@ -188,7 +188,10 @@ const createProject = (req, res, next) => {
 
 const getProjectById = (req, res, next) => {
     const { usertoken, pid } = req.body;
+
+    // [TODO]: add a constraint, such that the user can view the project only if is a contributor [for private projects]
     
+    // [TODO]: add project availability property => "public"[default] | "private"
     Project.findOne({pid: pid}).then((pjct) => {
         if (pjct) {
             return res.status(200).json({
