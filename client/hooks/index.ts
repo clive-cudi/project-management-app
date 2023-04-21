@@ -14,3 +14,4 @@ export { useGlobalLoading } from "./useGlobalLoading/useGlobalLoading";
 export { useNotificationPlateWidget } from "./useNotificationPlateWidget/useNotificationPlateWidget";
 export type { componentRepoInstance } from "./useRenderByID/useRenderByID";
 export { useTeams } from "./useTeams/useTeams";
+export { useProjects } from "./useProjects/useProjects";

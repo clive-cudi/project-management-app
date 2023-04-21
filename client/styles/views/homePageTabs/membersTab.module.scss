@@ -161,13 +161,22 @@
                         height: fit-content;
                         width: 100%;
                         padding: 10px;
-                        .mtb_aoe_col {
+                        &.mtb_available_orgs_expand_content_row_mode {
+                            flex-direction: column;
+                        }
+                        .mtb_aoe_col,
+                        .mtb_aoe_row {
                             display: flex;
                             height: fit-content;
                             width: 50%;
                             flex-direction: column;
                             &:first-child {
                                 border-right: 1px solid rgba(225, 227, 230, 1);
+                            }
+                            &.mtb_aoe_row {
+                                border-right: none;
+                                width: 100%;
+                                border-bottom: 1px solid rgba(225, 227, 230, 1);
                             }
                             .mtb_aoe_profile_wrapper {
                                 display: flex;
@@ -238,6 +247,9 @@
                                     color: #757D8A;
                                     font-family: DM Sans;
                                     font-weight: 500;
+                                    .strip_header_entry {
+                                        color: black;
+                                    }
                                 }
                                 .mtb_aoe_info_strip_header {
                                     display: flex;
@@ -291,6 +303,7 @@
         }
        }
    }
+
 }
 
 

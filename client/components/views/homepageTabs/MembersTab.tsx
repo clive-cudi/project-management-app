@@ -5,8 +5,9 @@ import { FcOrganization } from "react-icons/fc";
 import Image from "next/image";
 import MockUsers from "../../../mock/users.json";
 import { ProfileIconRibbon } from "../../reusable";
-import { useTeamsStore, useTeams } from "../../../hooks";
-import { AiOutlineTeam } from "react-icons/ai";
+import { useTeams, useProjects } from "../../../hooks";
+import { AiOutlineTeam, AiFillProject } from "react-icons/ai";
+import { teamsRes } from "../../../types";
 
 export const MembersTab = ({}) => {
   const [availableOrganizations, setAvailableOrganizations] = useState([
@@ -30,6 +31,7 @@ export const MembersTab = ({}) => {
   const userMockData = useMemo(() => [...MockUsers], []);
   // teams that the user is a member of
   const { getMemberTeamsByOrganization, teams } = useTeams();
+  const { getProjectById, getProjectByIdWithTeamBase } = useProjects();
 
   function toggleShowInfo(currentStateID: string) {
     if (showInfoStates?.includes(currentStateID)) {
@@ -44,6 +46,16 @@ export const MembersTab = ({}) => {
         })
         return true;
     }
+  }
+
+  const sampleTeam: teamsRes = {
+    name: "Tercy",
+    parentOrgID: "hguewryu2",
+    tid: "fjsie_fewr",
+    members: ["jfier", "clive"],
+    // filter from the projects fetched
+    // [TODO]: get request for all projects associated with user
+    projects: ["jfeirjfgr", "project_5d0693b4-a5ad-4eb4-9c87-ed82e428bc3c"]
   }
 
   return (
@@ -166,7 +178,7 @@ export const MembersTab = ({}) => {
         <div className={styles.mtb_row_content}>
           <ul>
             {teams.length > 0 ? (
-              teams.map((tm, ix) => {
+              [...teams, sampleTeam].map((tm, ix) => {
 
                 return (
                   <>
@@ -200,7 +212,68 @@ export const MembersTab = ({}) => {
                       </div>
                     </li>
                     {showInfoStates.includes(tm.tid) ? (
-                      <li className={styles.mtb_available_orgs_expand_wrapper} onClick={(e) => {e.stopPropagation()}}></li>
+                      <li className={styles.mtb_available_orgs_expand_wrapper} onClick={(e) => {e.stopPropagation()}}>
+                        <div className={`${styles.mtb_available_orgs_expand_content} ${styles.mtb_available_orgs_expand_content_row_mode}`}>
+                          <div className={`${styles.mtb_aoe_col} ${styles.mtb_aoe_row}`}>
+                            {/* name and decription of team */}
+                            <div className={styles.mtb_aoe_info_strip}>
+                              <div className={styles.mtb_aoe_info_strip_header}>
+                                <h4>Team Name: <span className={styles.strip_header_entry}>{tm.name}</span></h4>
+                                <span data-elm-type={"aoe-view-all-span"}>View all teams</span>
+                              </div>
+                            </div>
+                            <div className={styles.mtb_aoe_info_strip}>
+                              <div className={styles.mtb_aoe_info_strip_header}>
+                                <h4>Team Description: <span className={styles.strip_header_entry}>{tm.tid}</span></h4>
+                                <span data-elm-type={"aoe-view-all-span"}>View additional info</span>
+                              </div>
+                            </div>
+                            <div className={styles.mtb_aoe_info_strip}>
+                              <div className={styles.mtb_aoe_info_strip_header}>
+                                <h4>Parent Organization: <span className={styles.strip_header_entry}>{"Individual"}</span></h4>
+                                <span data-elm-type={"aoe-view-all-span"}>View parent org</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className={`${styles.mtb_aoe_col} ${styles.mtb_aoe_row}`}>
+                            <div className={styles.mtb_aoe_info_strip}>
+                              <div className={styles.mtb_aoe_info_strip_header}>
+                                <h4>Members: </h4>
+                                <span data-elm-type={"aoe-view-all-span"}>View all members</span>
+                              </div>
+                              <div className={styles.mtb_aoe_members}>
+                                  {/* Have an option to view all members [i.e: in a modal list] */}
+                                  <ProfileIconRibbon key={29} users={MockUsers} maxNumber={6} />
+                              </div>
+                            </div>
+                            <div className={styles.mtb_aoe_info_strip}>
+                                <div className={styles.mtb_aoe_info_strip_header}>
+                                  <h4>Projects:</h4>
+                                </div>
+                                <div className={styles.mtb_aoe_team_projects_wrapper}>
+                                  {tm.projects.map((tm_pjct_id, index) => {
+                                    const targetProject = getProjectByIdWithTeamBase(tm_pjct_id, tm.tid);
+                                    if (targetProject) {
+                                      return (
+                                        <div key={index} className={styles.mtb_aoe_team_project_item}>
+                                          <div className={styles.mtb_aoe_team_project_item_col}>
+                                            <span className={styles.aoe_project_item_icon}><AiFillProject/></span>
+                                            <span className={styles.aoe_project_item_name}>{targetProject.name}</span>
+                                          </div>
+                                          <div className={styles.mtb_aoe_team_project_item_col}>
+                                            <span data-elm-type={"aoe-view-all-span"}>View all members</span>
+                                          </div>
+                                        </div>
+                                      )
+                                    }
+
+                                    return null;
+                                  })}
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
                     ) : (null)}
                   </>
                 )
