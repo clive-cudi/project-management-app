@@ -9,6 +9,7 @@ export interface ProfileIcon_Props extends React.DetailedHTMLProps<React.HTMLAtt
     profilePicURL: string;
   };
   showDetailsOnHover?: boolean;
+  fetchDetails?: boolean
 }
 
 type details_widget_orientations_type =
@@ -20,6 +21,7 @@ type details_widget_orientations_type =
 export const ProfileIcon = ({
   user,
   showDetailsOnHover,
+  fetchDetails,
   ...utilProps
 }: ProfileIcon_Props): JSX.Element => {
   const imageHoverRef = useRef<HTMLDivElement>(null);
@@ -122,6 +124,12 @@ export const ProfileIcon = ({
   //     }
   //   }
   // }, []);
+
+  useEffect(() => {
+    if (fetchDetails) {
+      // query for fetching user profile details
+    }
+  }, [user, fetchDetails])
 
   return (
     <div
