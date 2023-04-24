@@ -70,7 +70,7 @@ export const MembersTab = ({}) => {
           </span>
         </div>
         <div className={styles.mtb_row_content}>
-          <ul>
+          <ul key={`mtb_list_0`}>
             {availableOrganizations.length > 0 ? (
               availableOrganizations.map((org, index) => {
 
@@ -116,6 +116,7 @@ export const MembersTab = ({}) => {
                       <li
                         className={styles.mtb_available_orgs_expand_wrapper}
                         onClick={(e) => {e.stopPropagation()}}
+                        key={`${index}_${org.orgID}`}
                       >
                         <div className={styles.mtb_available_orgs_expand_content}>
                             <div className={styles.mtb_aoe_col}>
@@ -161,7 +162,7 @@ export const MembersTab = ({}) => {
                 );
               })
             ) : (
-              <li data-elm-type={"li-no-organizations"}>No Organizations found</li>
+              <li data-elm-type={"li-no-organizations"} key={0}>No Organizations found</li>
             )}
           </ul>
         </div>
@@ -176,9 +177,9 @@ export const MembersTab = ({}) => {
           </span>
         </div>
         <div className={styles.mtb_row_content}>
-          <ul>
+          <ul key={`mtb_list_2`}>
             {teams.length > 0 ? (
-              [...teams, sampleTeam].map((tm, ix) => {
+              [...teams].map((tm, ix) => {
 
                 return (
                   <>
@@ -212,7 +213,7 @@ export const MembersTab = ({}) => {
                       </div>
                     </li>
                     {showInfoStates.includes(tm.tid) ? (
-                      <li className={styles.mtb_available_orgs_expand_wrapper} onClick={(e) => {e.stopPropagation()}}>
+                      <li className={styles.mtb_available_orgs_expand_wrapper} key={`${ix}_${tm.tid}`} onClick={(e) => {e.stopPropagation()}}>
                         <div className={`${styles.mtb_available_orgs_expand_content} ${styles.mtb_available_orgs_expand_content_row_mode}`}>
                           <div className={`${styles.mtb_aoe_col} ${styles.mtb_aoe_row}`}>
                             {/* name and decription of team */}
@@ -243,7 +244,7 @@ export const MembersTab = ({}) => {
                               </div>
                               <div className={styles.mtb_aoe_members}>
                                   {/* Have an option to view all members [i.e: in a modal list] */}
-                                  <ProfileIconRibbon key={29} users={MockUsers} maxNumber={6} />
+                                  <ProfileIconRibbon users={[...tm.members].map((tm_member) => ({uid: tm_member, profilePicURL: ""}))} maxNumber={6} />
                               </div>
                             </div>
                             <div className={styles.mtb_aoe_info_strip}>
@@ -251,11 +252,11 @@ export const MembersTab = ({}) => {
                                   <h4>Projects:</h4>
                                 </div>
                                 <div className={styles.mtb_aoe_team_projects_wrapper}>
-                                  {tm.projects.map((tm_pjct_id, index) => {
+                                  {tm.projects.map((tm_pjct_id, index_) => {
                                     const targetProject = getProjectByIdWithTeamBase(tm_pjct_id, tm.tid);
                                     if (targetProject) {
                                       return (
-                                        <div key={index} className={styles.mtb_aoe_team_project_item}>
+                                        <div key={`${tm_pjct_id}_${index_}`} className={styles.mtb_aoe_team_project_item}>
                                           <div className={styles.mtb_aoe_team_project_item_col}>
                                             <span className={styles.aoe_project_item_icon}><AiFillProject/></span>
                                             <span className={styles.aoe_project_item_name}>{targetProject.name}</span>

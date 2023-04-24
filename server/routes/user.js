@@ -6,4 +6,8 @@ router.post("/update-profile-picture", authVerify, UserController.updateProfileP
 
 router.get("/get-clients", authVerify, UserController.getClients);
 
+router.get("/profile/:uid", authVerify, UserController.fetchUserProfile);
+
+router.post("/profiles", authVerify, UserController.fetchMultipleUserProfiles);
+
 module.exports = router;
