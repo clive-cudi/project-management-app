@@ -19,3 +19,5 @@ export type GeneralTaskStatus_ = "todo" | "pending" | "done";
 export type OperationResultType_ = "success" | "error" | "info";
 
 export type ProjectHealthStatus = "active" | "dormant" | "inactive";
+
+export type OnlineStatus = "online" | "offline" | "away";

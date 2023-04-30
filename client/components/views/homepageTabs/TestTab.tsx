@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRenderByID, useLazyQuery } from "../../../hooks";
 import { AuthQueries } from "../../../utils";
 import { useSession } from "next-auth/react";
+import { ProfileIcon } from "../../reusable";
 
 export const TestTab = (): JSX.Element => {
     const wrapperStyles: React.CSSProperties = {
@@ -48,7 +49,8 @@ export const TestTab = (): JSX.Element => {
             <button onClick={() => {handleAddComponent()}}>Add Component to repo</button>
             <button onClick={() => {handleAddColorProp()}}>Add Color Prop</button>
             <button onClick={() => {fetchMe()}}>Trigger useLazyQuery()</button>
-            <span>useLazyQueryResult:</span>
+            <span>useLazyQueryResult: {JSON.stringify(me_data)}</span>
+            <ProfileIcon user={{uid: "0041bbbb-8f13-44cd-85c1-2ffbe657cc76", profilePicURL: ""}} showDetailsOnHover />
         </div>
     )
 }

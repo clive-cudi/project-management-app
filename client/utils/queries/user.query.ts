@@ -1,5 +1,5 @@
 import { api } from "../axios/axios.config";
-import { API_res_model, clientRes } from "../../types";
+import { API_res_model, clientRes, UserProfile } from "../../types";
 
 export const UserQueries = (session: any) => {
     const defaultReqConfig = {
@@ -16,8 +16,13 @@ export const UserQueries = (session: any) => {
         return (await api.get(`/user/get-clients`, defaultReqConfig)).data;
     }
 
+    const getProfile = async (uid: string): Promise<API_res_model & {user: UserProfile}> => {
+        return (await api.get(`/user/profile/${uid}`, defaultReqConfig)).data;
+    }
+
     return {
         updateProfilePic,
-        getClients
+        getClients,
+        getProfile
     }
 }
