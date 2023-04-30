@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { useRenderByID } from "../../../hooks";
+import React, { useEffect, useState } from "react";
+import { useRenderByID, useLazyQuery } from "../../../hooks";
+import { AuthQueries } from "../../../utils";
+import { useSession } from "next-auth/react";
 
 export const TestTab = (): JSX.Element => {
     const wrapperStyles: React.CSSProperties = {
@@ -7,10 +9,15 @@ export const TestTab = (): JSX.Element => {
         height: "100%",
         width: "100%",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        flexDirection: "column",
+        rowGap: "10px"
     }
+    const session = useSession();
     const { addComponent, registerProps, renderByID } = useRenderByID();
-    const [targetID, setTargetID] = useState<string>(`twhnus${Math.random() * 10}`)
+    const [targetID, setTargetID] = useState<string>(`twhnus${Math.random() * 10}`);
+    const { getMe } = AuthQueries(session);
+    const [fetchMe, {data: me_data}] = useLazyQuery(["me_query"], getMe);
 
     function handleAddComponent() {
         const targetComponent = {
@@ -29,6 +36,10 @@ export const TestTab = (): JSX.Element => {
         }))
     }
 
+    useEffect(() => {
+        console.log(me_data);
+    }, [me_data]);
+
     return (
         <div style={wrapperStyles}>
             {
@@ -36,6 +47,8 @@ export const TestTab = (): JSX.Element => {
             }
             <button onClick={() => {handleAddComponent()}}>Add Component to repo</button>
             <button onClick={() => {handleAddColorProp()}}>Add Color Prop</button>
+            <button onClick={() => {fetchMe()}}>Trigger useLazyQuery()</button>
+            <span>useLazyQueryResult:</span>
         </div>
     )
 }

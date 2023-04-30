@@ -754,6 +754,7 @@ const me = (req, res, next) => {
               user: dataToInclude,
               token: usertoken.token,
             },
+            me: dataToInclude
           },
         });
       } else {
