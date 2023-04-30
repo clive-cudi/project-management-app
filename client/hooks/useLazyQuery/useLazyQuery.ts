@@ -13,10 +13,10 @@ export function useLazyQuery<TData, TError>(
     key: UseQueryParams[0],
     fetchFn: QueryFunction<TData, QueryKey>,
     options?: Omit<UseQueryOptions<TData, TError, unknown, QueryKey>, 'queryKey' | 'queryFn'>
-): [() => void, UseQueryResult<unknown, unknown>] {
+): [() => void, UseQueryResult<TData, TError>] {
     const [enabled, setEnabled] = useState(false);
 
-    const query = useQuery<TData, TError, unknown, QueryKey>(key, fetchFn, {
+    const query = useQuery<TData, TError, unknown, QueryKey>([key], fetchFn, {
         ...(options || {}),
         enabled,
     });
@@ -27,5 +27,5 @@ export function useLazyQuery<TData, TError>(
         }
     }, [fetchFn, enabled]);
 
-    return [trigger, query];
+    return [trigger, query as UseQueryResult<TData, TError>];
 }

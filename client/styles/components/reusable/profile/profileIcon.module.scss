@@ -6,7 +6,7 @@
     justify-content: center;
     border-radius: 50%;
     position: relative;
-    span {
+    span[data-elm-type = "profile"] {
       display: flex;
       height: 100%;
       width: 100%;
@@ -28,6 +28,7 @@
         justify-content: center;
         color: rgba(120, 116, 134, 1);
         background: rgb(175, 175, 175);
+        border-radius: 50%;
         // background: gray;
       }
     }
@@ -38,13 +39,16 @@
       &[data-elm-isActive = "false"] {
         display: none;
       } 
-      height: 200px;
+      height: fit-content;
       width: 300px;
       position: absolute;
       background: white;
-      box-shadow: 1px 1px 20px 4px rgb(179, 179, 179);
+      // box-shadow: 1px 1px 20px 4px rgb(179, 179, 179);
+      box-shadow: 1px 1px 14px 2px rgb(214, 214, 214);
       border-radius: 6px;
       animation: animate-profile-details-slide-in 0.4s linear;
+      align-items: center;
+      justify-content: center;
       &.orientation_topright {
         top: -200px;
         left: 40px;
@@ -60,6 +64,75 @@
       &.orientation_bottomleft {
         bottom: -200px;
         right: 40px;
+      }
+      .profile_details_content {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        padding: 10px;
+        flex-direction: column;
+        row-gap: 10px;
+        position: relative;
+        .pdc_strip {
+          display: flex;
+          height: fit-content;
+          width: 100%;
+          &.pdc_strip_centered {
+            align-items: center;
+            justify-content: center;
+          }
+          &.pdc_strip_end {
+            align-items: center;
+            justify-content: end;
+          }
+          .pdc_profile_pic {
+            display: flex;
+            height: 100px;
+            width: 100px;
+            align-items: center;
+            justify-content: center;
+            span[data-elm-type = "profile"] {
+              span[data-elm-type = "user-profile-img-placeholder"] {
+                font-size: 28px;
+              }
+            }
+          }
+          .pdc_strip_info {
+            display: flex;
+            height: fit-content;
+            width: 100%;
+            align-items: center;
+            justify-content: flex-start;
+            column-gap: 10px;
+            span[data-elm-type="info-icon"] {
+              display: flex;
+              height: 100%;
+              width: fit-content;
+              align-items: center;
+              justify-content: center;
+              font-size: 18px;
+            }
+            h3 {
+              font-size: 16px;
+              font-family: Mulish;
+            }
+            h4 {
+              font-size: 14px;
+              font-family: Mulish;
+              font-weight: 400;
+            }
+          }
+          .pdc_util_tray {
+            display: flex;
+            height: fit-content;
+            width: 100%;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 0.5px solid rgba(219, 219, 219, 1);
+            padding: 10px 10px 10px 10px;
+          }
+        }
       }
     }
   }
@@ -94,6 +167,55 @@
     align-items: center;
     justify-content: center;
     left: 60px;
+  }
+}
+
+.pdc_status {
+  display: flex;
+  height: 30px;
+  width: fit-content;
+  // background: #F4D7DA;
+  border-radius: 4px;
+  padding: 4px;
+  align-items: center;
+  justify-content: center;
+  column-gap: 4px;
+  border: 0.5px solid rgba(219, 219, 219, 1);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  .pdc_status_indicator {
+    display: flex;
+    height: 100%;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    .pdc_light {
+      display: flex;
+      height: 10px;
+      width: 10px;
+      // background: gray;
+      border-radius: 50%;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.06), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);
+      &.pdc_light_offline {
+        background: rgb(185, 185, 185);
+      }
+      &.pdc_light_online {
+        background: chartreuse;
+      }
+      &.pdc_light_away {
+        background: orange;
+      }
+    }
+  }
+  .pdc_status_label {
+    display: flex;
+    height: 100%;
+    width: fit-content;
+    align-items: center;
+    font-family: Mulish;
+    font-size: 12px;
+    font-weight: 600;
   }
 }
   

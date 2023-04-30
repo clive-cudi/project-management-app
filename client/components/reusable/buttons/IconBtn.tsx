@@ -4,7 +4,7 @@ import styles from "../../../styles/components/reusable/buttons/buttons.module.s
 interface IconBtn_Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     icon: React.ReactNode | JSX.Element
     className?: string
-    variant?: "text" | "contained" | "outlined" | "util",
+    variant?: "text" | "contained" | "outlined" | "util" | "secondary",
     badge?: {
         status: boolean
         num: number
