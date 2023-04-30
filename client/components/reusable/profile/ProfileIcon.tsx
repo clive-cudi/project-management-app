@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../../../styles/components/reusable/profile/profileIcon.module.scss";
 import { HiUser } from "react-icons/hi";
+import { useQuery } from "@tanstack/react-query";
 
 
 export interface ProfileIcon_Props extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

@@ -15,3 +15,4 @@ export { useNotificationPlateWidget } from "./useNotificationPlateWidget/useNoti
 export type { componentRepoInstance } from "./useRenderByID/useRenderByID";
 export { useTeams } from "./useTeams/useTeams";
 export { useProjects } from "./useProjects/useProjects";
+export { useLazyQuery } from "./useLazyQuery/useLazyQuery";

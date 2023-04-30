@@ -96,14 +96,6 @@ const Home: NextPage & PageAuth = () => {
     setProjectsLoading(isProjectsLoading);
   }, [isProjectsLoading, setProjectsLoading]);
 
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("Mounting zustand devtools");
-      MountStoreDevTools();
-    }
-    console.log(session);
-  }, [])
-
   const navSwitchBtns: { btnComponent: JSX.Element | React.ReactNode }[] =
     useMemo<{ btnComponent: JSX.Element | React.ReactNode }[]>(() => {
       return navBtns.map((btn, ix) => {
@@ -126,14 +118,6 @@ const Home: NextPage & PageAuth = () => {
               variant={"primary"}
             >
               <span>{btn.icon}</span>
-              {/* {navMin
-                ? ""
-                : btn.label
-                    .split("")
-                    .map((char, i) =>
-                      i == 0 ? char.toUpperCase() : char.toLowerCase()
-                    )
-                    .join("")} */}
               {navMin ? "" : upperCaseFirstLetter(btn.label)}
             </SideNavBtn>
           ),
