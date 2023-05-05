@@ -20,7 +20,8 @@ export interface ProfileIcon_Props extends React.DetailedHTMLProps<React.HTMLAtt
     profilePicURL: string;
   };
   showDetailsOnHover?: boolean;
-  // fetchDetails?: boolean
+  fetchDetails?: boolean;
+  initialDetails?: UserProfile;
 }
 
 type details_widget_orientations_type =
@@ -31,8 +32,9 @@ type details_widget_orientations_type =
 
 export const ProfileIcon = ({
   user,
-  showDetailsOnHover,
-  // fetchDetails,
+  showDetailsOnHover = false,
+  fetchDetails = false,
+  initialDetails,
   ...utilProps
 }: ProfileIcon_Props): JSX.Element => {
   const imageHoverRef = useRef<HTMLDivElement>(null);
@@ -42,14 +44,14 @@ export const ProfileIcon = ({
   const [style, setStyle] = useState({});
   const session = useSession();
   const { getProfile } = UserQueries(session);
-  const [profile, setProfile] = useState<UserProfile>({
+  const [profile, setProfile] = useState<UserProfile>(initialDetails ?? {
     username: "",
     email: "",
     isVerified: false,
     about: ""
   });
   const [fetchUserProfile, {data: user_profile, error: user_profile_error, isLoading: user_profile_loading}] = useLazyQuery([`user_profile`], () => getProfile(user.uid));
-  const [onlineStatus, setOnlineStatus] = useState<OnlineStatus>("away")
+  const [onlineStatus, setOnlineStatus] = useState<OnlineStatus>("away");
 
   // function generateCurrentOrientation(
   //   width: number,
@@ -148,44 +150,36 @@ export const ProfileIcon = ({
 
 
   useEffect(() => {
-    setProfile((prev) => {
-      return({
-        ...prev,
-        ...user_profile?.user
+    if (fetchDetails) {
+      setProfile((prev) => {
+        return({
+          ...prev,
+          ...user_profile?.user
+        })
       })
-    })
+    }
   }, [user_profile]);
 
   function getTargetUserProfile() {
     fetchUserProfile();
   }
 
-  function renderOnlineStatusBadge(status: OnlineStatus) {
-    switch (status) {
-      case "online":
-        return <span data-elm={"online-status-indicator"}>
-        </span>
-      case "offline":
-      case "away":
-    }
-  }
-
   return (
     <div
       className={styles.profile_icon_wrapper}
-      // onMouseOver={() => {
-      //   if (imageHoverRef) {
-      //     imageHoverRef.current?.setAttribute("data-elm-isActive", "true");
-      //   }
-      // }}
-      // onMouseLeave={() => {
-      //   if (imageHoverRef) {
-      //     imageHoverRef.current?.setAttribute("data-elm-isActive", "false");
-      //   }
-      // }}
+      onMouseOver={() => {
+        getTargetUserProfile();
+        if (imageHoverRef) {
+          imageHoverRef.current?.setAttribute("data-elm-isActive", "true");
+        }
+      }}
+      onMouseLeave={() => {
+        if (imageHoverRef) {
+          imageHoverRef.current?.setAttribute("data-elm-isActive", "false");
+        }
+      }}
       data-elm-type={"profile-icon"}
       {...utilProps}
-      onClick={getTargetUserProfile}
     >
       <span data-elm-type="profile">
         {/* eslint-disable-next-line */}
@@ -202,16 +196,19 @@ export const ProfileIcon = ({
           ref={imageHoverRef}
           className={`${styles.profile_details_wrapper} orientation_${currentOrientation} `}
           id={"profile_details"}
-          data-elm-isActive={true}
+          data-elm-isActive={false}
         >
           <div className={styles.profile_details_content}>
+            <div className={`${styles.pdc_strip}`} style={{justifyContent: "space-between"}}>
+            <span data-elm-type={"pdc-view-full-profile-span"}>View full profile</span>
               {/* status */}
-              <div className={styles.pdc_status}>
+              <div className={`${styles.pdc_status}`}>
                 <span className={styles.pdc_status_indicator}>
                   <span className={`${styles.pdc_light} ${styles[`pdc_light_${onlineStatus}`]}`}></span>
                 </span>
                 <span className={styles.pdc_status_label}>{onlineStatus}</span>
               </div>
+            </div>
             <div className={`${styles.pdc_strip} ${styles.pdc_strip_centered}`}>
               <div className={styles.pdc_profile_pic}>
                 <span data-elm-type="profile">

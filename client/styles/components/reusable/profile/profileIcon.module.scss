@@ -77,6 +77,7 @@
           display: flex;
           height: fit-content;
           width: 100%;
+          align-items: center;
           &.pdc_strip_centered {
             align-items: center;
             justify-content: center;
@@ -132,6 +133,20 @@
             border-top: 0.5px solid rgba(219, 219, 219, 1);
             padding: 10px 10px 10px 10px;
           }
+          span[data-elm-type = "pdc-view-full-profile-span"] {
+            display: flex;
+            height: 100%;
+            width: fit-content;
+            align-items: center;
+            color: #3C64F4;
+            font-family: Mulish;
+            font-size: 14px;
+            font-weight: 600;
+            &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+          }
         }
       }
     }
@@ -181,9 +196,11 @@
   justify-content: center;
   column-gap: 4px;
   border: 0.5px solid rgba(219, 219, 219, 1);
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  &.pdc_status_float {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
   .pdc_status_indicator {
     display: flex;
     height: 100%;
