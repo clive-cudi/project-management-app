@@ -6,6 +6,9 @@
     justify-content: center;
     border-radius: 50%;
     position: relative;
+    &:hover {
+      cursor: pointer;
+    }
     span[data-elm-type = "profile"] {
       display: flex;
       height: 100%;
@@ -42,6 +45,7 @@
       height: fit-content;
       width: 300px;
       position: absolute;
+      bottom: 100%;
       background: white;
       // box-shadow: 1px 1px 20px 4px rgb(179, 179, 179);
       box-shadow: 1px 1px 14px 2px rgb(214, 214, 214);
@@ -49,6 +53,7 @@
       animation: animate-profile-details-slide-in 0.4s linear;
       align-items: center;
       justify-content: center;
+      z-index: 3;
       &.orientation_topright {
         top: -200px;
         left: 40px;

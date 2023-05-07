@@ -6,12 +6,7 @@ import { UserQueries } from "../../../utils";
 import { useSession } from "next-auth/react";
 import { UserProfile } from "../../../types";
 import { OnlineStatus } from "../../../types";
-import { MdEmail } from "react-icons/md";
-import { FcVoicemail, FcVideoCall, FcPhone } from "react-icons/fc";
-import { IconBtn } from "../buttons";
-import { BsChatLeftText } from "react-icons/bs";
-import { BsFillMicFill } from "react-icons/bs";
-import { AiOutlineUser } from "react-icons/ai";
+import { ProfileInfoWidget } from "./ProfileInfoWidget";
 
 
 export interface ProfileIcon_Props extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -24,7 +19,7 @@ export interface ProfileIcon_Props extends React.DetailedHTMLProps<React.HTMLAtt
   initialDetails?: UserProfile;
 }
 
-type details_widget_orientations_type =
+export type details_widget_orientations_type =
   | "topleft"
   | "topright"
   | "bottomright"
@@ -48,7 +43,9 @@ export const ProfileIcon = ({
     username: "",
     email: "",
     isVerified: false,
-    about: ""
+    about: "",
+    profilePicUrl: user.profilePicURL,
+    uid: user.uid
   });
   const [fetchUserProfile, {data: user_profile, error: user_profile_error, isLoading: user_profile_loading}] = useLazyQuery([`user_profile`], () => getProfile(user.uid));
   const [onlineStatus, setOnlineStatus] = useState<OnlineStatus>("away");
@@ -151,17 +148,41 @@ export const ProfileIcon = ({
 
   useEffect(() => {
     if (fetchDetails) {
-      setProfile((prev) => {
-        return({
-          ...prev,
-          ...user_profile?.user
+      if (user_profile?.success === true) {
+        setProfile((prev) => {
+          return({
+            ...prev,
+            ...user_profile?.user
+          })
         })
-      })
+      } else {
+        setProfile(() => ({
+            username: "",
+            email: "",
+            isVerified: false,
+            about: "",
+            uid: user.uid
+          }));
+      }
     }
   }, [user_profile]);
 
   function getTargetUserProfile() {
-    fetchUserProfile();
+    // reset current state
+    // check the if the target profile corresponds to the profile in state
+    // if (profile.uid === user.uid) {
+      // no need to refetch
+    // } else {
+      // reset profile and fetch profile
+      // setProfile(() => ({
+      //   username: "",
+      //   email: "",
+      //   isVerified: false,
+      //   about: "",
+      //   uid: user.uid
+      // }));
+      fetchUserProfile();
+    // }
   }
 
   return (
@@ -184,73 +205,74 @@ export const ProfileIcon = ({
       <span data-elm-type="profile">
         {/* eslint-disable-next-line */}
         {
-          user.profilePicURL ? 
+          profile?.profilePicUrl ? 
           // eslint-disable-next-line
-            <img src={user.profilePicURL ?? ""} alt="@" />
+            <img src={profile.profilePicUrl ?? ""} alt="@" />
           :
             <span data-elm-type={"user-profile-img-placeholder"}><HiUser /></span>
         }
       </span>
       {showDetailsOnHover ? (
-        <div
-          ref={imageHoverRef}
-          className={`${styles.profile_details_wrapper} orientation_${currentOrientation} `}
-          id={"profile_details"}
-          data-elm-isActive={false}
-        >
-          <div className={styles.profile_details_content}>
-            <div className={`${styles.pdc_strip}`} style={{justifyContent: "space-between"}}>
-            <span data-elm-type={"pdc-view-full-profile-span"}>View full profile</span>
-              {/* status */}
-              <div className={`${styles.pdc_status}`}>
-                <span className={styles.pdc_status_indicator}>
-                  <span className={`${styles.pdc_light} ${styles[`pdc_light_${onlineStatus}`]}`}></span>
-                </span>
-                <span className={styles.pdc_status_label}>{onlineStatus}</span>
-              </div>
-            </div>
-            <div className={`${styles.pdc_strip} ${styles.pdc_strip_centered}`}>
-              <div className={styles.pdc_profile_pic}>
-                <span data-elm-type="profile">
-                  {/* eslint-disable-next-line */}
-                  {
-                    user.profilePicURL ? 
-                    // eslint-disable-next-line
-                      <img src={user.profilePicURL ?? ""} alt="@" />
-                    :
-                      <span data-elm-type={"user-profile-img-placeholder"}><HiUser /></span>
-                  }
-                </span>
-              </div>
-            </div>
-            <div className={styles.pdc_strip}>
-              <div className={styles.pdc_strip_info}>
-                <span data-elm-type={"info-icon"}><AiOutlineUser /></span>
-                <h3>{user_profile?.user.username}</h3>
-              </div>
-            </div>
-            <div className={styles.pdc_strip}>
-              <div className={styles.pdc_strip_info}>
-                <span data-elm-type={"info-icon"}><MdEmail /></span>
-                <h4>{user_profile?.user.email}</h4>
-              </div>
-            </div>
-            <div className={styles.pdc_strip}>
-              <div className={styles.pdc_strip_info}>
-                <span data-elm-type={"info-icon"}><FcVoicemail /></span>
-                <h4>{user_profile?.user.info?.phone ?? "_"}</h4>
-              </div>
-            </div>
-            <div className={styles.pdc_strip}>
-              <div className={styles.pdc_util_tray}>
-                <IconBtn icon={<BsChatLeftText />} variant={"secondary"} />
-                <IconBtn icon={<BsFillMicFill />} variant={"secondary"} />
-                <IconBtn icon={<FcVideoCall />} variant={"secondary"} />
-                <IconBtn icon={<FcPhone />} variant={"secondary"} />
-              </div>
-            </div>
-          </div>
-        </div>
+        // <div
+        //   ref={imageHoverRef}
+        //   className={`${styles.profile_details_wrapper} orientation_${currentOrientation} `}
+        //   id={"profile_details"}
+        //   data-elm-isActive={false}
+        // >
+        //   <div className={styles.profile_details_content}>
+        //     <div className={`${styles.pdc_strip}`} style={{justifyContent: "space-between"}}>
+        //     <span data-elm-type={"pdc-view-full-profile-span"}>View full profile</span>
+        //       {/* status */}
+        //       <div className={`${styles.pdc_status}`}>
+        //         <span className={styles.pdc_status_indicator}>
+        //           <span className={`${styles.pdc_light} ${styles[`pdc_light_${onlineStatus}`]}`}></span>
+        //         </span>
+        //         <span className={styles.pdc_status_label}>{onlineStatus}</span>
+        //       </div>
+        //     </div>
+        //     <div className={`${styles.pdc_strip} ${styles.pdc_strip_centered}`}>
+        //       <div className={styles.pdc_profile_pic}>
+        //         <span data-elm-type="profile">
+        //           {/* eslint-disable-next-line */}
+        //           {
+        //             user.profilePicURL ? 
+        //             // eslint-disable-next-line
+        //               <img src={user.profilePicURL ?? ""} alt="@" />
+        //             :
+        //               <span data-elm-type={"user-profile-img-placeholder"}><HiUser /></span>
+        //           }
+        //         </span>
+        //       </div>
+        //     </div>
+        //     <div className={styles.pdc_strip}>
+        //       <div className={styles.pdc_strip_info}>
+        //         <span data-elm-type={"info-icon"}><AiOutlineUser /></span>
+        //         <h3>{user_profile?.user.username}</h3>
+        //       </div>
+        //     </div>
+        //     <div className={styles.pdc_strip}>
+        //       <div className={styles.pdc_strip_info}>
+        //         <span data-elm-type={"info-icon"}><MdEmail /></span>
+        //         <h4>{user_profile?.user.email}</h4>
+        //       </div>
+        //     </div>
+        //     <div className={styles.pdc_strip}>
+        //       <div className={styles.pdc_strip_info}>
+        //         <span data-elm-type={"info-icon"}><FcVoicemail /></span>
+        //         <h4>{user_profile?.user.info?.phone ?? "_"}</h4>
+        //       </div>
+        //     </div>
+        //     <div className={styles.pdc_strip}>
+        //       <div className={styles.pdc_util_tray}>
+        //         <IconBtn icon={<BsChatLeftText />} variant={"secondary"} />
+        //         <IconBtn icon={<BsFillMicFill />} variant={"secondary"} />
+        //         <IconBtn icon={<FcVideoCall />} variant={"secondary"} />
+        //         <IconBtn icon={<FcPhone />} variant={"secondary"} />
+        //       </div>
+        //     </div>
+        //   </div>
+        // </div>
+        <ProfileInfoWidget key={user.uid} imageHoverRef={imageHoverRef} onlineStatus={onlineStatus} profile={profile} isProfileLoading={user_profile_loading} />
       ) : null}
     </div>
   );

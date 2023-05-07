@@ -59,6 +59,10 @@ export const ProjectsOverview = ({ children }: ProjectsOverview_Props) => {
         <ProfileIconRibbon
           users={sampleUsers}
           wrapperDivProps={{ style: staticStyles }}
+          profileIconProps={{
+            fetchDetails: true,
+            showDetailsOnHover: true
+          }}
         />
       );
 

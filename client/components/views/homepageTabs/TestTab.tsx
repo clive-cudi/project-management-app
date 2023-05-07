@@ -50,7 +50,7 @@ export const TestTab = (): JSX.Element => {
             <button onClick={() => {handleAddColorProp()}}>Add Color Prop</button>
             <button onClick={() => {fetchMe()}}>Trigger useLazyQuery()</button>
             <span>useLazyQueryResult: {JSON.stringify(me_data)}</span>
-            <ProfileIcon user={{uid: "0041bbbb-8f13-44cd-85c1-2ffbe657cc76", profilePicURL: ""}} showDetailsOnHover />
+            <ProfileIcon user={{uid: "0041bbbb-8f13-44cd-85c1-2ffbe657cc76", profilePicURL: ""}} showDetailsOnHover fetchDetails />
         </div>
     )
 }
