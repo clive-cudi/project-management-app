@@ -145,7 +145,7 @@ export const MembersTab = ({}) => {
                                 </div>
                                 <div className={styles.mtb_aoe_members}>
                                   {/* Have an option to view all members [i.e: in a modal list] */}
-                                  <ProfileIconRibbon key={29} users={MockUsers} maxNumber={6} />
+                                  <ProfileIconRibbon key={29} users={MockUsers} maxNumber={6} profileIconProps={{fetchDetails: true, showDetailsOnHover: true}} />
                                 </div>
                               </div>
                               <div className={styles.mtb_aoe_info_strip}>
@@ -244,7 +244,7 @@ export const MembersTab = ({}) => {
                               </div>
                               <div className={styles.mtb_aoe_members}>
                                   {/* Have an option to view all members [i.e: in a modal list] */}
-                                  <ProfileIconRibbon users={[...tm.members].map((tm_member) => ({uid: tm_member, profilePicURL: ""}))} maxNumber={6} />
+                                  <ProfileIconRibbon users={[...tm.members].map((tm_member) => ({uid: tm_member, profilePicURL: ""}))} maxNumber={6} profileIconProps={{fetchDetails: true, showDetailsOnHover: true}} />
                               </div>
                             </div>
                             <div className={styles.mtb_aoe_info_strip}>

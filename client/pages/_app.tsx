@@ -17,6 +17,7 @@ import { NextComponentType } from "next";
 import type { PageAuth } from "../types";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 interface Props extends AppProps {
   Component: NextComponentType & PageAuth;
