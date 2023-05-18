@@ -9,6 +9,7 @@ import { useSettingsTab } from "../../../hooks/useSettingsTab/useSettingsTab";
 import { SettingsTabs_ } from "../../../types";
 import { upperCaseFirstLetter } from "../../../utils";
 import { SettingsTabView } from "../settings";
+import { useSession } from "next-auth/react";
 
 export const SettingsTab = ({}): JSX.Element => {
   const settingsNavOptions = useMemo<
@@ -37,6 +38,7 @@ export const SettingsTab = ({}): JSX.Element => {
   const { settingsTab, switchTab } = useSettingsTab();
   const [isNavMin, setIsNavMin] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const session = useSession();
 
   function toggleIsNavMinSettings(){
     if (isNavMin === true) {
@@ -57,7 +59,7 @@ export const SettingsTab = ({}): JSX.Element => {
                 <h4>Welcome back.</h4>
               </span>
               <span>
-                <h3>Sarah Smith</h3>
+                <h3>{session.data?.user.name ?? ""}</h3>
               </span>
             </div>
             <IconBtn icon={<IoSettingsOutline />} variant={`outlined`} onClick={(): void => {toggleIsNavMinSettings()}} />
