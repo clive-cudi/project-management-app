@@ -9,11 +9,13 @@
         min-height: 50px;
         width: 100%;
         justify-content: space-between;
+        column-gap: 10px;
         .cpf_form_field {
             display: flex;
             height: fit-content;
             width: fit-content;
             align-items: center;
+            column-gap: 10px;
             span {
                 display: flex;
                 width: 100px;

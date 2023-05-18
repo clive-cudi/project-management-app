@@ -14,6 +14,7 @@ export function useProjects() {
     }
 
     return {
+        projects,
         getProjectById,
         getProjectByIdWithTeamBase
     }
