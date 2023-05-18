@@ -16,14 +16,14 @@ export const ProjectQueries = (session: any) => {
         name: string;
         stage: string;
         clients: string[];
-        bugdet: string;
+        budget: string;
         start: string;
         finish: string;
         description: string;
       }
 
-    const createProject = async ({ name, stage, clients, bugdet, start, finish, description }: createProjectRequest_Props): Promise<API_res_model & {project: projectRes}> => {
-        return (await api.post("/project/create", { name, stage, clients, bugdet, start, finish, description }, defaultReqConfig)).data;
+    const createProject = async ({ name, stage, clients, budget, start, finish, description }: createProjectRequest_Props): Promise<API_res_model & {project: projectRes}> => {
+        return (await api.post("/project/create", { name, stage, clients, budget, start, finish, description }, defaultReqConfig)).data;
     }
 
     return {

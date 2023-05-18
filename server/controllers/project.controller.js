@@ -122,9 +122,10 @@ const createProject = (req, res, next) => {
                     return generateResponse({
                         req,
                         res,
-                        type: "Successfully created project " + projectDoc.name ?? name,
+                        type: "success",
                         data: {
-                            project: projectDoc
+                            project: projectDoc,
+                            message: "Successfully created project " + projectDoc.name ?? name,
                         }
                     })
                 }).catch((err) => {

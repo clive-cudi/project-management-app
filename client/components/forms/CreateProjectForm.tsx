@@ -16,18 +16,30 @@ import { UserQueries, ProjectQueries } from "../../utils";
 import { useSession } from "next-auth/react";
 import { clientRes, API_res_model } from "../../types";
 import { useProjectStore } from "../../hooks";
+import { ModalFormWrapper } from "../layout";
+import { CreateClientForm } from "./CreateClientForm";
 
 interface newProjectFormDataTypes {
   name: string;
   stage: string;
   clients: string[];
-  bugdet: string;
+  budget: string;
   start: string;
   finish: string;
   description: string;
 }
 
-export const CreateProjectForm = (): JSX.Element => {
+interface CreateProjectForm_Props {
+  initialValues?: {
+    name: string;
+    stage: string;
+    bugdet: string;
+    description: string;
+    client?: clientRes
+  }
+}
+
+export const CreateProjectForm = ({ initialValues }: CreateProjectForm_Props): JSX.Element => {
   const projectStageData = useMemo(
     () => [
       { label: "New Project", value: "new" },
@@ -40,12 +52,13 @@ export const CreateProjectForm = (): JSX.Element => {
     name: "",
     stage: "",
     clients: [],
-    bugdet: "",
+    budget: "",
     start: "",
     finish: "",
     description: "",
+    ...initialValues
   });
-  const { openAtCursor } = useContextMenu();
+  const { openAtCursor, closeContextMenu } = useContextMenu();
   // Fetch clients from backend
   const session = useSession();
   const { getClients } = UserQueries(session);
@@ -62,7 +75,7 @@ export const CreateProjectForm = (): JSX.Element => {
   // Initialize tippy.js
   const [choosenClients, setChoosenClients] = useState<
     { clientID: string; name: string }[]
-  >([]);
+  >(initialValues?.client ? [{clientID: initialValues.client.cid, name: initialValues.client.firstName}] :[]);
   const addClientOptions = useMemo<JSX.Element[]>(
     () => [<button key={1}>Add a new Client</button>],
     []
@@ -71,7 +84,7 @@ export const CreateProjectForm = (): JSX.Element => {
   const [createProjectLoading, setCreateProjectLoading] = useState<boolean>(false);
   const { startLoading, stopLoading, globalLoading } = useGlobalLoading();
   const { addNotificationWithBadge } = useNotificationPlateWidget();
-  const { closeModal } = useModal();
+  const { closeModal, openModal } = useModal();
   const { addifUnique: addProjectToStore } = useProjectStore();
   const createProjectMutation = useMutation({
     mutationKey: ["create_project"],
@@ -135,7 +148,7 @@ export const CreateProjectForm = (): JSX.Element => {
   }
 
   function submitNewProject() {
-    const { clients, description, bugdet, stage, ...requiredData } = newProjectData;
+    const { clients, description, budget, stage, ...requiredData } = newProjectData;
 
     console.log(newProjectData);
     if ([...Object.values(requiredData)].every(Boolean)) {
@@ -172,7 +185,7 @@ export const CreateProjectForm = (): JSX.Element => {
   }
 
   function removeFromChoiceList(client: { clientID: string | number; name: string | number }) {
-    console.log([...choosenClients].filter((val) => val.clientID !== client.clientID))
+    // console.log([...choosenClients].filter((val) => val.clientID !== client.clientID))
     setChoosenClients((prevChosen) =>
       [...prevChosen].filter((val) => val.clientID !== client.clientID)
     );
@@ -202,7 +215,7 @@ export const CreateProjectForm = (): JSX.Element => {
             type={`text`}
             placeholder={``}
             variant={"primary"}
-            inputArgs={{ name: "name" }}
+            inputArgs={{ name: "name", defaultValue: initialValues?.name ?? "" }}
             onChange={handleChange}
           />
         </div>
@@ -248,7 +261,12 @@ export const CreateProjectForm = (): JSX.Element => {
                   >
                     {available_client.name}
                   </button>
-                )).concat(<button onClick={() => {}}>Add new Client</button>) ?? [])
+                )).concat(<button onClick={() => {
+                  closeContextMenu();
+                  openModal(<ModalFormWrapper form={<CreateClientForm initialData={newProjectData} onResume={(createdClient, initialData) => {
+                    openModal(<ModalFormWrapper form={<CreateProjectForm initialValues={initialData}  />} title={"Create New Project"} />)
+                  }} />} title={"Create New Client"} />)
+                }}>Add new Client</button>) ?? [])
               );
             }}
           />
@@ -261,7 +279,7 @@ export const CreateProjectForm = (): JSX.Element => {
             type={`text`}
             placeholder={``}
             variant={"primary"}
-            inputArgs={{ name: "budget" }}
+            inputArgs={{ name: "budget", defaultValue: initialValues?.bugdet ?? "" }}
             onChange={handleChange}
           />
         </div>
@@ -295,7 +313,7 @@ export const CreateProjectForm = (): JSX.Element => {
           className={`${styles.cpf_form_field} ${styles.textarea_exception}`}
         >
           <span>Description</span>
-          <textarea name={"description"} onChange={handleChange}></textarea>
+          <textarea name={"description"} onChange={handleChange} defaultValue={initialValues?.description ?? ""}></textarea>
         </div>
       </div>
       <div

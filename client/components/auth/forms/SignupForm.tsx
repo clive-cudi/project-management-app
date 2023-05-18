@@ -5,6 +5,7 @@ import { FiUser } from "react-icons/fi";
 import { useModal } from "../../../hooks";
 import axios from "axios";
 import { FaCheckCircle } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 export const Signupform = (): JSX.Element => {
     const icon_img_styling: React.CSSProperties = {
@@ -29,6 +30,7 @@ export const Signupform = (): JSX.Element => {
     const [canSubmit, setCanSubmit] = useState<boolean>(false);
     const { openModal } = useModal();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         const type = e.target.type;
@@ -71,7 +73,9 @@ export const Signupform = (): JSX.Element => {
                 console.log(res);
                 if (res.data.success === true) {
                     // push to page for providing more information
-                    openModal(<ErrorModal message={`${res.data.message}`} type={"success"} icon={<FaCheckCircle fontSize={40} color={"rgb(0, 255, 38)"} />} btn_label={"Proceed"} />)
+                    openModal(<ErrorModal message={`${res.data.message}`} type={"success"} icon={<FaCheckCircle fontSize={40} color={"rgb(0, 255, 38)"} />} btn_label={"Proceed"} btn_onclick={() => {
+                        router.push('/login');
+                    }} />)
                 }
             }).catch((e) => {
                 setIsLoading(false)

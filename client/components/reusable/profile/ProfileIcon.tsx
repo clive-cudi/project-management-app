@@ -148,6 +148,13 @@ export const ProfileIcon = ({
 
   useEffect(() => {
     if (fetchDetails) {
+      setProfile(() => ({
+        username: "",
+        email: "",
+        isVerified: false,
+        about: "",
+        uid: user.uid
+      }));
       if (user_profile?.success === true) {
         setProfile((prev) => {
           return({
@@ -205,9 +212,9 @@ export const ProfileIcon = ({
       <span data-elm-type="profile">
         {/* eslint-disable-next-line */}
         {
-          profile?.profilePicUrl ? 
+          user?.profilePicURL ? 
           // eslint-disable-next-line
-            <img src={profile.profilePicUrl ?? ""} alt="@" />
+            <img src={user.profilePicURL ?? ""} alt="@" />
           :
             <span data-elm-type={"user-profile-img-placeholder"}><HiUser /></span>
         }
@@ -272,7 +279,7 @@ export const ProfileIcon = ({
         //     </div>
         //   </div>
         // </div>
-        <ProfileInfoWidget key={user.uid} imageHoverRef={imageHoverRef} onlineStatus={onlineStatus} profile={profile} isProfileLoading={user_profile_loading} />
+        <ProfileInfoWidget key={user.uid} imageHoverRef={imageHoverRef} onlineStatus={onlineStatus} />
       ) : null}
     </div>
   );

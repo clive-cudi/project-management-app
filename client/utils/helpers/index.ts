@@ -24,7 +24,7 @@ export const getCountDownReturnValues = (countDown: number) => {
 }
 
 // helper function to get an element's exact position
-function getPosition(el: HTMLElement | null) {
+export function getPosition(el: HTMLElement | null) {
     var xPosition = 0;
     var yPosition = 0;
    
