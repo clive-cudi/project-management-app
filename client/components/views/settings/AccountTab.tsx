@@ -48,7 +48,7 @@ export const AccountTab = ():JSX.Element => {
                         </div>
                         <div className={`${styles.user_info_strip_content} ${styles.user_info_strip_grid_cols_0}`}>
                             <span>
-                                <InputDiv type={`email`} placeholder={`username@domain.com`} inputArgs={{defaultValue: session.data?.user.email ?? ""}} onChange={()=>{}} />
+                                <InputDiv type={`email`} placeholder={`username@domain.com`} inputArgs={{defaultValue: session.data?.user?.email ?? ""}} onChange={()=>{}} />
                             </span>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ export const AccountTab = ():JSX.Element => {
                         </div>
                         <div className={`${styles.user_info_strip_content} ${styles.user_info_strip_grid_cols_2}`}>
                             <span>
-                                <InputDiv type={`text`} placeholder={"First Name"} inputArgs={{defaultValue: session.data?.user.name}} onChange={()=>{}} />
+                                <InputDiv type={`text`} placeholder={"First Name"} inputArgs={{defaultValue: session.data?.user?.name ?? ""}} onChange={()=>{}} />
                             </span>
                             <span>
                                 <InputDiv type={`text`} placeholder={"Second Name"} onChange={()=>{}} />
@@ -77,10 +77,10 @@ export const AccountTab = ():JSX.Element => {
                                 <InputSelect options={[]} />
                             </span>
                             <span>
-                                <InputDiv type={`number`} placeholder={`254`} inputArgs={{defaultValue: session.data?.user.user.info?.phone ?? ""}} onChange={()=>{}} />
+                                <InputDiv type={`number`} placeholder={`254`} inputArgs={{defaultValue: session.data?.user?.user?.info?.phone ?? ""}} onChange={()=>{}} />
                             </span>
                             <span data-span={"full"}>
-                                <InputDiv type={`text`} placeholder={`Street`} inputArgs={{defaultValue: session.data?.user.user.info?.address?.street ?? ""}} onChange={()=>{}} />
+                                <InputDiv type={`text`} placeholder={`Street`} inputArgs={{defaultValue: session.data?.user?.user?.info?.address?.street ?? ""}} onChange={()=>{}} />
                             </span>
                         </div>
                     </div>
