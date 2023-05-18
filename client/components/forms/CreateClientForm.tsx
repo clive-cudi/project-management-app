@@ -1,18 +1,56 @@
 import React, { useState, ChangeEvent } from "react";
 import styles from "../../styles/components/forms/createProjectForm.module.scss";
 import { InputDiv, RegularBtn, DropdownMultiOptionChoosenWidget, IconBtn } from "../reusable";
-import { useGlobalLoading, useProjectStore, useContextMenu } from "../../hooks";
+import { useGlobalLoading, useProjectStore, useContextMenu, useNotificationPlateWidget } from "../../hooks";
 import { BsPlus } from "react-icons/bs";
-import { projectRes } from "../../types";
-import { getUniqueListBy } from "../../utils";
+import { clientRes, projectRes } from "../../types";
+import { getUniqueListBy, ClientQueries } from "../../utils";
+import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+
+interface CreateClientForm_Props {
+    onResume?: (client: clientRes, initialData: any) => void
+    initialData?: any
+}
 
 
-export const CreateClientForm = (): JSX.Element => {
-    const [newClientData, setNewClientData] = useState({});
+export const CreateClientForm = ({ onResume, initialData }: CreateClientForm_Props): JSX.Element => {
+    const [newClientData, setNewClientData] = useState({
+        firstName: "",
+        lastName: "",
+        title: "",
+        email: "",
+        businessName: "",
+        mobile: "",
+        projects: []
+    });
     const { startLoading, stopLoading, globalLoading } = useGlobalLoading();
     const { projects } = useProjectStore();
     const { openAtCursor } = useContextMenu();
     const [chosenProjects, setChosenProjects] = useState<projectRes[]>([]);
+    const session = useSession();
+    const { createClient } = ClientQueries(session);
+    const { addNotificationWithBadge } = useNotificationPlateWidget();
+    const createClientMutation = useMutation({
+        mutationKey: ["create_client"],
+        mutationFn: createClient,
+        onMutate(variables) {
+            startLoading();
+        },
+        onSuccess(data, variables, context) {
+            addNotificationWithBadge({type: data.success ? "success" : "error", text: data.message})
+            if (data.success === true) {
+                onResume && onResume(data.client, initialData);
+            }
+        },
+        onError(error, variables, context) {
+            console.log(error);
+            addNotificationWithBadge({type: "error", text: String(error) as string})
+        },
+        onSettled(data, error, variables, context) {
+            stopLoading();
+        },
+    })
 
     function handleChange(
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -47,6 +85,11 @@ export const CreateClientForm = (): JSX.Element => {
 
       function submitNewClient() {
         // create new client
+        const { lastName, title, businessName, ...requiredInput} = newClientData;
+        if ([...Object.values(requiredInput)].every(Boolean)) {
+            // submit client then call onResume
+            createClientMutation.mutate(newClientData);
+        }
       }
 
       function removeFromChoiceList(prjct: { projectID: string | number; name: string | number }) {
@@ -118,7 +161,7 @@ export const CreateClientForm = (): JSX.Element => {
                             >
                                 {available_client.name}
                             </button>
-                            )).concat(<button onClick={() => {}}>Add new Client</button>) ?? [])
+                            )).concat(<button onClick={() => {}}>Add new Project</button>) ?? [])
                         );
                         }}
                     />
